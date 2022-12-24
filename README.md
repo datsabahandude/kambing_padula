@@ -1,3 +1,3 @@
-# kambing_padula
+# Kambing Pak Dula
 
-Kambing Pak Dula
+for science purposes...
