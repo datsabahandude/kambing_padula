@@ -44,7 +44,12 @@ class _kambing_listState extends State<kambing_list> {
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [],
-          )
+          ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.lightGreenAccent,
+          onPressed: (){},
+          child: Icon(Icons.add),
+        ),
       ),
     );
   }
