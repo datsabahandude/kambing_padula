@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'profile.dart';
+import 'kambing_list.dart';
+import 'penjantan.dart';
 
 void main() {
   runApp(const MyApp());
@@ -53,10 +56,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.lightGreenAccent,
                 fontSize: 26,
                 fontWeight: FontWeight.bold),),),
+        actions: [
+          MaterialButton(
+              onPressed: (){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            profile()));
+              },
+              child: CircleAvatar(
+                backgroundImage: AssetImage("images/kambir.jpg"),
+                backgroundColor: Colors.transparent,
+          ),
+          ),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Spacer(),
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: Center(
@@ -64,140 +83,96 @@ class _MyHomePageState extends State<MyHomePage> {
                 spacing: 15.0,
                 runSpacing: 15.0,
                 children: [
-                  SizedBox(
-                    width: 160.0,
-                    height: 160.0,
-                    child: Card(
-                      color: Colors.transparent,
-                      elevation: 2.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0)
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Image.asset("images/goat_icon.png",width: 64.0),
-                              SizedBox(height: 10.0),
-                              Text("Kambing", style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
-                              )),
-                              SizedBox(height: 5.0),
-                              Text("2 Items", style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w100
-                              ),)
-                            ],
+                  Row(
+                    children: [
+                      MaterialButton(
+                        onPressed: (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      penjantan()));
+                        },
+                        child: SizedBox(
+                          width: 140.0,
+                          height: 150.0,
+                          child: Card(
+                            color: Colors.transparent,
+                            elevation: 2.0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0)
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Image.asset("images/goat_icon.png",width: 64.0),
+                                    SizedBox(height: 10.0),
+                                    Text("Kambing", style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                    )),
+                                    SizedBox(height: 4.0),
+                                    Text("Penjantan", style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                    )),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 160.0,
-                    height: 160.0,
-                    child: Card(
-                      color: Colors.transparent,
-                      elevation: 2.0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0)
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Image.asset("images/goat_icon.png",width: 64.0),
-                              SizedBox(height: 10.0),
-                              Text("Kambing", style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
-                              )),
-                              SizedBox(height: 5.0),
-                              Text("2 Items", style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w100
-                              ),)
-                            ],
+                      MaterialButton(
+                        onPressed: (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      kambing_list()));
+                        },
+                        child: SizedBox(
+                          width: 140.0,
+                          height: 150.0,
+                          child: Card(
+                            color: Colors.transparent,
+                            elevation: 2.0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0)
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Image.asset("images/puteh.png",width: 64.0),
+                                    SizedBox(height: 10.0),
+                                    Text("Senarai", style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                    )),
+                                    SizedBox(height: 4.0),
+                                    Text("Kambing", style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                    )),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 160.0,
-                    height: 160.0,
-                    child: Card(
-                      color: Colors.transparent,
-                      elevation: 2.0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0)
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Image.asset("images/goat_icon.png",width: 64.0),
-                              SizedBox(height: 10.0),
-                              Text("Kambing", style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
-                              )),
-                              SizedBox(height: 5.0),
-                              Text("2 Items", style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w100
-                              ),)
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 160.0,
-                    height: 160.0,
-                    child: Card(
-                      color: Colors.transparent,
-                      elevation: 2.0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0)
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Image.asset("images/goat_icon.png",width: 64.0),
-                              SizedBox(height: 10.0),
-                              Text("Kambing", style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
-                              )),
-                              SizedBox(height: 5.0),
-                              Text("2 Items", style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w100
-                              ),)
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    ],
                   ),
                 ],
               ),
             ),
           ),
         ],
-      )
+      ),
     ),
     );
   }
