@@ -20,6 +20,7 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
   final _formkey = GlobalKey<FormState>();
   final jantina = ['Jantan','Betina','LGBTQ'];
   String? _selectedVal = '';
+  String date = '${DateTime.now()}';
   final namaEditingController = new TextEditingController();
   final lahirEditingController = new TextEditingController();
   final umurEditingController = new TextEditingController();
@@ -43,7 +44,7 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
-    // Navigator.of(context).pop();
+    Navigator.of(context).pop();
   }
   Future _pickImageGallery() async{
     try{
@@ -56,7 +57,7 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
-    // Navigator.of(context).pop();
+    Navigator.of(context).pop();
   }
   Widget build(BuildContext context) {
 
@@ -150,36 +151,6 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
               borderRadius: BorderRadius.circular(10),
             )
         ));
-    /*final jantinaField = TextFormField(
-        autofocus: false,
-        controller: jantinaEditingController,
-        keyboardType: TextInputType.emailAddress,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Kambing Jantan/Betina/LGBTQ?';
-          }
-        },
-        onSaved: (value){
-          jantinaEditingController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            floatingLabelBehavior: FloatingLabelBehavior.never,
-            errorStyle: GoogleFonts.poppins(
-              textStyle: TextStyle(
-                fontSize: 12.0,
-                color: Colors.yellow,
-                fontWeight: FontWeight.w700,
-              ),),
-            fillColor: Colors.white,
-            filled: true,
-            //prefixIcon: Icon(Icons.add_business_rounded, color: Colors.purple),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "Jantina Kambing",
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            )
-        ));*/
     final hargaField = TextFormField(
         autofocus: false,
         controller: hargaEditingController,
@@ -240,6 +211,7 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                   fontWeight: FontWeight.bold),),),
         ),
         body: SingleChildScrollView(
+          padding: EdgeInsets.all(15.0),
           child: Container(
             padding: EdgeInsets.all(20.0),
             child: Form(
@@ -327,7 +299,6 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                   namaField, SizedBox(height: 20.0,),
                   lahirField, SizedBox(height: 20.0,),
                   umurField, SizedBox(height: 20.0,),
-                  // jantinaField, SizedBox(height: 20.0,),
                   hargaField, SizedBox(height: 20.0,),
                   DropdownButtonFormField(
                     value: _selectedVal,
@@ -371,7 +342,7 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                           }
                           else if (image == null){
                             Fluttertoast.showToast(
-                                msg: "Please Upload an Image!", toastLength: Toast.LENGTH_SHORT,
+                                msg: "Mana Gambarnya?", toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.CENTER,
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colors.red,
