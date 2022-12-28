@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'profile.dart';
-import 'kambing_list.dart';
+import 'add_kambing/kambing_list.dart';
 import 'penjantan.dart';
 
 void main() {
@@ -57,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 fontSize: 26,
                 fontWeight: FontWeight.bold),),),
         actions: [
-          MaterialButton(
+          /*MaterialButton(
               onPressed: (){
                 Navigator.push(
                     context,
@@ -69,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 backgroundImage: AssetImage("images/kambir.jpg"),
                 backgroundColor: Colors.transparent,
           ),
-          ),
+          ),*/
         ],
       ),
       body: Column(
