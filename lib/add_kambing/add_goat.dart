@@ -20,11 +20,9 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
   final _formkey = GlobalKey<FormState>();
   final jantina = ['Jantan','Betina','LGBTQ'];
   String? _selectedVal = '';
-  String date = '${DateTime.now()}';
+  DateTime datenow = DateTime.now();
+  String umur = '';
   final namaEditingController = new TextEditingController();
-  final lahirEditingController = new TextEditingController();
-  final umurEditingController = new TextEditingController();
-  final jantinaEditingController = new TextEditingController();
   final hargaEditingController = new TextEditingController();
   File? image;
   // UploadTask? uploadTask;
@@ -91,70 +89,13 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
               borderRadius: BorderRadius.circular(10),
             )
         ));
-    final lahirField = TextFormField(
-        autofocus: false,
-        controller: lahirEditingController,
-        keyboardType: TextInputType.emailAddress,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Bila lahir? (agak-agak ja)';
-          }
-        },
-        onSaved: (value){
-          lahirEditingController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            floatingLabelBehavior: FloatingLabelBehavior.never,
-            errorStyle: GoogleFonts.poppins(
-              textStyle: TextStyle(
-                fontSize: 12.0,
-                color: Colors.yellow,
-                fontWeight: FontWeight.w700,
-              ),),
-            fillColor: Colors.white,
-            filled: true,
-            prefixIcon: Icon(Icons.cake_outlined, color: Colors.purple),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "Tarikh lahir",
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            )
-        ));
-    final umurField = TextFormField(
-        autofocus: false,
-        controller: umurEditingController,
-        keyboardType: TextInputType.emailAddress,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Umur Kambing?';
-          }
-        },
-        onSaved: (value){
-          umurEditingController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            floatingLabelBehavior: FloatingLabelBehavior.never,
-            errorStyle: GoogleFonts.poppins(
-              textStyle: TextStyle(
-                fontSize: 12.0,
-                color: Colors.yellow,
-                fontWeight: FontWeight.w700,
-              ),),
-            fillColor: Colors.white,
-            filled: true,
-            prefixIcon: Icon(Icons.av_timer, color: Colors.purple),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "Umur",
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            )
-        ));
     final hargaField = TextFormField(
         autofocus: false,
         controller: hargaEditingController,
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))
+        ],
         validator: (value) {
           if (value!.isEmpty) {
             return 'Harga jual?';
@@ -296,10 +237,35 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                     ],
                   ),
                   SizedBox(height: 50.0,),
-                  namaField, SizedBox(height: 20.0,),
-                  lahirField, SizedBox(height: 20.0,),
-                  umurField, SizedBox(height: 20.0,),
-                  hargaField, SizedBox(height: 20.0,),
+                  ElevatedButton.icon(
+                    onPressed: () async{
+                      DateTime? newdate = await showDatePicker(
+                        context: context,
+                        initialDate: datenow,
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2100),
+                      );
+                      if (newdate == null) return;
+                      setState(() => datenow = newdate);
+                      umur = '${DateTime.now().year-datenow.year} tahun ${DateTime.now().month-datenow.month}';
+                    },
+                    icon: Icon(Icons.cake_outlined, color: Colors.purple),
+                    label: Text('${datenow.day}/${datenow.month}/${datenow.year}'),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.white)
+                    ),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {},
+                    icon: Icon(Icons.av_timer, color: Colors.purple),
+                    label: Text('Umur: '+ umur),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.white)
+                    ),
+                  ),
+                  SizedBox(height: 10.0,),
+                  namaField, SizedBox(height: 15.0,),
+                  hargaField, SizedBox(height: 15.0,),
                   DropdownButtonFormField(
                     value: _selectedVal,
                     items: jantina.map(
