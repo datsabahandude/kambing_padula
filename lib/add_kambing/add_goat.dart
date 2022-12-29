@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kambing_padula/add_kambing/kambing_list.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class add_goat extends StatefulWidget {
   const add_goat({Key? key}) : super(key: key);
@@ -27,11 +28,19 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
   File? image;
   // UploadTask? uploadTask;
   String? url;
+  String name = '';
+  late SharedPreferences prefs;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    init();
+  }
+  Future init() async {
+    prefs = await SharedPreferences.getInstance();
+    String? name = prefs.getString('name');
+    if (name == null) return;
+    setState(() => this.name = name);
   }
   Future _pickImageCamera() async{
     try{
@@ -304,17 +313,12 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                       child: MaterialButton(
                         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                         minWidth: MediaQuery.of(context).size.width * 0.6,
-                        onPressed: () {
+                        onPressed: () async {
                           if ((_formkey.currentState!.validate())&& image != null) {
                             _formkey.currentState!.save();
+                          prefs.setString('name', 'ehe');
                             // update(inameEditingController.text);
                           }
-    // onPressed: () async{
-    // if ((_formkey.currentState!.validate())&& image != null) {
-    // _formkey.currentState!.save();
-    // // update(inameEditingController.text);
-    // await UserSimplePreferences.setName(namaEditingController.text);
-    // }
                           else if (image == null){
                             Fluttertoast.showToast(
                                 msg: "Mana Gambarnya?", toastLength: Toast.LENGTH_SHORT,
@@ -340,6 +344,7 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                       ),
                     ),
                   ),
+                  SizedBox(height: 10.0,),
                 ],
               ),
             ),
