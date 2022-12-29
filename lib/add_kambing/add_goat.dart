@@ -247,7 +247,7 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                       );
                       if (newdate == null) return;
                       setState(() => datenow = newdate);
-                      umur = '${DateTime.now().year-datenow.year} tahun ${DateTime.now().month-datenow.month}';
+                      umur = '${DateTime.now().year-datenow.year} tahun ${DateTime.now().month-datenow.month} bulan';
                     },
                     icon: Icon(Icons.cake_outlined, color: Colors.purple),
                     label: Text('${datenow.day}/${datenow.month}/${datenow.year}'),
@@ -256,7 +256,9 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                     ),
                   ),
                   ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() => umur = '${DateTime.now().year-datenow.year} tahun ${DateTime.now().month-datenow.month} bulan');
+                    },
                     icon: Icon(Icons.av_timer, color: Colors.purple),
                     label: Text('Umur: '+ umur),
                     style: ButtonStyle(
