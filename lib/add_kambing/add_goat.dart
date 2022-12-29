@@ -154,7 +154,7 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
         body: SingleChildScrollView(
           padding: EdgeInsets.all(15.0),
           child: Container(
-            padding: EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(30.0),
             child: Form(
               key: _formkey,
               child: Column(
@@ -294,7 +294,8 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                         filled: true,
                         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                     ),
-                  ), SizedBox(height: 20.0,),
+                  ),
+                  SizedBox(height: 20.0,),
                   Container(
                     child: Material(
                       elevation: 5,
@@ -308,6 +309,12 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                             _formkey.currentState!.save();
                             // update(inameEditingController.text);
                           }
+    // onPressed: () async{
+    // if ((_formkey.currentState!.validate())&& image != null) {
+    // _formkey.currentState!.save();
+    // // update(inameEditingController.text);
+    // await UserSimplePreferences.setName(namaEditingController.text);
+    // }
                           else if (image == null){
                             Fluttertoast.showToast(
                                 msg: "Mana Gambarnya?", toastLength: Toast.LENGTH_SHORT,

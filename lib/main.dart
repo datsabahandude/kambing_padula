@@ -3,6 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'add_kambing/kambing_list.dart';
 import 'penjantan.dart';
 
+// Future main() async{
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await UserSimplePreferences.init();
+//   runApp(const MyApp());
+// }
 void main() {
   runApp(const MyApp());
 }
