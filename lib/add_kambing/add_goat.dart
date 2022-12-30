@@ -28,19 +28,23 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
   File? image;
   // UploadTask? uploadTask;
   String? url;
-  String name = '';
-  late SharedPreferences prefs;
+  // String name = '';
+  // late SharedPreferences prefs;
 
   @override
   void initState() {
     super.initState();
-    init();
+  //   init();
+  // }
+  // Future init() async {
+  //   prefs = await SharedPreferences.getInstance();
+  //   String? name = prefs.getString('name');
+  //   if (name == null) return;
+  //   setState(() => this.name = name);
   }
-  Future init() async {
-    prefs = await SharedPreferences.getInstance();
-    String? name = prefs.getString('name');
-    if (name == null) return;
-    setState(() => this.name = name);
+  Future<void> setNotesData(noteValue) async{
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString('nameKey', noteValue);
   }
   Future _pickImageCamera() async{
     try{
@@ -316,8 +320,16 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                         onPressed: () async {
                           if ((_formkey.currentState!.validate())&& image != null) {
                             _formkey.currentState!.save();
-                          prefs.setString('name', 'ehe');
+                          // prefs.setString('name', 'ehe');
+                            setNotesData(namaEditingController.text);
                             // update(inameEditingController.text);
+                            Fluttertoast.showToast(
+                                msg: "Daftar Berjaya!", toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.green,
+                                textColor: Colors.black87,
+                                fontSize: 16.0);
                           }
                           else if (image == null){
                             Fluttertoast.showToast(
