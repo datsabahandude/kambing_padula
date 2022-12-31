@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'add_kambing/kambing_list.dart';
 import 'penjantan.dart';
 
@@ -8,7 +9,9 @@ import 'penjantan.dart';
 //   await UserSimplePreferences.init();
 //   runApp(const MyApp());
 // }
-void main() {
+void main() async{
+  await Hive.initFlutter();
+  var box = await Hive.openBox('mybox');
   runApp(const MyApp());
 }
 
