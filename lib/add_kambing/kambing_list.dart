@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kambing_padula/add_kambing/add_goat.dart';
 import 'package:kambing_padula/main.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class kambing_list extends StatefulWidget {
   const kambing_list({Key? key}) : super(key: key);
@@ -11,7 +13,20 @@ class kambing_list extends StatefulWidget {
 }
 
 class _kambing_listState extends State<kambing_list> {
+  // String? noteValue;
+  final _box = Hive.box('mybox');
   @override
+  void initState() {
+    super.initState();
+    // getNotes();
+  }
+  // void getNotes() async{
+  //   final SharedPreferences pref = await SharedPreferences.getInstance();
+  //   noteValue = pref.getString('nameKey');
+  //   setState(() {
+  //
+  //   });
+  // }
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints.expand(),
@@ -45,8 +60,13 @@ class _kambing_listState extends State<kambing_list> {
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+               Container(
                 padding: EdgeInsets.all(20),
+                child: _box.get(1) != null ? Text(_box.get(1)
+                ):Container(
+                  child: Text('theres no data'),
+                ),
+                // child: noteValue == null ? Text('No Data D:') : Text(noteValue!,),
                 // child: ListView.builder(
                 //     scrollDirection: Axis.vertical,
                 //     itemCount: _itemlist.length,

@@ -2,13 +2,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kambing_padula/add_kambing/kambing_list.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class add_goat extends StatefulWidget {
   const add_goat({Key? key}) : super(key: key);
-
   @override
   State<add_goat> createState() => _add_goatState();
 }
@@ -20,21 +21,35 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
   final _formkey = GlobalKey<FormState>();
   final jantina = ['Jantan','Betina','LGBTQ'];
   String? _selectedVal = '';
-  String date = '${DateTime.now()}';
+  DateTime datenow = DateTime.now();
+  String umur = '';
   final namaEditingController = new TextEditingController();
-  final lahirEditingController = new TextEditingController();
-  final umurEditingController = new TextEditingController();
-  final jantinaEditingController = new TextEditingController();
   final hargaEditingController = new TextEditingController();
   File? image;
   // UploadTask? uploadTask;
   String? url;
+  // String name = '';
+  // late SharedPreferences prefs;
+  final _box = Hive.box('mybox');
+  void writeData() {
+    _box.put(1, _selectedVal);
+  }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+  //   init();
+  // }
+  // Future init() async {
+  //   prefs = await SharedPreferences.getInstance();
+  //   String? name = prefs.getString('name');
+  //   if (name == null) return;
+  //   setState(() => this.name = name);
   }
+  // Future<void> setNotesData(noteValue) async{
+  //   final SharedPreferences pref = await SharedPreferences.getInstance();
+  //   pref.setString('nameKey', noteValue);
+  // }
   Future _pickImageCamera() async{
     try{
       final image = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -91,70 +106,13 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
               borderRadius: BorderRadius.circular(10),
             )
         ));
-    final lahirField = TextFormField(
-        autofocus: false,
-        controller: lahirEditingController,
-        keyboardType: TextInputType.emailAddress,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Bila lahir? (agak-agak ja)';
-          }
-        },
-        onSaved: (value){
-          lahirEditingController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            floatingLabelBehavior: FloatingLabelBehavior.never,
-            errorStyle: GoogleFonts.poppins(
-              textStyle: TextStyle(
-                fontSize: 12.0,
-                color: Colors.yellow,
-                fontWeight: FontWeight.w700,
-              ),),
-            fillColor: Colors.white,
-            filled: true,
-            prefixIcon: Icon(Icons.cake_outlined, color: Colors.purple),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "Tarikh lahir",
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            )
-        ));
-    final umurField = TextFormField(
-        autofocus: false,
-        controller: umurEditingController,
-        keyboardType: TextInputType.emailAddress,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Umur Kambing?';
-          }
-        },
-        onSaved: (value){
-          umurEditingController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            floatingLabelBehavior: FloatingLabelBehavior.never,
-            errorStyle: GoogleFonts.poppins(
-              textStyle: TextStyle(
-                fontSize: 12.0,
-                color: Colors.yellow,
-                fontWeight: FontWeight.w700,
-              ),),
-            fillColor: Colors.white,
-            filled: true,
-            prefixIcon: Icon(Icons.av_timer, color: Colors.purple),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "Umur",
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            )
-        ));
     final hargaField = TextFormField(
         autofocus: false,
         controller: hargaEditingController,
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))
+        ],
         validator: (value) {
           if (value!.isEmpty) {
             return 'Harga jual?';
@@ -213,7 +171,7 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
         body: SingleChildScrollView(
           padding: EdgeInsets.all(15.0),
           child: Container(
-            padding: EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(30.0),
             child: Form(
               key: _formkey,
               child: Column(
@@ -296,10 +254,37 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                     ],
                   ),
                   SizedBox(height: 50.0,),
-                  namaField, SizedBox(height: 20.0,),
-                  lahirField, SizedBox(height: 20.0,),
-                  umurField, SizedBox(height: 20.0,),
-                  hargaField, SizedBox(height: 20.0,),
+                  ElevatedButton.icon(
+                    onPressed: () async{
+                      DateTime? newdate = await showDatePicker(
+                        context: context,
+                        initialDate: datenow,
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2100),
+                      );
+                      if (newdate == null) return;
+                      setState(() => datenow = newdate);
+                      umur = '${DateTime.now().year-datenow.year} tahun ${DateTime.now().month-datenow.month} bulan';
+                    },
+                    icon: Icon(Icons.cake_outlined, color: Colors.purple),
+                    label: Text('${datenow.day}/${datenow.month}/${datenow.year}'),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.white)
+                    ),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      setState(() => umur = '${DateTime.now().year-datenow.year} tahun ${DateTime.now().month-datenow.month} bulan');
+                    },
+                    icon: Icon(Icons.av_timer, color: Colors.purple),
+                    label: Text('Umur: '+ umur),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.white)
+                    ),
+                  ),
+                  SizedBox(height: 10.0,),
+                  namaField, SizedBox(height: 15.0,),
+                  hargaField, SizedBox(height: 15.0,),
                   DropdownButtonFormField(
                     value: _selectedVal,
                     items: jantina.map(
@@ -326,7 +311,8 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                         filled: true,
                         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                     ),
-                  ), SizedBox(height: 20.0,),
+                  ),
+                  SizedBox(height: 20.0,),
                   Container(
                     child: Material(
                       elevation: 5,
@@ -335,10 +321,20 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                       child: MaterialButton(
                         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                         minWidth: MediaQuery.of(context).size.width * 0.6,
-                        onPressed: () {
+                        onPressed: writeData,
+                            /*() async {
                           if ((_formkey.currentState!.validate())&& image != null) {
                             _formkey.currentState!.save();
-                            // update(inameEditingController.text);
+                          // prefs.setString('name', 'ehe');
+                          //   setNotesData(namaEditingController.text);
+                            _box.put(1, [_selectedVal]);
+                            Fluttertoast.showToast(
+                                msg: "Daftar Berjaya!", toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.green,
+                                textColor: Colors.black87,
+                                fontSize: 16.0);
                           }
                           else if (image == null){
                             Fluttertoast.showToast(
@@ -349,7 +345,7 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                                 textColor: Colors.white,
                                 fontSize: 16.0);
                           }
-                        },
+                        },*/
                         child: Text(
                           "Daftar Kambing",
                           textAlign: TextAlign.center,
@@ -365,6 +361,7 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                       ),
                     ),
                   ),
+                  SizedBox(height: 10.0,),
                 ],
               ),
             ),
