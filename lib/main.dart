@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
+import 'package:kambing_padula/add_kambing/kambing.dart';
 import 'add_kambing/kambing_list.dart';
 import 'penjantan.dart';
 
-// Future main() async{
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await UserSimplePreferences.init();
-//   runApp(const MyApp());
-// }
-void main() async{
+Future main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   var box = await Hive.openBox('mybox');
+  Hive.registerAdapter(KambingAdapter());
+  await Hive.openBox<Kambing>('kambings');
   runApp(const MyApp());
 }
 

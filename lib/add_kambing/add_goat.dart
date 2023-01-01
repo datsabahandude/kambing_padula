@@ -2,11 +2,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:kambing_padula/add_kambing/boxes.dart';
+import 'package:kambing_padula/add_kambing/kambing.dart';
 import 'package:kambing_padula/add_kambing/kambing_list.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 
 class add_goat extends StatefulWidget {
   const add_goat({Key? key}) : super(key: key);
@@ -26,30 +26,13 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
   final namaEditingController = new TextEditingController();
   final hargaEditingController = new TextEditingController();
   File? image;
-  // UploadTask? uploadTask;
   String? url;
-  // String name = '';
-  // late SharedPreferences prefs;
-  final _box = Hive.box('mybox');
-  void writeData() {
-    _box.put(1, _selectedVal);
-  }
 
   @override
   void initState() {
     super.initState();
-  //   init();
-  // }
-  // Future init() async {
-  //   prefs = await SharedPreferences.getInstance();
-  //   String? name = prefs.getString('name');
-  //   if (name == null) return;
-  //   setState(() => this.name = name);
   }
-  // Future<void> setNotesData(noteValue) async{
-  //   final SharedPreferences pref = await SharedPreferences.getInstance();
-  //   pref.setString('nameKey', noteValue);
-  // }
+
   Future _pickImageCamera() async{
     try{
       final image = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -74,6 +57,7 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
     }
     Navigator.of(context).pop();
   }
+
   Widget build(BuildContext context) {
 
     final namaField = TextFormField(
@@ -321,13 +305,10 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                       child: MaterialButton(
                         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                         minWidth: MediaQuery.of(context).size.width * 0.6,
-                        onPressed: writeData,
-                            /*() async {
+                        onPressed:() async {
                           if ((_formkey.currentState!.validate())&& image != null) {
                             _formkey.currentState!.save();
-                          // prefs.setString('name', 'ehe');
-                          //   setNotesData(namaEditingController.text);
-                            _box.put(1, [_selectedVal]);
+                            addKambing();
                             Fluttertoast.showToast(
                                 msg: "Daftar Berjaya!", toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.CENTER,
@@ -345,7 +326,7 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
                                 textColor: Colors.white,
                                 fontSize: 16.0);
                           }
-                        },*/
+                        },
                         child: Text(
                           "Daftar Kambing",
                           textAlign: TextAlign.center,
@@ -369,5 +350,16 @@ class _add_goatState extends State<add_goat> with SingleTickerProviderStateMixin
         ),
       ),
     );
+  }
+  Future addKambing() async{
+    final kambing = Kambing()
+      ..image = image as String
+      ..date = datenow
+      ..age = umur
+      ..name = namaEditingController.text
+      ..price = hargaEditingController.text
+      ..gender = _selectedVal!;
+    final box = Boxes.getKambings();
+    box.add(kambing);
   }
 }
