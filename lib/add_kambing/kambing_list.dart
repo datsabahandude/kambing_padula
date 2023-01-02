@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:kambing_padula/add_kambing/KambingDialog.dart';
 import 'package:kambing_padula/add_kambing/add_goat.dart';
+import 'package:kambing_padula/add_kambing/kambing.dart';
 import 'package:kambing_padula/main.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 
 class kambing_list extends StatefulWidget {
   const kambing_list({Key? key}) : super(key: key);
@@ -12,84 +17,217 @@ class kambing_list extends StatefulWidget {
   State<kambing_list> createState() => _kambing_listState();
 }
 
-class _kambing_listState extends State<kambing_list> {
-  // String? noteValue;
-  final _box = Hive.box('mybox');
+class _kambing_listState extends State<kambing_list> with SingleTickerProviderStateMixin{
+  _kambing_listState(){
+    _selectedVal = jantina[0];
+  }
+  final jantina = ['Jantan','Betina','LGBTQ'];
+  String? _selectedVal = '';
+  DateTime datenow = DateTime.now();
+  final namaEditingController = new TextEditingController();
+  final hargaEditingController = new TextEditingController();
+  File? image;
+  String? url;
+  final List<Kambing> kambings = [];
   @override
   void initState() {
     super.initState();
-    // getNotes();
   }
-  // void getNotes() async{
-  //   final SharedPreferences pref = await SharedPreferences.getInstance();
-  //   noteValue = pref.getString('nameKey');
-  //   setState(() {
-  //
-  //   });
-  // }
-  Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints.expand(),
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("images/goated.jpg"),
-              fit: BoxFit.cover)
-      ),
-      child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            leading: new IconButton(
-              icon: Icon(
-                Icons.arrow_back_rounded,
-                color: Colors.white,
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> MyApp()));
-              },
+  void dispose(){
+    // Hive.box('kambing').close();
+    Hive.close();
+    super.dispose();
+  }
+  Future _pickImageCamera() async{
+    try{
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      if (image == null) return;
+      final imagetemp = File(image.path);
+      setState(() => this.image = imagetemp);
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+    Navigator.of(context).pop();
+  }
+  Future _pickImageGallery() async{
+    try{
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      final imagetemp = File(image.path);
+      //final imagepermanent = await saveImagePermanently(image.path);
+      setState(() => this.image = imagetemp);
+      //setState(() => this.image = imagepermanent);
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+    Navigator.of(context).pop();
+  }
+  Widget build(BuildContext context) => Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          leading: new IconButton(
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: Colors.white,
+              size: 30,
             ),
-            title: Text("Senarai Kambing",
-              style: GoogleFonts.poppins(
-                textStyle: TextStyle(
-                    color: Colors.lightGreenAccent,
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold),),),
-            actions: [],
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> MyApp()));
+            },
           ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-               Container(
-                padding: EdgeInsets.all(20),
-                child: _box.get(1) != null ? Text(_box.get(1)
-                ):Container(
-                  child: Text('theres no data'),
-                ),
-                // child: noteValue == null ? Text('No Data D:') : Text(noteValue!,),
-                // child: ListView.builder(
-                //     scrollDirection: Axis.vertical,
-                //     itemCount: _itemlist.length,
-                //     itemBuilder: (context, index) {
-                //       final item = _itemlist[index];
-                //       return ItemCard(_itemlist[index] as dumm);
-                //     } //=> build(context),
-                // ),
-              ),
-            ],
-          ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.lightGreenAccent,
-          onPressed: (){
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        add_goat()));
-          },
-          child: Icon(Icons.add),
+          title: Text("Senarai Kambing",
+            style: GoogleFonts.poppins(
+              textStyle: TextStyle(
+                  color: Colors.lightGreenAccent,
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold),),),
+          actions: [],
         ),
+        body: ValueListenableBuilder<Box<Kambing>>(
+          valueListenable: Boxes.getKambings().listenable(),
+          builder: (context, box, _) {
+            final kambings = box.values.toList().cast<Kambings>();
+            return buildContent(kambings);
+          },
+        ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.lightGreenAccent,
+        onPressed: () => showDialog(
+            context: context,
+            builder: (context) => KambingDialog(
+              onClickDone: addKambing,
+            )
+        ),
+        child: Icon(Icons.add),
+      ),
+    );
+  Widget buildContent(List<Kambing> kambings) {
+    if (kambings.isEmpty) {
+      return Center(
+        child: Text(
+          'gak ada kambingnya',
+          style: TextStyle(fontSize: 24),
+        ),
+      );
+    } else {
+      return Column(
+        children: [
+          SizedBox(height: 24,),
+          Text(
+            '1st',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.pink
+            ),
+          ),
+          SizedBox(height: 24,),
+          Expanded(
+              child: ListView.builder(
+                  padding: EdgeInsets.all(8),
+                  itemCount: kambings.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final kambing = kambings[index];
+                    return buildKambing(context, kambing);
+          }
+          )
+          )
+        ],
+      );
+    }
+  }
+  Widget buildKambing(
+      BuildContext context,
+      Kambing kambing,
+      ) {
+    // final date = DateFormat.yMMMd().format(kambing.date);
+    // edit all below
+    return Card(
+      color: Colors.white,
+      child: ExpansionTile(
+        tilePadding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+        title: Text(
+          kambing.name,
+          maxLines: 2,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        subtitle: Text('date'),
+        trailing: Text(
+          'amount',
+          style: TextStyle(
+              color: Colors.pink, fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        children: [
+          buildButtons(context, kambing),
+        ],
       ),
     );
   }
+
+  Widget buildButtons(BuildContext context, Kambing kambing) => Row(
+    children: [
+      Expanded(
+        child: TextButton.icon(
+          label: Text('Edit'),
+          icon: Icon(Icons.edit),
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => KambingDialog(
+                kambing: kambing,
+                // onClickedDone: (){},
+                onClickedDone: (name, amount, isExpense) {
+                  // return editKambing(kambing, name, amount, isExpense);
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
+      Expanded(
+        child: TextButton.icon(
+          label: Text('Delete'),
+          icon: Icon(Icons.delete),
+          onPressed: (){},
+          // onPressed: () => deleteTransaction(transaction),
+        ),
+      )
+    ],
+  );
+/*
+  Future addKambing() async{
+    final kambing = Kambing()
+      ..image = image as String
+      ..date = datenow
+      ..age = umur
+      ..name = namaEditingController.text
+      ..price = hargaEditingController.text
+      ..gender = _selectedVal!;
+    final box = Boxes.getKambings();
+    box.add(kambing);
+  }
+
+  void editTransaction(
+      Transaction transaction,
+      String name,
+      double amount,
+      bool isExpense,
+      ) {
+    transaction.name = name;
+    transaction.amount = amount;
+    transaction.isExpense = isExpense;
+
+    // final box = Boxes.getTransactions();
+    // box.put(transaction.key, transaction);
+
+    transaction.save();
+  }
+
+  void deleteTransaction(Transaction transaction) {
+    // final box = Boxes.getTransactions();
+    // box.delete(transaction.key);
+
+    transaction.delete();
+    //setState(() => transactions.remove(transaction));
+  }*/
 }
