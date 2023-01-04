@@ -64,66 +64,73 @@ class _kambing_listState extends State<kambing_list> with SingleTickerProviderSt
     }
     Navigator.of(context).pop();
   }
-  Widget build(BuildContext context) => Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          leading: new IconButton(
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.white,
-              size: 30,
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints.expand(),
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("images/goated.jpg"),
+              fit: BoxFit.cover)
+      ),
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            leading: new IconButton(
+              icon: Icon(
+                Icons.arrow_back_rounded,
+                color: Colors.white,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> MyApp()));
+              },
             ),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> MyApp()));
+            title: Text("Senarai Kambing",
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                    color: Colors.lightGreenAccent,
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold),),),
+            actions: [],
+          ),
+          body: ValueListenableBuilder<Box<Kambing>>(
+            valueListenable: Boxes.getKambings().listenable(),
+            builder: (context, box, _) {
+              final kambings = box.values.toList().cast<Kambing>();
+              return buildContent(kambings);
             },
           ),
-          title: Text("Senarai Kambing",
-            style: GoogleFonts.poppins(
-              textStyle: TextStyle(
-                  color: Colors.lightGreenAccent,
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold),),),
-          actions: [],
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.lightGreenAccent,
+          onPressed: () => showDialog(
+              context: context,
+              builder: (context) => KambingDialog(
+                onClickedDone: addKambing
+              )
+          ),
+          child: Icon(Icons.add),
         ),
-        body: ValueListenableBuilder<Box<Kambing>>(
-          valueListenable: Boxes.getKambings().listenable(),
-          builder: (context, box, _) {
-            final kambings = box.values.toList().cast<Kambing>();
-            return buildContent(kambings);
-          },
-        ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.lightGreenAccent,
-        onPressed: () => showDialog(
-            context: context,
-            builder: (context) => KambingDialog(
-              onClickedDone: addKambing
-            )
-        ),
-        child: Icon(Icons.add),
       ),
     );
+  }
   Widget buildContent(List<Kambing> kambings) {
     if (kambings.isEmpty) {
       return Center(
         child: Text(
-          'gak ada kambingnya',
-          style: TextStyle(fontSize: 24),
+          'gak ada kambingnya?',
+          style: GoogleFonts.poppins(
+          textStyle: TextStyle(
+              color: Colors.lightGreenAccent,
+              fontSize: 24,
+              fontWeight: FontWeight.bold
+          ),
+          )
         ),
       );
     } else {
       return Column(
         children: [
-          SizedBox(height: 24,),
-          Text(
-            '1st',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.pink
-            ),
-          ),
           SizedBox(height: 24,),
           Expanded(
               child: ListView.builder(
@@ -190,8 +197,7 @@ class _kambing_listState extends State<kambing_list> with SingleTickerProviderSt
         child: TextButton.icon(
           label: Text('Delete'),
           icon: Icon(Icons.delete),
-          onPressed: (){},
-          // onPressed: () => deleteTransaction(transaction),
+          onPressed: () => deleteKambing(kambing),
         ),
       )
     ],
@@ -224,12 +230,12 @@ class _kambing_listState extends State<kambing_list> with SingleTickerProviderSt
 
     transaction.save();
   }
-
-  void deleteTransaction(Transaction transaction) {
+*/
+  void deleteKambing(Kambing kambing) {
     // final box = Boxes.getTransactions();
     // box.delete(transaction.key);
 
-    transaction.delete();
+    kambing.delete();
     //setState(() => transactions.remove(transaction));
-  }*/
+  }
 }

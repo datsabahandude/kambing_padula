@@ -43,7 +43,7 @@ class _KambingDialogState extends State<KambingDialog> {
   @override
   Widget build(BuildContext context) {
     final isEditing = widget.kambing != null;
-    final title = isEditing ? 'Edit Transaction' : 'Add Transaction';
+    final title = isEditing ? 'Ubah Maklumat' : 'Tambah Kambing Baru';
     return AlertDialog(
       title: Text(title),
       content: Form(
@@ -109,12 +109,12 @@ class _KambingDialogState extends State<KambingDialog> {
   );
 
   Widget buildCancelButton(BuildContext context) => TextButton(
-    child: Text('Cancel'),
+    child: Text('Batal'),
     onPressed: () => Navigator.of(context).pop(),
   );
 
   Widget buildAddButton(BuildContext context, {required bool isEditing}) {
-    final text = isEditing ? 'Save' : 'Add';
+    final text = isEditing ? 'Simpan' : 'Tambah';
 
     return TextButton(
       child: Text(text),
