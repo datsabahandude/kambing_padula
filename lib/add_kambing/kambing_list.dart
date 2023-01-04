@@ -1,12 +1,13 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kambing_padula/add_kambing/KambingDialog.dart';
-import 'package:kambing_padula/add_kambing/add_goat.dart';
+// import 'package:kambing_padula/add_kambing/add_goat.dart';
+import 'package:kambing_padula/add_kambing/boxes.dart';
 import 'package:kambing_padula/add_kambing/kambing.dart';
 import 'package:kambing_padula/main.dart';
 
@@ -23,6 +24,7 @@ class _kambing_listState extends State<kambing_list> with SingleTickerProviderSt
   }
   final jantina = ['Jantan','Betina','LGBTQ'];
   String? _selectedVal = '';
+  String umur='';
   DateTime datenow = DateTime.now();
   final namaEditingController = new TextEditingController();
   final hargaEditingController = new TextEditingController();
@@ -87,7 +89,7 @@ class _kambing_listState extends State<kambing_list> with SingleTickerProviderSt
         body: ValueListenableBuilder<Box<Kambing>>(
           valueListenable: Boxes.getKambings().listenable(),
           builder: (context, box, _) {
-            final kambings = box.values.toList().cast<Kambings>();
+            final kambings = box.values.toList().cast<Kambing>();
             return buildContent(kambings);
           },
         ),
@@ -96,7 +98,7 @@ class _kambing_listState extends State<kambing_list> with SingleTickerProviderSt
         onPressed: () => showDialog(
             context: context,
             builder: (context) => KambingDialog(
-              onClickDone: addKambing,
+              onClickedDone: addKambing
             )
         ),
         child: Icon(Icons.add),
@@ -175,10 +177,10 @@ class _kambing_listState extends State<kambing_list> with SingleTickerProviderSt
             MaterialPageRoute(
               builder: (context) => KambingDialog(
                 kambing: kambing,
-                // onClickedDone: (){},
-                onClickedDone: (name, amount, isExpense) {
-                  // return editKambing(kambing, name, amount, isExpense);
-                },
+                onClickedDone: (image, datenow, umur, name, price, gender){},
+                // onClickedDone: (name, amount, isExpense) {
+                //   return editKambing(kambing, name, amount, isExpense);
+                // },
               ),
             ),
           ),
@@ -194,10 +196,10 @@ class _kambing_listState extends State<kambing_list> with SingleTickerProviderSt
       )
     ],
   );
-/*
-  Future addKambing() async{
+
+  Future addKambing(String image, DateTime datenow, String umur, String name, String price, String gender) async{
     final kambing = Kambing()
-      ..image = image as String
+      ..image = image
       ..date = datenow
       ..age = umur
       ..name = namaEditingController.text
@@ -206,7 +208,7 @@ class _kambing_listState extends State<kambing_list> with SingleTickerProviderSt
     final box = Boxes.getKambings();
     box.add(kambing);
   }
-
+/*
   void editTransaction(
       Transaction transaction,
       String name,

@@ -3,7 +3,7 @@ import 'kambing.dart';
 
 class KambingDialog extends StatefulWidget {
   final Kambing? kambing;
-  final Function(String name, double amount, bool isExpense) onClickedDone;
+  final Function(String image, DateTime datenow, String umur, String name, String price, String gender) onClickedDone;
   const KambingDialog({
     Key? key,
     this.kambing,
@@ -123,9 +123,14 @@ class _KambingDialogState extends State<KambingDialog> {
 
         if (isValid) {
           final name = nameController.text;
+          final image = nameController.text;
+          final datenow = DateTime.now();
+          final price = nameController.text;
+          final gender = nameController.text;
+          final umur = nameController.text;
           final amount = double.tryParse(amountController.text) ?? 0;
 
-          widget.onClickedDone(name, amount, isExpense);
+          widget.onClickedDone(image, datenow, umur, name, price, gender);
 
           Navigator.of(context).pop();
         }
