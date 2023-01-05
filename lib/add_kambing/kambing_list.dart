@@ -203,9 +203,9 @@ class _kambing_listState extends State<kambing_list> with SingleTickerProviderSt
     ],
   );
 
-  Future addKambing(String image, DateTime datenow, String umur, String name, String price, String gender) async{
+  Future addKambing(File image, DateTime datenow, String umur, String name, String price, String gender) async{
     final kambing = Kambing()
-      ..image = image
+      ..image = image!
       ..date = datenow
       ..age = umur
       ..name = namaEditingController.text
