@@ -32,9 +32,6 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
   final namaEditingController = new TextEditingController();
   final hargaEditingController = new TextEditingController();
   File? image;
-  String? url;
-  // final nameController = TextEditingController();
-  // final amountController = TextEditingController();
 
   bool isExpense = true;
 
@@ -42,23 +39,24 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
   void initState() {
     super.initState();
 
-    /*if (widget.kambing != null) {
+    if (widget.kambing != null) {
       final kambing = widget.kambing!;
 
-      nameController.text = kambing.name;
-      amountController.text = kambing.amount.toString();
-      isExpense = kambing.isExpense;
-    }*/
+      image = kambing.image;
+      datenow = kambing.date;
+      umur = kambing.age;
+      namaEditingController.text = kambing.name;
+      hargaEditingController.text = kambing.price;
+      _selectedVal = kambing.gender;
+    }
   }
   @override
   void dispose() {
     namaEditingController.dispose();
     hargaEditingController.dispose();
-    // nameController.dispose();
-    // amountController.dispose();
-
     super.dispose();
   }
+
   Future _pickImageCamera() async{
     try{
       final image = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -83,6 +81,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
     }
     Navigator.of(context).pop();
   }
+
   @override
   Widget build(BuildContext context) {
     final namaField = TextFormField(
@@ -153,23 +152,6 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
     return AlertDialog(
       title: Text(title, style: GoogleFonts.poppins(
         textStyle: TextStyle(),),),
-      /*content: Form(
-        key: formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              SizedBox(height: 8),
-              buildName(),
-              SizedBox(height: 8),
-              buildAmount(),
-              SizedBox(height: 8),
-              buildRadioButtons(),
-            ],
-          ),
-        ),
-      ),
-      */
       content: SingleChildScrollView(
         // padding: EdgeInsets.all(15.0),
         child: Container(
@@ -330,9 +312,14 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                       padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                       minWidth: MediaQuery.of(context).size.width * 0.6,
                       onPressed:() async {
-                        if ((_formKey.currentState!.validate())&& image != null) {
-                          _formKey.currentState!.save();
-                          widget.onClickedDone(image!, datenow, umur, namaEditingController.text, hargaEditingController.text, _selectedVal!);
+                        final isValid = _formKey.currentState!.validate();
+                        if (isValid && image != null) {
+                          final img = image!;
+                          final nama = namaEditingController.text;
+                          final harga = hargaEditingController.text;
+                          final g = _selectedVal!;
+                          widget.onClickedDone(img, datenow, umur, nama, harga, g);
+                          Navigator.of(context).pop();
                           Fluttertoast.showToast(
                               msg: "Daftar Berjaya!", toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.CENTER,
@@ -378,73 +365,4 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
       ],
     );
   }
-/*
-  Widget buildName() => TextFormField(
-    controller: namaEditingController,
-    decoration: InputDecoration(
-      border: OutlineInputBorder(),
-      hintText: 'Enter Name',
-    ),
-    validator: (name) =>
-    name != null && name.isEmpty ? 'Enter a name' : null,
-  );
-
-  Widget buildAmount() => TextFormField(
-    decoration: InputDecoration(
-      border: OutlineInputBorder(),
-      hintText: 'Enter Amount',
-    ),
-    keyboardType: TextInputType.number,
-    validator: (amount) => amount != null && double.tryParse(amount) == null
-        ? 'Enter a valid number'
-        : null,
-    controller: amountController,
-  );
-
-  Widget buildRadioButtons() => Column(
-    children: [
-      RadioListTile<bool>(
-        title: Text('Expense'),
-        value: true,
-        groupValue: isExpense,
-        onChanged: (value) => setState(() => isExpense = value!),
-      ),
-      RadioListTile<bool>(
-        title: Text('Income'),
-        value: false,
-        groupValue: isExpense,
-        onChanged: (value) => setState(() => isExpense = value!),
-      ),
-    ],
-  );
-
-  Widget buildCancelButton(BuildContext context) => TextButton(
-    child: Text('Batal'),
-    onPressed: () => Navigator.of(context).pop(),
-  );
-
-  Widget buildAddButton(BuildContext context, {required bool isEditing}) {
-    final text = isEditing ? 'Simpan' : 'Tambah';
-
-    return TextButton(
-      child: Text(text),
-      onPressed: () async {
-        final isValid = _formKey.currentState!.validate();
-
-        if (isValid) {
-          final name = namaEditingController;
-          final image = nameController.text;
-          final datenow = DateTime.now();
-          final price = nameController.text;
-          final gender = nameController.text;
-          final umur = nameController.text;
-          final amount = double.tryParse(amountController.text) ?? 0;
-
-          widget.onClickedDone(image, datenow, umur, name, price, gender);
-
-          Navigator.of(context).pop();
-        }
-      },
-    );
-  }*/
 }
