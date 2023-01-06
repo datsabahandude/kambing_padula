@@ -9,7 +9,6 @@ import 'penjantan.dart';
 Future main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  var box = await Hive.openBox('mybox');
   Hive.registerAdapter(KambingAdapter());
   await Hive.openBox<Kambing>('kambings');
   runApp(const MyApp());

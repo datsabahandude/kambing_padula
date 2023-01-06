@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kambing_padula/add_kambing/database_adapter.dart';
+import 'package:kambing_padula/add_kambing/hive_service.dart';
 import 'kambing.dart';
 
 class KambingDialog extends StatefulWidget {
@@ -24,6 +26,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
   _KambingDialogState(){
     _selectedVal = jantina[0];
   }
+  DatabaseAdapter adapter = HiveService();
   final _formKey = GlobalKey<FormState>();
   final jantina = ['Jantan','Betina','LGBTQ'];
   String? _selectedVal = '';
@@ -61,6 +64,8 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
     try{
       final image = await ImagePicker().pickImage(source: ImageSource.camera);
       if (image == null) return;
+      Uint8List imageBytes = await image.readAsBytes();
+      adapter.storeImage(imageBytes);
       final imagetemp = File(image.path);
       setState(() => this.image = imagetemp);
     } on PlatformException catch (e) {
@@ -72,14 +77,17 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
     try{
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
+      Uint8List imageBytes = await image.readAsBytes();
+      adapter.storeImage(imageBytes);
       final imagetemp = File(image.path);
-      //final imagepermanent = await saveImagePermanently(image.path);
       setState(() => this.image = imagetemp);
-      //setState(() => this.image = imagepermanent);
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
     Navigator.of(context).pop();
+  }
+  Future<List<Uint8List>?> _readImagesFromDatabase() async {
+    return adapter.getImages();
   }
 
   @override

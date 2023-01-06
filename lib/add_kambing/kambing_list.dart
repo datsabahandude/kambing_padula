@@ -122,26 +122,7 @@ class _kambing_listState extends State<kambing_list> {
     final nama = kambing.name;
     final harga = kambing.price;
     final gender = kambing.gender;
-    /*return Card(
-      shadowColor: Colors.deepPurple,
-      elevation: 8,
-      child: ExpansionTile(
-        tilePadding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-        title: Text(nama,
-          maxLines: 2,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        ),
-        subtitle: Text(age),
-        trailing: Text(
-          gender,
-          style: TextStyle(
-              color: Colors.pink, fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        children: [
-          buildButtons(context, kambing),
-        ],
-      ),
-    );*/
+
     return Container(
       constraints: BoxConstraints(
         maxHeight: double.infinity
