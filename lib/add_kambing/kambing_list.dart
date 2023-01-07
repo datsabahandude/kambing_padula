@@ -4,9 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
 import 'package:kambing_padula/add_kambing/KambingDialog.dart';
-// import 'package:kambing_padula/add_kambing/add_goat.dart';
 import 'package:kambing_padula/add_kambing/boxes.dart';
 import 'package:kambing_padula/add_kambing/kambing.dart';
 import 'package:kambing_padula/main.dart';
@@ -18,118 +17,91 @@ class kambing_list extends StatefulWidget {
   State<kambing_list> createState() => _kambing_listState();
 }
 
-class _kambing_listState extends State<kambing_list> with SingleTickerProviderStateMixin{
-  _kambing_listState(){
-    _selectedVal = jantina[0];
-  }
-  final jantina = ['Jantan','Betina','LGBTQ'];
-  String? _selectedVal = '';
-  String umur='';
-  DateTime datenow = DateTime.now();
-  final namaEditingController = new TextEditingController();
-  final hargaEditingController = new TextEditingController();
-  File? image;
-  String? url;
-  final List<Kambing> kambings = [];
+class _kambing_listState extends State<kambing_list> {
+
+  // final List<Kambing> kambings = [];
   @override
   void initState() {
     super.initState();
   }
+  @override
   void dispose(){
-    // Hive.box('kambing').close();
     Hive.close();
     super.dispose();
   }
-  Future _pickImageCamera() async{
-    try{
-      final image = await ImagePicker().pickImage(source: ImageSource.camera);
-      if (image == null) return;
-      final imagetemp = File(image.path);
-      setState(() => this.image = imagetemp);
-    } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
-    }
-    Navigator.of(context).pop();
-  }
-  Future _pickImageGallery() async{
-    try{
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imagetemp = File(image.path);
-      //final imagepermanent = await saveImagePermanently(image.path);
-      setState(() => this.image = imagetemp);
-      //setState(() => this.image = imagepermanent);
-    } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
-    }
-    Navigator.of(context).pop();
-  }
-  Widget build(BuildContext context) => Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          leading: new IconButton(
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.white,
-              size: 30,
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints.expand(),
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("images/goated.jpg"),
+              fit: BoxFit.cover)
+      ),
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            leading: new IconButton(
+              icon: Icon(
+                Icons.arrow_back_rounded,
+                color: Colors.white,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> MyApp()));
+              },
             ),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> MyApp()));
+            title: Text("Senarai Kambing",
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                    color: Colors.lightGreenAccent,
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold),),),
+            actions: [],
+          ),
+          body: ValueListenableBuilder<Box<Kambing>>(
+            valueListenable: Boxes.getKambings().listenable(),
+            builder: (context, box, _) {
+              final kambings = box.values.toList().cast<Kambing>();
+              return buildContent(kambings);
             },
           ),
-          title: Text("Senarai Kambing",
-            style: GoogleFonts.poppins(
-              textStyle: TextStyle(
-                  color: Colors.lightGreenAccent,
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold),),),
-          actions: [],
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.lightGreenAccent,
+          onPressed: () => showDialog(
+              context: context,
+              builder: (context) => KambingDialog(
+                onClickedDone: addKambing
+              )
+          ),
+          child: Icon(Icons.add),
         ),
-        body: ValueListenableBuilder<Box<Kambing>>(
-          valueListenable: Boxes.getKambings().listenable(),
-          builder: (context, box, _) {
-            final kambings = box.values.toList().cast<Kambing>();
-            return buildContent(kambings);
-          },
-        ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.lightGreenAccent,
-        onPressed: () => showDialog(
-            context: context,
-            builder: (context) => KambingDialog(
-              onClickedDone: addKambing
-            )
-        ),
-        child: Icon(Icons.add),
       ),
     );
+  }
   Widget buildContent(List<Kambing> kambings) {
     if (kambings.isEmpty) {
       return Center(
         child: Text(
-          'gak ada kambingnya',
-          style: TextStyle(fontSize: 24),
+          'gak ada kambingnya?',
+          style: GoogleFonts.poppins(
+          textStyle: TextStyle(
+              color: Colors.lightGreenAccent,
+              fontSize: 24,
+              fontWeight: FontWeight.bold
+          ),
+          )
         ),
       );
     } else {
       return Column(
         children: [
           SizedBox(height: 24,),
-          Text(
-            '1st',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.pink
-            ),
-          ),
-          SizedBox(height: 24,),
           Expanded(
               child: ListView.builder(
                   padding: EdgeInsets.all(8),
                   itemCount: kambings.length,
-                  itemBuilder: (BuildContext context, int index) {
+                  itemBuilder: (context, index) {
                     final kambing = kambings[index];
                     return buildKambing(context, kambing);
           }
@@ -139,30 +111,51 @@ class _kambing_listState extends State<kambing_list> with SingleTickerProviderSt
       );
     }
   }
+  // template UI
   Widget buildKambing(
       BuildContext context,
       Kambing kambing,
       ) {
-    // final date = DateFormat.yMMMd().format(kambing.date);
-    // edit all below
-    return Card(
-      color: Colors.white,
-      child: ExpansionTile(
-        tilePadding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-        title: Text(
-          kambing.name,
-          maxLines: 2,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+    final gambar = kambing.image;
+    final lahir = kambing.date;
+    final age = kambing.age;
+    final nama = kambing.name;
+    final harga = kambing.price;
+    final gender = kambing.gender;
+
+    return Container(
+      constraints: BoxConstraints(
+        maxHeight: double.infinity
+      ),
+      child: Card(
+        shadowColor: Colors.deepPurple,
+        elevation: 8,
+        child: ListTile(
+          tileColor: Colors.yellowAccent,
+          leading: ClipOval(child: Image.file(gambar),),
+          title: Text(nama, style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.deepPurple, fontSize: 18, fontWeight: FontWeight.bold),),),
+          subtitle: Column(
+            children: [
+              Row(
+                children: [
+                  Container(
+                    child: Text(harga),
+                  ),
+                  Spacer(),
+                  Container(
+                    child: Text(age),
+                  ),
+                ],
+              ),
+              Container(child: Text(gender),)
+            ],
+          ),
+          isThreeLine: true,
+          trailing: Icon(Icons.keyboard_arrow_right_rounded),
+          onTap: (){
+            Navigator.of(context).pop();
+          },
         ),
-        subtitle: Text('date'),
-        trailing: Text(
-          'amount',
-          style: TextStyle(
-              color: Colors.pink, fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        children: [
-          buildButtons(context, kambing),
-        ],
       ),
     );
   }
@@ -177,10 +170,9 @@ class _kambing_listState extends State<kambing_list> with SingleTickerProviderSt
             MaterialPageRoute(
               builder: (context) => KambingDialog(
                 kambing: kambing,
-                onClickedDone: (image, datenow, umur, name, price, gender){},
-                // onClickedDone: (name, amount, isExpense) {
-                //   return editKambing(kambing, name, amount, isExpense);
-                // },
+                onClickedDone: (image, datenow, umur, name, price, gender) {
+                  // editKambing(kambing, image, date, umur, nama, harga, jantina);
+                },
               ),
             ),
           ),
@@ -188,48 +180,46 @@ class _kambing_listState extends State<kambing_list> with SingleTickerProviderSt
       ),
       Expanded(
         child: TextButton.icon(
-          label: Text('Delete'),
+          label: Text('Padam'),
           icon: Icon(Icons.delete),
-          onPressed: (){},
-          // onPressed: () => deleteTransaction(transaction),
+          onPressed: () => deleteKambing(kambing),
         ),
       )
     ],
   );
 
-  Future addKambing(String image, DateTime datenow, String umur, String name, String price, String gender) async{
+  Future addKambing(File image, DateTime datenow, String umur, String name, String price, String gender) async{
     final kambing = Kambing()
       ..image = image
       ..date = datenow
       ..age = umur
-      ..name = namaEditingController.text
-      ..price = hargaEditingController.text
-      ..gender = _selectedVal!;
+      ..name = name
+      ..price = price
+      ..gender = gender;
     final box = Boxes.getKambings();
     box.add(kambing);
   }
-/*
-  void editTransaction(
-      Transaction transaction,
-      String name,
-      double amount,
-      bool isExpense,
+
+  void editKambing(
+      Kambing kambing,
+      File image,
+      DateTime date,
+      String umur,
+      String nama,
+      String harga,
+      String jantina
       ) {
-    transaction.name = name;
-    transaction.amount = amount;
-    transaction.isExpense = isExpense;
+    kambing.image = image;
+    kambing.date = date;
+    kambing.age = umur;
+    kambing.name = nama;
+    kambing.price = harga;
+    kambing.gender = jantina;
 
-    // final box = Boxes.getTransactions();
-    // box.put(transaction.key, transaction);
-
-    transaction.save();
+    kambing.save();
   }
 
-  void deleteTransaction(Transaction transaction) {
-    // final box = Boxes.getTransactions();
-    // box.delete(transaction.key);
-
-    transaction.delete();
-    //setState(() => transactions.remove(transaction));
-  }*/
+  void deleteKambing(Kambing kambing) {
+    kambing.delete();
+  }
 }

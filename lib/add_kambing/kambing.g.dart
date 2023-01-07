@@ -17,7 +17,7 @@ class KambingAdapter extends TypeAdapter<Kambing> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Kambing()
-      ..image = fields[0] as String
+      ..image = fields[0] as File
       ..date = fields[1] as DateTime
       ..age = fields[2] as String
       ..name = fields[3] as String
