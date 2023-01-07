@@ -1,10 +1,8 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-// import 'package:image_picker/image_picker.dart';
 import 'package:kambing_padula/add_kambing/KambingDialog.dart';
 import 'package:kambing_padula/add_kambing/boxes.dart';
 import 'package:kambing_padula/add_kambing/kambing.dart';
@@ -116,7 +114,7 @@ class _kambing_listState extends State<kambing_list> {
       BuildContext context,
       Kambing kambing,
       ) {
-    final gambar = kambing.image;
+    final gambar = kambing.imageBytes;
     final lahir = kambing.date;
     final age = kambing.age;
     final nama = kambing.name;
@@ -132,7 +130,7 @@ class _kambing_listState extends State<kambing_list> {
         elevation: 8,
         child: ListTile(
           tileColor: Colors.yellowAccent,
-          leading: ClipOval(child: Image.file(gambar),),
+          leading: Image.memory(gambar),
           title: Text(nama, style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.deepPurple, fontSize: 18, fontWeight: FontWeight.bold),),),
           subtitle: Column(
             children: [
@@ -153,8 +151,8 @@ class _kambing_listState extends State<kambing_list> {
           isThreeLine: true,
           trailing: Icon(Icons.keyboard_arrow_right_rounded),
           onTap: (){
-            Navigator.of(context).pop();
-          },
+            deleteKambing(kambing);
+            },
         ),
       ),
     );
@@ -188,9 +186,9 @@ class _kambing_listState extends State<kambing_list> {
     ],
   );
 
-  Future addKambing(File image, DateTime datenow, String umur, String name, String price, String gender) async{
+  Future addKambing(Uint8List imageBytes, DateTime datenow, String umur, String name, String price, String gender) async{
     final kambing = Kambing()
-      ..image = image
+      ..imageBytes = imageBytes
       ..date = datenow
       ..age = umur
       ..name = name
@@ -202,14 +200,14 @@ class _kambing_listState extends State<kambing_list> {
 
   void editKambing(
       Kambing kambing,
-      File image,
+      Uint8List image,
       DateTime date,
       String umur,
       String nama,
       String harga,
       String jantina
       ) {
-    kambing.image = image;
+    kambing.imageBytes = image;
     kambing.date = date;
     kambing.age = umur;
     kambing.name = nama;

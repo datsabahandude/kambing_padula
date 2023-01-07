@@ -1,17 +1,14 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:kambing_padula/add_kambing/database_adapter.dart';
-import 'package:kambing_padula/add_kambing/hive_service.dart';
 import 'kambing.dart';
 
 class KambingDialog extends StatefulWidget {
   final Kambing? kambing;
-  final Function(File image, DateTime datenow, String umur, String name, String price, String gender) onClickedDone;
+  final Function(Uint8List imageBytes, DateTime datenow, String umur, String name, String price, String gender) onClickedDone;
   const KambingDialog({
     Key? key,
     this.kambing,
@@ -26,7 +23,6 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
   _KambingDialogState(){
     _selectedVal = jantina[0];
   }
-  DatabaseAdapter adapter = HiveService();
   final _formKey = GlobalKey<FormState>();
   final jantina = ['Jantan','Betina','LGBTQ'];
   String? _selectedVal = '';
@@ -35,6 +31,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
   final namaEditingController = new TextEditingController();
   final hargaEditingController = new TextEditingController();
   File? image;
+  Uint8List? imageBytes;
 
   bool isExpense = true;
 
@@ -45,7 +42,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
     if (widget.kambing != null) {
       final kambing = widget.kambing!;
 
-      image = kambing.image;
+      imageBytes = kambing.imageBytes;
       datenow = kambing.date;
       umur = kambing.age;
       namaEditingController.text = kambing.name;
@@ -62,12 +59,14 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
 
   Future _pickImageCamera() async{
     try{
-      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
       if (image == null) return;
       Uint8List imageBytes = await image.readAsBytes();
-      adapter.storeImage(imageBytes);
       final imagetemp = File(image.path);
-      setState(() => this.image = imagetemp);
+      setState(() {
+        this.image = imagetemp;
+        this.imageBytes = imageBytes;
+      });
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
@@ -75,19 +74,18 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
   }
   Future _pickImageGallery() async{
     try{
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
       Uint8List imageBytes = await image.readAsBytes();
-      adapter.storeImage(imageBytes);
       final imagetemp = File(image.path);
-      setState(() => this.image = imagetemp);
+      setState(() {
+        this.image = imagetemp;
+        this.imageBytes = imageBytes;
+      });
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
     Navigator.of(context).pop();
-  }
-  Future<List<Uint8List>?> _readImagesFromDatabase() async {
-    return adapter.getImages();
   }
 
   @override
@@ -322,7 +320,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                       onPressed:() async {
                         final isValid = _formKey.currentState!.validate();
                         if (isValid && image != null) {
-                          final img = image!;
+                          final img = imageBytes!;
                           final nama = namaEditingController.text;
                           final harga = hargaEditingController.text;
                           final g = _selectedVal!;

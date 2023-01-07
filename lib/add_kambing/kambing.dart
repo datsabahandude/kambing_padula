@@ -1,10 +1,10 @@
-import 'dart:io';
+import 'dart:typed_data';
 import 'package:hive/hive.dart';
 part 'kambing.g.dart';
 @HiveType(typeId: 0)
 class Kambing extends HiveObject{
   @HiveField(0)
-  late File image;
+  late Uint8List imageBytes;
   @HiveField(1)
   late DateTime date;
   @HiveField(2)
