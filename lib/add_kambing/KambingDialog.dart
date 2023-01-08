@@ -267,7 +267,14 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                     }
                     //FTT
                     else if ((DateTime.now().day<newdate.day)&&(DateTime.now().month>=newdate.month)&&DateTime.now().year>=newdate.year){
-                      if(DateTime.now().month==newdate.month){
+                      if(DateTime.now().year==newdate.year&&DateTime.now().day<newdate.day){
+                        return;
+                      }
+                      if (DateTime.now().month==newdate.month&&DateTime.now().year!=newdate.year) {
+                        yy = '${DateTime.now().year-newdate.year-1}';
+                        mm = '${DateTime.now().month-newdate.month+11}';
+                      }
+                      else if(DateTime.now().month==newdate.month){
                         yy = '${DateTime.now().year-newdate.year}';
                         mm = '${DateTime.now().month-newdate.month}';
                       }
