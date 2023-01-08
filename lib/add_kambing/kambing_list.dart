@@ -17,7 +17,6 @@ class kambing_list extends StatefulWidget {
 
 class _kambing_listState extends State<kambing_list> {
 
-  // final List<Kambing> kambings = [];
   @override
   void initState() {
     super.initState();
@@ -145,7 +144,7 @@ class _kambing_listState extends State<kambing_list> {
                   ),
                 ],
               ),
-              Container(child: Text(gender),)
+              Container(child: Text('${lahir.day}/${lahir.month}/${lahir.year}'),)
             ],
           ),
           isThreeLine: true,

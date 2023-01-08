@@ -33,8 +33,6 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
   File? image;
   Uint8List? imageBytes;
 
-  bool isExpense = true;
-
   @override
   void initState() {
     super.initState();
@@ -108,7 +106,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
             errorStyle: GoogleFonts.poppins(
               textStyle: TextStyle(
                 fontSize: 12.0,
-                color: Colors.yellow,
+                color: Colors.deepPurpleAccent,
                 fontWeight: FontWeight.w700,
               ),),
             fillColor: Colors.white,
@@ -141,7 +139,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
             errorStyle: GoogleFonts.poppins(
               textStyle: TextStyle(
                 fontSize: 12.0,
-                color: Colors.yellow,
+                color: Colors.deepPurpleAccent,
                 fontWeight: FontWeight.w700,
               ),),
             fillColor: Colors.white,
@@ -246,15 +244,51 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                 SizedBox(height: 10.0,),
                 ElevatedButton.icon(
                   onPressed: () async{
+                    String mm = '', yy = '';
                     DateTime? newdate = await showDatePicker(
                       context: context,
                       initialDate: datenow,
-                      firstDate: DateTime(2000),
+                      firstDate: DateTime(1950),
                       lastDate: DateTime(2100),
                     );
                     if (newdate == null) return;
+                    // TTT
+                    if ((DateTime.now().day>=newdate.day)&&(DateTime.now().month>=newdate.month)&&DateTime.now().year>=newdate.year){
+                      yy = '${DateTime.now().year-newdate.year}';
+                      mm = '${DateTime.now().month-newdate.month}';
+                    }
+                    //TFT
+                    else if ((DateTime.now().day>=newdate.day)&&(DateTime.now().month<newdate.month)&&DateTime.now().year>=newdate.year){
+                      if(DateTime.now().year == newdate.year){
+                        return;
+                      }
+                      yy = '${DateTime.now().year-newdate.year-1}';
+                      mm = '${DateTime.now().month-newdate.month+12}';
+                    }
+                    //FTT
+                    else if ((DateTime.now().day<newdate.day)&&(DateTime.now().month>=newdate.month)&&DateTime.now().year>=newdate.year){
+                      if(DateTime.now().month==newdate.month){
+                        yy = '${DateTime.now().year-newdate.year}';
+                        mm = '${DateTime.now().month-newdate.month}';
+                      }
+                      else {
+                        yy = '${DateTime.now().year-newdate.year}';
+                        mm = '${DateTime.now().month-newdate.month-1}';
+                      }
+                    }
+                    //FFT
+                    else if ((DateTime.now().day<newdate.day)&&(DateTime.now().month<newdate.month)&&DateTime.now().year>=newdate.year){
+                      if(DateTime.now().year == newdate.year){
+                        return;
+                      }
+                      yy = '${DateTime.now().year-newdate.year-1}';
+                      mm = '${DateTime.now().month-newdate.month+11}';
+                    }
+                    else {
+                      return;
+                    }
                     setState(() => datenow = newdate);
-                    umur = '${DateTime.now().year-datenow.year} tahun ${DateTime.now().month-datenow.month} bulan';
+                    umur = yy+': Tahun '+mm+': Bulan';
                   },
                   icon: Icon(Icons.cake_outlined, color: Colors.purple),
                   label: Text('${datenow.day}/${datenow.month}/${datenow.year}',
@@ -265,9 +299,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                   ),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {
-                    setState(() => umur = '${DateTime.now().year-datenow.year} tahun ${DateTime.now().month-datenow.month} bulan');
-                  },
+                  onPressed: () {},
                   icon: Icon(Icons.av_timer, color: Colors.purple),
                   label: Text('Umur: '+ umur,
                     style: GoogleFonts.poppins(
