@@ -125,12 +125,40 @@ class _kambing_listState extends State<kambing_list> {
         maxHeight: double.infinity
       ),
       child: Card(
-        shadowColor: Colors.deepPurple,
+        shadowColor: Colors.deepPurpleAccent,
         elevation: 8,
-        child: ListTile(
+        clipBehavior: Clip.antiAlias,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(24)
+    ),
+    child: Column(
+      children: [
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Ink.image(
+              image: MemoryImage(gambar),
+              child: InkWell(
+                onTap: (){},
+              ),
+              height: 240,
+              fit: BoxFit.cover,
+            ),
+          ],
+        ),
+        ListTile(
           tileColor: Colors.yellowAccent,
-          leading: Image.memory(gambar),
-          title: Text(nama, style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.deepPurple, fontSize: 18, fontWeight: FontWeight.bold),),),
+          title: Center(child:
+          Text(
+            nama,
+            style: GoogleFonts.poppins(
+            textStyle: TextStyle(
+                color: Colors.deepPurple,
+                fontSize: 18,
+                fontWeight: FontWeight.bold),
+          ),
+          ),
+          ),
           subtitle: Column(
             children: [
               Row(
@@ -148,11 +176,27 @@ class _kambing_listState extends State<kambing_list> {
             ],
           ),
           isThreeLine: true,
-          trailing: Icon(Icons.keyboard_arrow_right_rounded),
+          // trailing: Icon(Icons.keyboard_arrow_right_rounded),
           onTap: (){
-            deleteKambing(kambing);
-            },
+            // deleteKambing(kambing);
+          },
         ),
+        ButtonBar(
+          alignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              child: Text(''),
+              onPressed: (){}
+            ),
+            Spacer(),
+            TextButton(
+              child: Text(''),
+              onPressed: (){}
+            ),
+          ],
+        )
+      ],
+    ),
       ),
     );
   }
