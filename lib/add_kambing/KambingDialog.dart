@@ -295,7 +295,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                       return;
                     }
                     setState(() => datenow = newdate);
-                    umur = yy+': Tahun '+mm+': Bulan';
+                    umur = yy+' Tahun '+mm+' Bulan';
                   },
                   icon: Icon(Icons.cake_outlined, color: Colors.purple),
                   label: Text('${datenow.day}/${datenow.month}/${datenow.year}',
