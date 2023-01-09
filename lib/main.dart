@@ -83,7 +83,39 @@ class _MyHomePageState extends State<MyHomePage> {
                   print("Hello World");
                 },
                 child: Text("Hello World")),
-            Spacer(),
+            //Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: 144,
+                  width: 144,
+                  child: Column(
+                    children: <Widget>[
+                      Image.asset("images/goat_icon.png",
+                          width: 64.0),
+                      ElevatedButton(onPressed: (){
+                        print("Kambing Gebu");
+                      }, child: Text("Makan Kambing"),),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 20,),
+                SizedBox(
+                  height: 144,
+                  width: 144,
+                  child: Column(
+                    children: <Widget>[
+                      Image.asset("images/puteh.png",
+                          width: 64.0),
+                      ElevatedButton(onPressed: (){
+                        print("Kambing Gebu");
+                      }, child: Text("Kamnbing gebu"),),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Center(
