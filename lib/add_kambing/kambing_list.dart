@@ -119,6 +119,7 @@ class _kambing_listState extends State<kambing_list> {
     final nama = kambing.name;
     final harga = kambing.price;
     final gender = kambing.gender;
+    TextStyle txtstl = GoogleFonts.poppins(textStyle: TextStyle(color: Colors.deepPurple, fontSize: 14, fontWeight: FontWeight.bold),);
 
     return Container(
       constraints: BoxConstraints(
@@ -147,7 +148,7 @@ class _kambing_listState extends State<kambing_list> {
           ],
         ),
         ListTile(
-          tileColor: Colors.yellowAccent,
+          tileColor: Colors.white,
           title: Center(child:
           Text(
             nama,
@@ -164,15 +165,19 @@ class _kambing_listState extends State<kambing_list> {
               Row(
                 children: [
                   Container(
-                    child: Text(harga),
+                    child: Text('RM'+harga, style: GoogleFonts.poppins(textStyle: txtstl),),
                   ),
                   Spacer(),
                   Container(
-                    child: Text(age),
+                    child: Text(age, style: GoogleFonts.poppins(textStyle: txtstl),),
+                  ),
+                  Spacer(),
+                  Container(
+                    child: Text(gender, style: GoogleFonts.poppins(textStyle: txtstl),),
                   ),
                 ],
               ),
-              Container(child: Text('${lahir.day}/${lahir.month}/${lahir.year}'),)
+              Container(child: Text('${lahir.day}/${lahir.month}/${lahir.year}', style: GoogleFonts.poppins(textStyle: txtstl),),)
             ],
           ),
           isThreeLine: true,
@@ -181,20 +186,6 @@ class _kambing_listState extends State<kambing_list> {
             // deleteKambing(kambing);
           },
         ),
-        /*ButtonBar(
-          alignment: MainAxisAlignment.center,
-          children: [
-            TextButton(
-              child: Text(''),
-              onPressed: (){}
-            ),
-            Spacer(),
-            TextButton(
-              child: Text(''),
-              onPressed: (){}
-            ),
-          ],
-        )*/
       ],
     ),
       ),

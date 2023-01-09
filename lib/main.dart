@@ -78,44 +78,94 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ElevatedButton(
-                onPressed: () {
-                  print("Hello World");
-                },
-                child: Text("Hello World")),
-            //Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: 144,
-                  width: 144,
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset("images/goat_icon.png",
-                          width: 64.0),
-                      ElevatedButton(onPressed: (){
-                        print("Kambing Gebu");
-                      }, child: Text("Makan Kambing"),),
-                    ],
-                  ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Center(
+                child: Wrap(
+                  spacing: 15.0,
+                  runSpacing: 15.0,
+                  children: [
+                    Row(
+                      children: [
+                        MaterialButton(
+                          onPressed: () {},
+                          child: SizedBox(
+                            width: 140.0,
+                            height: 150.0,
+                            child: Card(
+                              color: Colors.transparent,
+                              elevation: 2.0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0)),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Image.asset("images/goat_icon.png",
+                                          width: 64.0),
+                                      SizedBox(height: 10.0),
+                                      Text("Makan",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.0,
+                                          )),
+                                      SizedBox(height: 4.0),
+                                      Text("Kambing",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.0,
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        MaterialButton(
+                          onPressed: () {},
+                          child: SizedBox(
+                            width: 140.0,
+                            height: 150.0,
+                            child: Card(
+                              color: Colors.transparent,
+                              elevation: 2.0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0)),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Image.asset("images/puteh.png",
+                                          width: 64.0),
+                                      SizedBox(height: 10.0),
+                                      Text("Kambing",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.0,
+                                          )),
+                                      SizedBox(height: 4.0),
+                                      Text("Gebu",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.0,
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                SizedBox(width: 20,),
-                SizedBox(
-                  height: 144,
-                  width: 144,
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset("images/puteh.png",
-                          width: 64.0),
-                      ElevatedButton(onPressed: (){
-                        print("Kambing Gebu");
-                      }, child: Text("Kamnbing gebu"),),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
+            Spacer(),
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Center(
