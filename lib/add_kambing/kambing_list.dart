@@ -181,7 +181,7 @@ class _kambing_listState extends State<kambing_list> {
             // deleteKambing(kambing);
           },
         ),
-        ButtonBar(
+        /*ButtonBar(
           alignment: MainAxisAlignment.center,
           children: [
             TextButton(
@@ -194,7 +194,7 @@ class _kambing_listState extends State<kambing_list> {
               onPressed: (){}
             ),
           ],
-        )
+        )*/
       ],
     ),
       ),
