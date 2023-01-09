@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kambing_padula/main.dart';
 
@@ -10,18 +11,16 @@ class penjantan extends StatefulWidget {
 }
 
 class _penjantanState extends State<penjantan> {
+  bool isPressed = true;
+  bool isDarkMode = false;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints.expand(),
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("images/goated.jpg"),
-              fit: BoxFit.cover)
-      ),
-      child: Scaffold(
+    final bgcolor = isDarkMode ? const Color(0xFF2E3239) : const Color(0xFFE7ECEF);
+    Offset distance = isPressed ? Offset(10, 10) : Offset(28, 28);
+    double blur = isPressed ? 5 : 30;
+    return Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.transparent,
+          backgroundColor: bgcolor,
           appBar: AppBar(
             leading: new IconButton(
               icon: Icon(
@@ -41,11 +40,35 @@ class _penjantanState extends State<penjantan> {
                     fontWeight: FontWeight.bold),),),
             actions: [],
           ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [],
-          )
-      ),
-    );
+          body: Center(
+                child: GestureDetector(
+                  onTap: () => setState(() =>
+                    isPressed = !isPressed
+                  ),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 100),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: bgcolor,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: blur,
+                          offset: -distance,
+                          color: isDarkMode ? Color(0xFF35393F) : Colors.white,
+                          inset: isPressed,
+                        ),
+                        BoxShadow(
+                          blurRadius: blur,
+                          offset: distance,
+                          color: isDarkMode ? Color(0xFF23262A) : Colors.grey,
+                          inset: isPressed,
+                        )
+                      ]
+                  ),
+                  child: SizedBox(height: 200, width: 200,),
+              ),
+                ),
+          ),
+      );
   }
 }

@@ -1,10 +1,8 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-// import 'package:image_picker/image_picker.dart';
 import 'package:kambing_padula/add_kambing/KambingDialog.dart';
 import 'package:kambing_padula/add_kambing/boxes.dart';
 import 'package:kambing_padula/add_kambing/kambing.dart';
@@ -19,7 +17,6 @@ class kambing_list extends StatefulWidget {
 
 class _kambing_listState extends State<kambing_list> {
 
-  // final List<Kambing> kambings = [];
   @override
   void initState() {
     super.initState();
@@ -116,7 +113,7 @@ class _kambing_listState extends State<kambing_list> {
       BuildContext context,
       Kambing kambing,
       ) {
-    final gambar = kambing.image;
+    final gambar = kambing.imageBytes;
     final lahir = kambing.date;
     final age = kambing.age;
     final nama = kambing.name;
@@ -128,12 +125,40 @@ class _kambing_listState extends State<kambing_list> {
         maxHeight: double.infinity
       ),
       child: Card(
-        shadowColor: Colors.deepPurple,
+        shadowColor: Colors.deepPurpleAccent,
         elevation: 8,
-        child: ListTile(
+        clipBehavior: Clip.antiAlias,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(24)
+    ),
+    child: Column(
+      children: [
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Ink.image(
+              image: MemoryImage(gambar),
+              child: InkWell(
+                onTap: (){},
+              ),
+              height: 240,
+              fit: BoxFit.cover,
+            ),
+          ],
+        ),
+        ListTile(
           tileColor: Colors.yellowAccent,
-          leading: ClipOval(child: Image.file(gambar),),
-          title: Text(nama, style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.deepPurple, fontSize: 18, fontWeight: FontWeight.bold),),),
+          title: Center(child:
+          Text(
+            nama,
+            style: GoogleFonts.poppins(
+            textStyle: TextStyle(
+                color: Colors.deepPurple,
+                fontSize: 18,
+                fontWeight: FontWeight.bold),
+          ),
+          ),
+          ),
           subtitle: Column(
             children: [
               Row(
@@ -147,15 +172,31 @@ class _kambing_listState extends State<kambing_list> {
                   ),
                 ],
               ),
-              Container(child: Text(gender),)
+              Container(child: Text('${lahir.day}/${lahir.month}/${lahir.year}'),)
             ],
           ),
           isThreeLine: true,
-          trailing: Icon(Icons.keyboard_arrow_right_rounded),
+          // trailing: Icon(Icons.keyboard_arrow_right_rounded),
           onTap: (){
-            Navigator.of(context).pop();
+            // deleteKambing(kambing);
           },
         ),
+        /*ButtonBar(
+          alignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              child: Text(''),
+              onPressed: (){}
+            ),
+            Spacer(),
+            TextButton(
+              child: Text(''),
+              onPressed: (){}
+            ),
+          ],
+        )*/
+      ],
+    ),
       ),
     );
   }
@@ -188,9 +229,9 @@ class _kambing_listState extends State<kambing_list> {
     ],
   );
 
-  Future addKambing(File image, DateTime datenow, String umur, String name, String price, String gender) async{
+  Future addKambing(Uint8List imageBytes, DateTime datenow, String umur, String name, String price, String gender) async{
     final kambing = Kambing()
-      ..image = image
+      ..imageBytes = imageBytes
       ..date = datenow
       ..age = umur
       ..name = name
@@ -202,14 +243,14 @@ class _kambing_listState extends State<kambing_list> {
 
   void editKambing(
       Kambing kambing,
-      File image,
+      Uint8List image,
       DateTime date,
       String umur,
       String nama,
       String harga,
       String jantina
       ) {
-    kambing.image = image;
+    kambing.imageBytes = image;
     kambing.date = date;
     kambing.age = umur;
     kambing.name = nama;

@@ -1,17 +1,14 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:kambing_padula/add_kambing/database_adapter.dart';
-import 'package:kambing_padula/add_kambing/hive_service.dart';
 import 'kambing.dart';
 
 class KambingDialog extends StatefulWidget {
   final Kambing? kambing;
-  final Function(File image, DateTime datenow, String umur, String name, String price, String gender) onClickedDone;
+  final Function(Uint8List imageBytes, DateTime datenow, String umur, String name, String price, String gender) onClickedDone;
   const KambingDialog({
     Key? key,
     this.kambing,
@@ -26,7 +23,6 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
   _KambingDialogState(){
     _selectedVal = jantina[0];
   }
-  DatabaseAdapter adapter = HiveService();
   final _formKey = GlobalKey<FormState>();
   final jantina = ['Jantan','Betina','LGBTQ'];
   String? _selectedVal = '';
@@ -35,8 +31,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
   final namaEditingController = new TextEditingController();
   final hargaEditingController = new TextEditingController();
   File? image;
-
-  bool isExpense = true;
+  Uint8List? imageBytes;
 
   @override
   void initState() {
@@ -45,7 +40,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
     if (widget.kambing != null) {
       final kambing = widget.kambing!;
 
-      image = kambing.image;
+      imageBytes = kambing.imageBytes;
       datenow = kambing.date;
       umur = kambing.age;
       namaEditingController.text = kambing.name;
@@ -62,12 +57,14 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
 
   Future _pickImageCamera() async{
     try{
-      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
       if (image == null) return;
       Uint8List imageBytes = await image.readAsBytes();
-      adapter.storeImage(imageBytes);
       final imagetemp = File(image.path);
-      setState(() => this.image = imagetemp);
+      setState(() {
+        this.image = imagetemp;
+        this.imageBytes = imageBytes;
+      });
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
@@ -75,19 +72,18 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
   }
   Future _pickImageGallery() async{
     try{
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
       Uint8List imageBytes = await image.readAsBytes();
-      adapter.storeImage(imageBytes);
       final imagetemp = File(image.path);
-      setState(() => this.image = imagetemp);
+      setState(() {
+        this.image = imagetemp;
+        this.imageBytes = imageBytes;
+      });
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
     Navigator.of(context).pop();
-  }
-  Future<List<Uint8List>?> _readImagesFromDatabase() async {
-    return adapter.getImages();
   }
 
   @override
@@ -110,7 +106,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
             errorStyle: GoogleFonts.poppins(
               textStyle: TextStyle(
                 fontSize: 12.0,
-                color: Colors.yellow,
+                color: Colors.deepPurpleAccent,
                 fontWeight: FontWeight.w700,
               ),),
             fillColor: Colors.white,
@@ -143,7 +139,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
             errorStyle: GoogleFonts.poppins(
               textStyle: TextStyle(
                 fontSize: 12.0,
-                color: Colors.yellow,
+                color: Colors.deepPurpleAccent,
                 fontWeight: FontWeight.w700,
               ),),
             fillColor: Colors.white,
@@ -248,15 +244,58 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                 SizedBox(height: 10.0,),
                 ElevatedButton.icon(
                   onPressed: () async{
+                    String mm = '', yy = '';
                     DateTime? newdate = await showDatePicker(
                       context: context,
                       initialDate: datenow,
-                      firstDate: DateTime(2000),
+                      firstDate: DateTime(1950),
                       lastDate: DateTime(2100),
                     );
                     if (newdate == null) return;
+                    // TTT
+                    if ((DateTime.now().day>=newdate.day)&&(DateTime.now().month>=newdate.month)&&DateTime.now().year>=newdate.year){
+                      yy = '${DateTime.now().year-newdate.year}';
+                      mm = '${DateTime.now().month-newdate.month}';
+                    }
+                    //TFT
+                    else if ((DateTime.now().day>=newdate.day)&&(DateTime.now().month<newdate.month)&&DateTime.now().year>=newdate.year){
+                      if(DateTime.now().year == newdate.year){
+                        return;
+                      }
+                      yy = '${DateTime.now().year-newdate.year-1}';
+                      mm = '${DateTime.now().month-newdate.month+12}';
+                    }
+                    //FTT
+                    else if ((DateTime.now().day<newdate.day)&&(DateTime.now().month>=newdate.month)&&DateTime.now().year>=newdate.year){
+                      if(DateTime.now().year==newdate.year&&DateTime.now().day<newdate.day){
+                        return;
+                      }
+                      if (DateTime.now().month==newdate.month&&DateTime.now().year!=newdate.year) {
+                        yy = '${DateTime.now().year-newdate.year-1}';
+                        mm = '${DateTime.now().month-newdate.month+11}';
+                      }
+                      else if(DateTime.now().month==newdate.month){
+                        yy = '${DateTime.now().year-newdate.year}';
+                        mm = '${DateTime.now().month-newdate.month}';
+                      }
+                      else {
+                        yy = '${DateTime.now().year-newdate.year}';
+                        mm = '${DateTime.now().month-newdate.month-1}';
+                      }
+                    }
+                    //FFT
+                    else if ((DateTime.now().day<newdate.day)&&(DateTime.now().month<newdate.month)&&DateTime.now().year>=newdate.year){
+                      if(DateTime.now().year == newdate.year){
+                        return;
+                      }
+                      yy = '${DateTime.now().year-newdate.year-1}';
+                      mm = '${DateTime.now().month-newdate.month+11}';
+                    }
+                    else {
+                      return;
+                    }
                     setState(() => datenow = newdate);
-                    umur = '${DateTime.now().year-datenow.year} tahun ${DateTime.now().month-datenow.month} bulan';
+                    umur = yy+': Tahun '+mm+': Bulan';
                   },
                   icon: Icon(Icons.cake_outlined, color: Colors.purple),
                   label: Text('${datenow.day}/${datenow.month}/${datenow.year}',
@@ -267,9 +306,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                   ),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {
-                    setState(() => umur = '${DateTime.now().year-datenow.year} tahun ${DateTime.now().month-datenow.month} bulan');
-                  },
+                  onPressed: () {},
                   icon: Icon(Icons.av_timer, color: Colors.purple),
                   label: Text('Umur: '+ umur,
                     style: GoogleFonts.poppins(
@@ -322,7 +359,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                       onPressed:() async {
                         final isValid = _formKey.currentState!.validate();
                         if (isValid && image != null) {
-                          final img = image!;
+                          final img = imageBytes!;
                           final nama = namaEditingController.text;
                           final harga = hargaEditingController.text;
                           final g = _selectedVal!;
