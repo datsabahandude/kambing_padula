@@ -8,11 +8,9 @@ class Kambing extends HiveObject{
   @HiveField(1)
   late DateTime date;
   @HiveField(2)
-  late String age;
-  @HiveField(3)
   late String name;
-  @HiveField(4)
+  @HiveField(3)
   late String price;
-  @HiveField(5)
+  @HiveField(4)
   late String gender;
 }

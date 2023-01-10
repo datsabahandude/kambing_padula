@@ -35,7 +35,7 @@ class _penjantanState extends State<penjantan> {
             title: Text("Kambing Penjantan",
               style: GoogleFonts.poppins(
                 textStyle: TextStyle(
-                    color: Colors.lightGreenAccent,
+                    // color: Colors.lightGreenAccent,
                     fontSize: 26,
                     fontWeight: FontWeight.bold),),),
             actions: [],
