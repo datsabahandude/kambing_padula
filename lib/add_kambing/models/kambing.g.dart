@@ -19,27 +19,24 @@ class KambingAdapter extends TypeAdapter<Kambing> {
     return Kambing()
       ..imageBytes = fields[0] as Uint8List
       ..date = fields[1] as DateTime
-      ..age = fields[2] as String
-      ..name = fields[3] as String
-      ..price = fields[4] as String
-      ..gender = fields[5] as String;
+      ..name = fields[2] as String
+      ..price = fields[3] as String
+      ..gender = fields[4] as String;
   }
 
   @override
   void write(BinaryWriter writer, Kambing obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.imageBytes)
       ..writeByte(1)
       ..write(obj.date)
       ..writeByte(2)
-      ..write(obj.age)
-      ..writeByte(3)
       ..write(obj.name)
-      ..writeByte(4)
+      ..writeByte(3)
       ..write(obj.price)
-      ..writeByte(5)
+      ..writeByte(4)
       ..write(obj.gender);
   }
 
