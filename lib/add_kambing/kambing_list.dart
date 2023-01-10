@@ -27,21 +27,14 @@ class _kambing_listState extends State<kambing_list> {
     super.dispose();
   }
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints.expand(),
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("images/goated.jpg"),
-              fit: BoxFit.cover)
-      ),
-      child: Scaffold(
+    return Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.transparent,
+          // backgroundColor: Colors.transparent,
           appBar: AppBar(
             leading: new IconButton(
               icon: Icon(
                 Icons.arrow_back_rounded,
-                color: Colors.white,
+                // color: Colors.white,
                 size: 30,
               ),
               onPressed: () {
@@ -51,7 +44,7 @@ class _kambing_listState extends State<kambing_list> {
             title: Text("Senarai Kambing",
               style: GoogleFonts.poppins(
                 textStyle: TextStyle(
-                    color: Colors.lightGreenAccent,
+                    // color: Colors.white,
                     fontSize: 26,
                     fontWeight: FontWeight.bold),),),
             actions: [],
@@ -64,17 +57,16 @@ class _kambing_listState extends State<kambing_list> {
             },
           ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.lightGreenAccent,
+          backgroundColor: Colors.deepPurple,
           onPressed: () => showDialog(
               context: context,
               builder: (context) => KambingDialog(
                 onClickedDone: addKambing
               )
           ),
-          child: Icon(Icons.add),
+          child: Icon(Icons.add,),
         ),
-      ),
-    );
+      );
   }
   Widget buildContent(List<Kambing> kambings) {
     if (kambings.isEmpty) {
@@ -118,7 +110,6 @@ class _kambing_listState extends State<kambing_list> {
     final nama = kambing.name;
     final harga = kambing.price;
     final gender = kambing.gender;
-    TextStyle txtstl = GoogleFonts.poppins(textStyle: TextStyle(color: Colors.deepPurple, fontSize: 18, fontWeight: FontWeight.bold),);
     String mm = '', yy = '';
     if ((DateTime.now().day>=lahir.day)&&(DateTime.now().month>=lahir.month)&&DateTime.now().year>=lahir.year){
       yy = '${DateTime.now().year-lahir.year}';
@@ -185,7 +176,7 @@ class _kambing_listState extends State<kambing_list> {
                 ),
                 SizedBox(width: 20,),
                 AspectRatio(
-                  aspectRatio: 4/3,
+                  aspectRatio: 5/3,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,27 +186,39 @@ class _kambing_listState extends State<kambing_list> {
                           gender == 'Jantan' ? Icon(Icons.male_outlined, color: Colors.blue,) :
                           gender == 'Betina' ? Icon(Icons.female_outlined, color: Colors.pink,) :
                           Icon(Icons.transgender_outlined),
-                          Text(nama, style: GoogleFonts.poppins(textStyle: txtstl),),
+                          SizedBox(width: 10,),
+                          Text(nama, style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.deepPurple, fontSize: 18, fontWeight: FontWeight.bold),),),
                         ],
                       ),
-                      Text(age, style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w300,
-                          )),),
-                      Text('${lahir.day}/${lahir.month}/${lahir.year}', style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w300,
-                          )),),
+                      Row(
+                        children: [
+                          Icon(Icons.av_timer, color: Colors.purple),
+                          SizedBox(width: 10,),
+                          Text(age, style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w300,
+                              )),),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Icon(Icons.cake_outlined, color: Colors.purple),
+                          SizedBox(width: 10,),
+                          Text('${lahir.day}/${lahir.month}/${lahir.year}', style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w300,
+                              )),),
+                        ],
+                      ),
                       // SizedBox(height: 20,),
-                      Text('RM'+harga, style: GoogleFonts.poppins(textStyle: txtstl),),
+                      Text('RM  '+harga, style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.green, fontSize: 18, fontWeight: FontWeight.bold),),),
                     ],
                   ),
                 ),
-                IconButton(onPressed: () {}, icon: Icon(Icons.keyboard_arrow_right_rounded))
               ],
             ),
           ),

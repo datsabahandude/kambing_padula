@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.grey,
+        primarySwatch: Colors.deepPurple,
       ),
       home: const MyHomePage(title: 'Kambing Pak Dola'),
     );
@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
             widget.title,
             style: GoogleFonts.poppins(
               textStyle: TextStyle(
-                  color: Colors.lightGreenAccent,
+                  // color: Colors.white,
                   fontSize: 26,
                   fontWeight: FontWeight.bold),
             ),
