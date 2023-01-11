@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kambing_padula/add_kambing/KambingDialog.dart';
 import 'package:kambing_padula/add_kambing/boxes.dart';
@@ -83,7 +82,7 @@ class _kambing_listState extends State<kambing_list> {
           'gak ada kambingnya?',
           style: GoogleFonts.poppins(
           textStyle: TextStyle(
-              color: Colors.lightGreenAccent,
+              color: Colors.deepPurple,
               fontSize: 24,
               fontWeight: FontWeight.bold
           ),
