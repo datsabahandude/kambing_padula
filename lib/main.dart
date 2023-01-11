@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive/hive.dart';
-import 'package:kambing_padula/add_kambing/kambing.dart';
+import 'package:kambing_padula/add_kambing/models/kambing.dart';
 import 'add_kambing/kambing_list.dart';
 import 'penjantan.dart';
 
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.grey,
+        primarySwatch: Colors.deepPurple,
       ),
       home: const MyHomePage(title: 'Kambing Pak Dola'),
     );
@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
             widget.title,
             style: GoogleFonts.poppins(
               textStyle: TextStyle(
-                  color: Colors.lightGreenAccent,
+                  // color: Colors.white,
                   fontSize: 26,
                   fontWeight: FontWeight.bold),
             ),

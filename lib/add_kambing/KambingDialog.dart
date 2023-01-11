@@ -4,11 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'kambing.dart';
+import 'models/kambing.dart';
 
 class KambingDialog extends StatefulWidget {
   final Kambing? kambing;
-  final Function(Uint8List imageBytes, DateTime datenow, String umur, String name, String price, String gender) onClickedDone;
+  final Function(Uint8List imageBytes, DateTime datenow, String name, String price, String gender) onClickedDone;
   const KambingDialog({
     Key? key,
     this.kambing,
@@ -42,7 +42,6 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
 
       imageBytes = kambing.imageBytes;
       datenow = kambing.date;
-      umur = kambing.age;
       namaEditingController.text = kambing.name;
       hargaEditingController.text = kambing.price;
       _selectedVal = kambing.gender;
@@ -114,6 +113,11 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
             prefixIcon: Icon(Icons.paste_outlined, color: Colors.purple),
             contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
             hintText: "Nama Kambing",
+            hintStyle: GoogleFonts.poppins(
+              textStyle: TextStyle(
+                fontSize: 16.0,
+                color: Colors.deepPurple,
+              ),),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
             )
@@ -147,6 +151,11 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
             prefixIcon: Icon(Icons.monetization_on_outlined, color: Colors.purple),
             contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
             hintText: "Harga Kambing",
+            hintStyle: GoogleFonts.poppins(
+              textStyle: TextStyle(
+                fontSize: 16.0,
+                color: Colors.deepPurple,
+              ),),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
             )
@@ -300,7 +309,9 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                   icon: Icon(Icons.cake_outlined, color: Colors.purple),
                   label: Text('${datenow.day}/${datenow.month}/${datenow.year}',
                     style: GoogleFonts.poppins(
-                    textStyle: TextStyle(),),),
+                    textStyle: TextStyle(
+                      color: Colors.deepPurple,
+                      fontSize: 16,),),),
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.white)
                   ),
@@ -311,6 +322,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                   label: Text('Umur: '+ umur,
                     style: GoogleFonts.poppins(
                     textStyle: TextStyle(
+                      color: Colors.deepPurple,
                       fontSize: 14
                     ),),),
                   style: ButtonStyle(
@@ -323,17 +335,20 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                 DropdownButtonFormField(
                   value: _selectedVal,
                   items: jantina.map(
-                          (e)=> DropdownMenuItem(child: Text(e), value: e)
+                          (e)=> DropdownMenuItem(child: Text(
+                            e,
+                            style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                color: Colors.deepPurple,
+                                fontSize: 16,
+                              fontWeight: FontWeight.bold
+                            ),),), value: e)
                   ).toList(),
                   onChanged: (val){
                     setState(() {
                       _selectedVal = val as String;
                     });
                   },
-                  icon: const Icon(
-                    Icons.arrow_drop_down_circle,
-                    color: Colors.white,
-                  ),
                   dropdownColor: Colors.white,
                   decoration: InputDecoration(
                     prefixIcon: _selectedVal == 'Jantan' ? Icon(Icons.male_outlined, color: Colors.blue,)
@@ -363,7 +378,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                           final nama = namaEditingController.text;
                           final harga = hargaEditingController.text;
                           final g = _selectedVal!;
-                          widget.onClickedDone(img, datenow, umur, nama, harga, g);
+                          widget.onClickedDone(img, datenow, nama, harga, g);
                           Navigator.of(context).pop();
                           Fluttertoast.showToast(
                               msg: "Daftar Berjaya!", toastLength: Toast.LENGTH_SHORT,
