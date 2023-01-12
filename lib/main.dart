@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Kambing Pak Dola',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   fontWeight: FontWeight.bold),
             ),
           ),
-         /*actions: [
+          /*actions: [
             MaterialButton(
               onPressed: () {
                 Navigator.push(context,
@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
+            /*Padding(
               padding: const EdgeInsets.all(12.0),
               child: Center(
                 child: Wrap(
@@ -164,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
-            ),
+            ),*/
             Spacer(),
             Padding(
               padding: const EdgeInsets.all(12.0),
@@ -216,6 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                         ),
+                        Spacer(),
                         MaterialButton(
                           onPressed: () {
                             Navigator.push(
