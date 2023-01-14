@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:hive/hive.dart';
 import 'package:kambing_padula/add_kambing/models/kambing.dart';
 import 'add_kambing/kambing_list.dart';
 import 'penjantan.dart';
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: const MyHomePage(title: 'Kambing Pak Dola'),
+      home: const kambing_list(),
     );
   }
 }
