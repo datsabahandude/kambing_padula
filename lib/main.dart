@@ -31,9 +31,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -52,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: Text(
-            widget.title,
+            'Kambing Pak Dola',
             style: GoogleFonts.poppins(
               textStyle: TextStyle(
                   // color: Colors.white,

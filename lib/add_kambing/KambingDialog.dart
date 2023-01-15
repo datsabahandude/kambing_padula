@@ -59,7 +59,7 @@ class _KambingDialogState extends State<KambingDialog>
 
   Future _pickImageCamera() async {
     try {
-      XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
       if (image == null) return;
       Uint8List imageBytes = await image.readAsBytes();
       final imagetemp = File(image.path);
@@ -83,7 +83,7 @@ class _KambingDialogState extends State<KambingDialog>
 
   Future _pickImageGallery() async {
     try {
-      XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
       Uint8List imageBytes = await image.readAsBytes();
       final imagetemp = File(image.path);

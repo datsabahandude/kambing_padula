@@ -15,76 +15,80 @@ class kambing_list extends StatefulWidget {
 }
 
 class _kambing_listState extends State<kambing_list> {
-
   @override
   void initState() {
     super.initState();
   }
+
   @override
-  void dispose(){
+  void dispose() {
     Hive.close();
     super.dispose();
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
-          resizeToAvoidBottomInset: false,
-          // backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            leading: new IconButton(
-              icon: Icon(
-                Icons.arrow_back_rounded,
-                // color: Colors.white,
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> MyApp()));
-              },
-            ),
-            title: Text("Senarai Kambing",
-              style: GoogleFonts.poppins(
-                textStyle: TextStyle(
-                    // color: Colors.white,
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold),),),
-            actions: [],
+      resizeToAvoidBottomInset: false,
+      // backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        leading: new IconButton(
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            // color: Colors.white,
+            size: 30,
           ),
-          body: ValueListenableBuilder<Box<Kambing>>(
-            valueListenable: Boxes.getKambings().listenable(),
-            builder: (context, box, _) {
-              final kambings = box.values.toList().cast<Kambing>();
-              return buildContent(kambings);
-            },
-          ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.deepPurple,
-          onPressed: () => showDialog(
-              context: context,
-              builder: (context) => KambingDialog(
-                onClickedDone: addKambing
-              )
-          ),
-          child: Icon(Icons.add,),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => MyHomePage()));
+          },
         ),
-      );
+        title: Text(
+          "Senarai Kambing",
+          style: GoogleFonts.poppins(
+            textStyle: TextStyle(
+                // color: Colors.white,
+                fontSize: 26,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+        actions: [],
+      ),
+      body: ValueListenableBuilder<Box<Kambing>>(
+        valueListenable: Boxes.getKambings().listenable(),
+        builder: (context, box, _) {
+          final kambings = box.values.toList().cast<Kambing>();
+          return buildContent(kambings);
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurple,
+        onPressed: () => showDialog(
+            context: context,
+            builder: (context) => KambingDialog(onClickedDone: addKambing)),
+        child: Icon(
+          Icons.add,
+        ),
+      ),
+    );
   }
+
   Widget buildContent(List<Kambing> kambings) {
     if (kambings.isEmpty) {
       return Center(
-        child: Text(
-          'gak ada kambingnya?',
-          style: GoogleFonts.poppins(
-          textStyle: TextStyle(
-              color: Colors.deepPurple,
-              fontSize: 24,
-              fontWeight: FontWeight.bold
-          ),
-          )
-        ),
+        child: Text('gak ada kambingnya?',
+            style: GoogleFonts.poppins(
+              textStyle: TextStyle(
+                  color: Colors.deepPurple,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold),
+            )),
       );
     } else {
       return Column(
         children: [
-          SizedBox(height: 24,),
+          SizedBox(
+            height: 24,
+          ),
           Expanded(
               child: ListView.builder(
                   padding: EdgeInsets.all(8),
@@ -92,79 +96,79 @@ class _kambing_listState extends State<kambing_list> {
                   itemBuilder: (context, index) {
                     final kambing = kambings[index];
                     return buildKambing(context, kambing);
-          }
-          )
-          )
+                  }))
         ],
       );
     }
   }
+
   // template UI
   Widget buildKambing(
-      BuildContext context,
-      Kambing kambing,
-      ) {
+    BuildContext context,
+    Kambing kambing,
+  ) {
     final gambar = kambing.imageBytes;
     final lahir = kambing.date;
     final nama = kambing.name;
     final harga = kambing.price;
     final gender = kambing.gender;
     String mm = '', yy = '';
-    if ((DateTime.now().day>=lahir.day)&&(DateTime.now().month>=lahir.month)&&DateTime.now().year>=lahir.year){
-      yy = '${DateTime.now().year-lahir.year}';
-      mm = '${DateTime.now().month-lahir.month}';
+    if ((DateTime.now().day >= lahir.day) &&
+        (DateTime.now().month >= lahir.month) &&
+        DateTime.now().year >= lahir.year) {
+      yy = '${DateTime.now().year - lahir.year}';
+      mm = '${DateTime.now().month - lahir.month}';
     }
     //TFT
-    else if ((DateTime.now().day>=lahir.day)&&(DateTime.now().month<lahir.month)&&DateTime.now().year>=lahir.year){
-      if(DateTime.now().year == lahir.year){
-      }
-      yy = '${DateTime.now().year-lahir.year-1}';
-      mm = '${DateTime.now().month-lahir.month+12}';
+    else if ((DateTime.now().day >= lahir.day) &&
+        (DateTime.now().month < lahir.month) &&
+        DateTime.now().year >= lahir.year) {
+      if (DateTime.now().year == lahir.year) {}
+      yy = '${DateTime.now().year - lahir.year - 1}';
+      mm = '${DateTime.now().month - lahir.month + 12}';
     }
     //FTT
-    else if ((DateTime.now().day<lahir.day)&&(DateTime.now().month>=lahir.month)&&DateTime.now().year>=lahir.year){
-      if(DateTime.now().year==lahir.year&&DateTime.now().day<lahir.day){
-      }
-      if (DateTime.now().month==lahir.month&&DateTime.now().year!=lahir.year) {
-        yy = '${DateTime.now().year-lahir.year-1}';
-        mm = '${DateTime.now().month-lahir.month+11}';
-      }
-      else if(DateTime.now().month==lahir.month){
-        yy = '${DateTime.now().year-lahir.year}';
-        mm = '${DateTime.now().month-lahir.month}';
-      }
-      else {
-        yy = '${DateTime.now().year-lahir.year}';
-        mm = '${DateTime.now().month-lahir.month-1}';
+    else if ((DateTime.now().day < lahir.day) &&
+        (DateTime.now().month >= lahir.month) &&
+        DateTime.now().year >= lahir.year) {
+      if (DateTime.now().year == lahir.year &&
+          DateTime.now().day < lahir.day) {}
+      if (DateTime.now().month == lahir.month &&
+          DateTime.now().year != lahir.year) {
+        yy = '${DateTime.now().year - lahir.year - 1}';
+        mm = '${DateTime.now().month - lahir.month + 11}';
+      } else if (DateTime.now().month == lahir.month) {
+        yy = '${DateTime.now().year - lahir.year}';
+        mm = '${DateTime.now().month - lahir.month}';
+      } else {
+        yy = '${DateTime.now().year - lahir.year}';
+        mm = '${DateTime.now().month - lahir.month - 1}';
       }
     }
     //FFT
-    else if ((DateTime.now().day<lahir.day)&&(DateTime.now().month<lahir.month)&&DateTime.now().year>=lahir.year){
-      if(DateTime.now().year == lahir.year){
-      }
-      yy = '${DateTime.now().year-lahir.year-1}';
-      mm = '${DateTime.now().month-lahir.month+11}';
-    }
-    else {
-    }
-    final age = yy+' Tahun '+mm+' Bulan';
+    else if ((DateTime.now().day < lahir.day) &&
+        (DateTime.now().month < lahir.month) &&
+        DateTime.now().year >= lahir.year) {
+      if (DateTime.now().year == lahir.year) {}
+      yy = '${DateTime.now().year - lahir.year - 1}';
+      mm = '${DateTime.now().month - lahir.month + 11}';
+    } else {}
+    final age = yy + ' Tahun ' + mm + ' Bulan';
     return Card(
       shadowColor: Colors.deepPurpleAccent,
       elevation: 8,
       clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24)
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       child: Container(
         padding: EdgeInsets.all(6),
         // margin: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 40),
         child: AspectRatio(
-          aspectRatio: 3/1,
+          aspectRatio: 3 / 1,
           child: Container(
             child: Row(
               children: [
                 AspectRatio(
-                  aspectRatio: 1/1,
+                  aspectRatio: 1 / 1,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image.memory(
@@ -173,48 +177,86 @@ class _kambing_listState extends State<kambing_list> {
                     ),
                   ),
                 ),
-                SizedBox(width: 20,),
+                SizedBox(
+                  width: 20,
+                ),
                 AspectRatio(
-                  aspectRatio: 5/3,
+                  aspectRatio: 5 / 3,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          gender == 'Jantan' ? Icon(Icons.male_outlined, color: Colors.blue,) :
-                          gender == 'Betina' ? Icon(Icons.female_outlined, color: Colors.pink,) :
-                          Icon(Icons.transgender_outlined),
-                          SizedBox(width: 10,),
-                          Text(nama, style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.deepPurple, fontSize: 18, fontWeight: FontWeight.bold),),),
+                          gender == 'Jantan'
+                              ? Icon(
+                                  Icons.male_outlined,
+                                  color: Colors.blue,
+                                )
+                              : gender == 'Betina'
+                                  ? Icon(
+                                      Icons.female_outlined,
+                                      color: Colors.pink,
+                                    )
+                                  : Icon(Icons.transgender_outlined),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            nama,
+                            style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                  color: Colors.deepPurple,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ],
                       ),
                       Row(
                         children: [
                           Icon(Icons.av_timer, color: Colors.purple),
-                          SizedBox(width: 10,),
-                          Text(age, style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w300,
-                              )),),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            age,
+                            style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w300,
+                            )),
+                          ),
                         ],
                       ),
                       Row(
                         children: [
                           Icon(Icons.cake_outlined, color: Colors.purple),
-                          SizedBox(width: 10,),
-                          Text('${lahir.day}/${lahir.month}/${lahir.year}', style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w300,
-                              )),),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            '${lahir.day}/${lahir.month}/${lahir.year}',
+                            style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w300,
+                            )),
+                          ),
                         ],
                       ),
                       // SizedBox(height: 20,),
-                      Text('RM  '+harga, style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.green, fontSize: 18, fontWeight: FontWeight.bold),),),
+                      Text(
+                        'RM  ' + harga,
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              color: Colors.green,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -296,34 +338,35 @@ class _kambing_listState extends State<kambing_list> {
   }
 
   Widget buildButtons(BuildContext context, Kambing kambing) => Row(
-    children: [
-      Expanded(
-        child: TextButton.icon(
-          label: Text('Edit'),
-          icon: Icon(Icons.edit),
-          onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => KambingDialog(
-                kambing: kambing,
-                onClickedDone: (image, datenow, name, price, gender) {
-                  // editKambing(kambing, image, date, nama, harga, jantina);
-                },
+        children: [
+          Expanded(
+            child: TextButton.icon(
+              label: Text('Edit'),
+              icon: Icon(Icons.edit),
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => KambingDialog(
+                    kambing: kambing,
+                    onClickedDone: (image, datenow, name, price, gender) {
+                      // editKambing(kambing, image, date, nama, harga, jantina);
+                    },
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
-      Expanded(
-        child: TextButton.icon(
-          label: Text('Padam'),
-          icon: Icon(Icons.delete),
-          onPressed: () => deleteKambing(kambing),
-        ),
-      )
-    ],
-  );
+          Expanded(
+            child: TextButton.icon(
+              label: Text('Padam'),
+              icon: Icon(Icons.delete),
+              onPressed: () => deleteKambing(kambing),
+            ),
+          )
+        ],
+      );
 
-  Future addKambing(Uint8List imageBytes, DateTime datenow, String name, String price, String gender) async{
+  Future addKambing(Uint8List imageBytes, DateTime datenow, String name,
+      String price, String gender) async {
     final kambing = Kambing()
       ..imageBytes = imageBytes
       ..date = datenow
@@ -334,14 +377,8 @@ class _kambing_listState extends State<kambing_list> {
     box.add(kambing);
   }
 
-  void editKambing(
-      Kambing kambing,
-      Uint8List image,
-      DateTime date,
-      String nama,
-      String harga,
-      String jantina
-      ) {
+  void editKambing(Kambing kambing, Uint8List image, DateTime date, String nama,
+      String harga, String jantina) {
     kambing.imageBytes = image;
     kambing.date = date;
     kambing.name = nama;
