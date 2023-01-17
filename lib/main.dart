@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:hive/hive.dart';
 import 'package:kambing_padula/add_kambing/models/kambing.dart';
 import 'add_kambing/kambing_list.dart';
 import 'penjantan.dart';
@@ -21,20 +20,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Kambing Pak Dola',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: const MyHomePage(title: 'Kambing Pak Dola'),
+      home: const kambing_list(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -53,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: Text(
-            widget.title,
+            'Kambing Pak Dola',
             style: GoogleFonts.poppins(
               textStyle: TextStyle(
                   // color: Colors.white,
@@ -61,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   fontWeight: FontWeight.bold),
             ),
           ),
-         /*actions: [
+          /*actions: [
             MaterialButton(
               onPressed: () {
                 Navigator.push(context,
@@ -78,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
+            /*Padding(
               padding: const EdgeInsets.all(12.0),
               child: Center(
                 child: Wrap(
@@ -164,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
-            ),
+            ),*/
             Spacer(),
             Padding(
               padding: const EdgeInsets.all(12.0),
@@ -216,6 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                         ),
+                        Spacer(),
                         MaterialButton(
                           onPressed: () {
                             Navigator.push(

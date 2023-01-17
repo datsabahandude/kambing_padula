@@ -8,7 +8,8 @@ import 'models/kambing.dart';
 
 class KambingDialog extends StatefulWidget {
   final Kambing? kambing;
-  final Function(Uint8List imageBytes, DateTime datenow, String name, String price, String gender) onClickedDone;
+  final Function(Uint8List imageBytes, DateTime datenow, String name,
+      String price, String gender) onClickedDone;
   const KambingDialog({
     Key? key,
     this.kambing,
@@ -19,12 +20,13 @@ class KambingDialog extends StatefulWidget {
   State<KambingDialog> createState() => _KambingDialogState();
 }
 
-class _KambingDialogState extends State<KambingDialog> with SingleTickerProviderStateMixin{
-  _KambingDialogState(){
+class _KambingDialogState extends State<KambingDialog>
+    with SingleTickerProviderStateMixin {
+  _KambingDialogState() {
     _selectedVal = jantina[0];
   }
   final _formKey = GlobalKey<FormState>();
-  final jantina = ['Jantan','Betina','LGBTQ'];
+  final jantina = ['Jantan', 'Betina', 'LGBTQ'];
   String? _selectedVal = '';
   DateTime datenow = DateTime.now();
   String umur = '';
@@ -47,6 +49,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
       _selectedVal = kambing.gender;
     }
   }
+
   @override
   void dispose() {
     namaEditingController.dispose();
@@ -54,9 +57,9 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
     super.dispose();
   }
 
-  Future _pickImageCamera() async{
-    try{
-      XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
+  Future _pickImageCamera() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
       if (image == null) return;
       Uint8List imageBytes = await image.readAsBytes();
       final imagetemp = File(image.path);
@@ -66,12 +69,21 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
       });
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
+      Fluttertoast.showToast(
+          msg: "Ternyata timbul masalah",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
     }
     Navigator.of(context).pop();
   }
-  Future _pickImageGallery() async{
-    try{
-      XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+  Future _pickImageGallery() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
       Uint8List imageBytes = await image.readAsBytes();
       final imagetemp = File(image.path);
@@ -81,6 +93,14 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
       });
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
+      Fluttertoast.showToast(
+          msg: "Tenyata punya masalah",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
     }
     Navigator.of(context).pop();
   }
@@ -96,7 +116,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
             return 'Nama Kambing ?';
           }
         },
-        onSaved: (value){
+        onSaved: (value) {
           namaEditingController.text = value!;
         },
         textInputAction: TextInputAction.next,
@@ -107,7 +127,8 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                 fontSize: 12.0,
                 color: Colors.deepPurpleAccent,
                 fontWeight: FontWeight.w700,
-              ),),
+              ),
+            ),
             fillColor: Colors.white,
             filled: true,
             prefixIcon: Icon(Icons.paste_outlined, color: Colors.purple),
@@ -117,11 +138,11 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
               textStyle: TextStyle(
                 fontSize: 16.0,
                 color: Colors.deepPurple,
-              ),),
+              ),
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-            )
-        ));
+            )));
     final hargaField = TextFormField(
         autofocus: false,
         controller: hargaEditingController,
@@ -134,7 +155,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
             return 'Harga jual?';
           }
         },
-        onSaved: (value){
+        onSaved: (value) {
           hargaEditingController.text = value!;
         },
         textInputAction: TextInputAction.next,
@@ -145,26 +166,32 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                 fontSize: 12.0,
                 color: Colors.deepPurpleAccent,
                 fontWeight: FontWeight.w700,
-              ),),
+              ),
+            ),
             fillColor: Colors.white,
             filled: true,
-            prefixIcon: Icon(Icons.monetization_on_outlined, color: Colors.purple),
+            prefixIcon:
+                Icon(Icons.monetization_on_outlined, color: Colors.purple),
             contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
             hintText: "Harga Kambing",
             hintStyle: GoogleFonts.poppins(
               textStyle: TextStyle(
                 fontSize: 16.0,
                 color: Colors.deepPurple,
-              ),),
+              ),
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-            )
-        ));
+            )));
     final isEditing = widget.kambing != null;
     final title = isEditing ? 'Ubah Maklumat' : 'Tambah Kambing Baru';
     return AlertDialog(
-      title: Text(title, style: GoogleFonts.poppins(
-        textStyle: TextStyle(),),),
+      title: Text(
+        title,
+        style: GoogleFonts.poppins(
+          textStyle: TextStyle(),
+        ),
+      ),
       content: SingleChildScrollView(
         // padding: EdgeInsets.all(15.0),
         child: Container(
@@ -176,16 +203,19 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                 Stack(
                   children: [
                     Center(
-                      child: image != null ? ClipOval(child: Image.file(
-                        image!,
-                        width: 180,
-                        height: 180,
-                        fit: BoxFit.cover,
-                      ),
-                      ) : CircleAvatar(
-                          backgroundImage: AssetImage("images/kambir.jpg"),
-                          backgroundColor: Colors.transparent,
-                          radius: 100),
+                      child: image != null
+                          ? ClipOval(
+                              child: Image.file(
+                                image!,
+                                width: 180,
+                                height: 180,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : CircleAvatar(
+                              backgroundImage: AssetImage("images/kambir.jpg"),
+                              backgroundColor: Colors.transparent,
+                              radius: 100),
                     ),
                     Positioned(
                       top: 130,
@@ -193,66 +223,91 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                       child: RawMaterialButton(
                         elevation: 10,
                         fillColor: Colors.white,
-                        child: Icon(Icons.add_a_photo_outlined, color: Color(0xff360c72)),
+                        child: Icon(Icons.add_a_photo_outlined,
+                            color: Color(0xff360c72)),
                         padding: EdgeInsets.all(15),
                         shape: CircleBorder(),
-                        onPressed: (){
-                          showDialog(context: context, builder: (BuildContext context){
-                            return AlertDialog(title: Text('Sila Pilih',
-                              style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.deepPurple,
-                                  )
-                              ),),
-                                content: SingleChildScrollView(
-                                  child: ListBody(children: [
-                                    InkWell(splashColor: Colors.purple,
-                                      onTap: _pickImageCamera,
-                                      child: Row(
-                                        children: [
-                                          Padding(padding: const EdgeInsets.all(8.0),
-                                            child: Icon(Icons.camera_alt, color: Colors.deepPurple,),
-                                          ),
-                                          Text('Kamera', style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.deepPurple,
-                                                fontWeight: FontWeight.w500,
-                                              )
-                                          ),)
-                                        ],
-                                      ),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                    title: Text(
+                                      'Sila Pilih',
+                                      style: GoogleFonts.poppins(
+                                          textStyle: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.deepPurple,
+                                      )),
                                     ),
-                                    InkWell(splashColor: Colors.greenAccent,
-                                      onTap: _pickImageGallery,
-                                      child: Row(
+                                    content: SingleChildScrollView(
+                                      child: ListBody(
                                         children: [
-                                          Padding(padding: const EdgeInsets.all(8.0),
-                                            child: Icon(Icons.image_outlined, color: Colors.deepPurple,),
+                                          InkWell(
+                                            splashColor: Colors.purple,
+                                            onTap: _pickImageCamera,
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Icon(
+                                                    Icons.camera_alt,
+                                                    color: Colors.deepPurple,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'Kamera',
+                                                  style: GoogleFonts.poppins(
+                                                      textStyle: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.deepPurple,
+                                                    fontWeight: FontWeight.w500,
+                                                  )),
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                          Text('Album', style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.deepPurple,
-                                                  fontWeight: FontWeight.w500
-                                              )
-                                          ),)
+                                          InkWell(
+                                            splashColor: Colors.greenAccent,
+                                            onTap: _pickImageGallery,
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Icon(
+                                                    Icons.image_outlined,
+                                                    color: Colors.deepPurple,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'Album',
+                                                  style: GoogleFonts.poppins(
+                                                      textStyle: TextStyle(
+                                                          fontSize: 20,
+                                                          color:
+                                                              Colors.deepPurple,
+                                                          fontWeight:
+                                                              FontWeight.w500)),
+                                                )
+                                              ],
+                                            ),
+                                          )
                                         ],
                                       ),
-                                    )
-                                  ],),
-                                )
-                            );
-                          });
+                                    ));
+                              });
                         },
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 10.0,),
+                SizedBox(
+                  height: 10.0,
+                ),
                 ElevatedButton.icon(
-                  onPressed: () async{
+                  onPressed: () async {
                     String mm = '', yy = '';
                     DateTime? newdate = await showDatePicker(
                       context: context,
@@ -262,98 +317,127 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                     );
                     if (newdate == null) return;
                     // TTT
-                    if ((DateTime.now().day>=newdate.day)&&(DateTime.now().month>=newdate.month)&&DateTime.now().year>=newdate.year){
-                      yy = '${DateTime.now().year-newdate.year}';
-                      mm = '${DateTime.now().month-newdate.month}';
+                    if ((DateTime.now().day >= newdate.day) &&
+                        (DateTime.now().month >= newdate.month) &&
+                        DateTime.now().year >= newdate.year) {
+                      yy = '${DateTime.now().year - newdate.year}';
+                      mm = '${DateTime.now().month - newdate.month}';
                     }
                     //TFT
-                    else if ((DateTime.now().day>=newdate.day)&&(DateTime.now().month<newdate.month)&&DateTime.now().year>=newdate.year){
-                      if(DateTime.now().year == newdate.year){
+                    else if ((DateTime.now().day >= newdate.day) &&
+                        (DateTime.now().month < newdate.month) &&
+                        DateTime.now().year >= newdate.year) {
+                      if (DateTime.now().year == newdate.year) {
                         return;
                       }
-                      yy = '${DateTime.now().year-newdate.year-1}';
-                      mm = '${DateTime.now().month-newdate.month+12}';
+                      yy = '${DateTime.now().year - newdate.year - 1}';
+                      mm = '${DateTime.now().month - newdate.month + 12}';
                     }
                     //FTT
-                    else if ((DateTime.now().day<newdate.day)&&(DateTime.now().month>=newdate.month)&&DateTime.now().year>=newdate.year){
-                      if(DateTime.now().year==newdate.year&&DateTime.now().day<newdate.day){
+                    else if ((DateTime.now().day < newdate.day) &&
+                        (DateTime.now().month >= newdate.month) &&
+                        DateTime.now().year >= newdate.year) {
+                      if (DateTime.now().year == newdate.year &&
+                          DateTime.now().day < newdate.day) {
                         return;
                       }
-                      if (DateTime.now().month==newdate.month&&DateTime.now().year!=newdate.year) {
-                        yy = '${DateTime.now().year-newdate.year-1}';
-                        mm = '${DateTime.now().month-newdate.month+11}';
-                      }
-                      else if(DateTime.now().month==newdate.month){
-                        yy = '${DateTime.now().year-newdate.year}';
-                        mm = '${DateTime.now().month-newdate.month}';
-                      }
-                      else {
-                        yy = '${DateTime.now().year-newdate.year}';
-                        mm = '${DateTime.now().month-newdate.month-1}';
+                      if (DateTime.now().month == newdate.month &&
+                          DateTime.now().year != newdate.year) {
+                        yy = '${DateTime.now().year - newdate.year - 1}';
+                        mm = '${DateTime.now().month - newdate.month + 11}';
+                      } else if (DateTime.now().month == newdate.month) {
+                        yy = '${DateTime.now().year - newdate.year}';
+                        mm = '${DateTime.now().month - newdate.month}';
+                      } else {
+                        yy = '${DateTime.now().year - newdate.year}';
+                        mm = '${DateTime.now().month - newdate.month - 1}';
                       }
                     }
                     //FFT
-                    else if ((DateTime.now().day<newdate.day)&&(DateTime.now().month<newdate.month)&&DateTime.now().year>=newdate.year){
-                      if(DateTime.now().year == newdate.year){
+                    else if ((DateTime.now().day < newdate.day) &&
+                        (DateTime.now().month < newdate.month) &&
+                        DateTime.now().year >= newdate.year) {
+                      if (DateTime.now().year == newdate.year) {
                         return;
                       }
-                      yy = '${DateTime.now().year-newdate.year-1}';
-                      mm = '${DateTime.now().month-newdate.month+11}';
-                    }
-                    else {
+                      yy = '${DateTime.now().year - newdate.year - 1}';
+                      mm = '${DateTime.now().month - newdate.month + 11}';
+                    } else {
                       return;
                     }
                     setState(() => datenow = newdate);
-                    umur = yy+' Tahun '+mm+' Bulan';
+                    umur = yy + ' Tahun ' + mm + ' Bulan';
                   },
                   icon: Icon(Icons.cake_outlined, color: Colors.purple),
-                  label: Text('${datenow.day}/${datenow.month}/${datenow.year}',
+                  label: Text(
+                    '${datenow.day}/${datenow.month}/${datenow.year}',
                     style: GoogleFonts.poppins(
-                    textStyle: TextStyle(
-                      color: Colors.deepPurple,
-                      fontSize: 16,),),),
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.white)
+                      textStyle: TextStyle(
+                        color: Colors.deepPurple,
+                        fontSize: 16,
+                      ),
+                    ),
                   ),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.white)),
                 ),
                 ElevatedButton.icon(
                   onPressed: () {},
                   icon: Icon(Icons.av_timer, color: Colors.purple),
-                  label: Text('Umur: '+ umur,
+                  label: Text(
+                    'Umur: ' + umur,
                     style: GoogleFonts.poppins(
-                    textStyle: TextStyle(
-                      color: Colors.deepPurple,
-                      fontSize: 14
-                    ),),),
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.white)
+                      textStyle:
+                          TextStyle(color: Colors.deepPurple, fontSize: 14),
+                    ),
                   ),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.white)),
                 ),
-                SizedBox(height: 10.0,),
-                namaField, SizedBox(height: 15.0,),
-                hargaField, SizedBox(height: 15.0,),
+                SizedBox(
+                  height: 10.0,
+                ),
+                namaField,
+                SizedBox(
+                  height: 15.0,
+                ),
+                hargaField,
+                SizedBox(
+                  height: 15.0,
+                ),
                 DropdownButtonFormField(
                   value: _selectedVal,
-                  items: jantina.map(
-                          (e)=> DropdownMenuItem(child: Text(
+                  items: jantina
+                      .map((e) => DropdownMenuItem(
+                          child: Text(
                             e,
                             style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
-                                color: Colors.deepPurple,
-                                fontSize: 16,
-                              fontWeight: FontWeight.bold
-                            ),),), value: e)
-                  ).toList(),
-                  onChanged: (val){
+                              textStyle: TextStyle(
+                                  color: Colors.deepPurple,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          value: e))
+                      .toList(),
+                  onChanged: (val) {
                     setState(() {
                       _selectedVal = val as String;
                     });
                   },
                   dropdownColor: Colors.white,
                   decoration: InputDecoration(
-                    prefixIcon: _selectedVal == 'Jantan' ? Icon(Icons.male_outlined, color: Colors.blue,)
-                        : _selectedVal == 'Betina' ? Icon(Icons.female_outlined, color: Colors.pink,)
-                        : Icon(Icons.transgender_outlined),
+                    prefixIcon: _selectedVal == 'Jantan'
+                        ? Icon(
+                            Icons.male_outlined,
+                            color: Colors.blue,
+                          )
+                        : _selectedVal == 'Betina'
+                            ? Icon(
+                                Icons.female_outlined,
+                                color: Colors.pink,
+                              )
+                            : Icon(Icons.transgender_outlined),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -362,7 +446,9 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                     contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                   ),
                 ),
-                SizedBox(height: 20.0,),
+                SizedBox(
+                  height: 20.0,
+                ),
                 Container(
                   child: Material(
                     elevation: 5,
@@ -371,7 +457,7 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                     child: MaterialButton(
                       padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                       minWidth: MediaQuery.of(context).size.width * 0.6,
-                      onPressed:() async {
+                      onPressed: () async {
                         final isValid = _formKey.currentState!.validate();
                         if (isValid && image != null) {
                           final img = imageBytes!;
@@ -381,16 +467,17 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                           widget.onClickedDone(img, datenow, nama, harga, g);
                           Navigator.of(context).pop();
                           Fluttertoast.showToast(
-                              msg: "Daftar Berjaya!", toastLength: Toast.LENGTH_SHORT,
+                              msg: "Daftar Berjaya!",
+                              toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.CENTER,
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.green,
                               textColor: Colors.black87,
                               fontSize: 16.0);
-                        }
-                        else if (image == null){
+                        } else if (image == null) {
                           Fluttertoast.showToast(
-                              msg: "Mana Gambarnya?", toastLength: Toast.LENGTH_SHORT,
+                              msg: "Mana Gambarnya?",
+                              toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.CENTER,
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.red,
@@ -405,15 +492,17 @@ class _KambingDialogState extends State<KambingDialog> with SingleTickerProvider
                           textStyle: TextStyle(
                               fontSize: 20,
                               color: Color(0xff360c72),
-                              fontWeight: FontWeight.bold
-                          ),),
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(20.0)),
                     ),
                   ),
                 ),
-                SizedBox(height: 10.0,),
+                SizedBox(
+                  height: 10.0,
+                ),
               ],
             ),
           ),
