@@ -182,83 +182,87 @@ class _kambing_listState extends State<kambing_list> {
                 ),
                 AspectRatio(
                   aspectRatio: 5 / 3,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+                  child: InkWell(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          gender == 'Jantan'
-                              ? Icon(
-                                  Icons.male_outlined,
-                                  color: Colors.blue,
-                                )
-                              : gender == 'Betina'
+                          Row(
+                            children: [
+                              gender == 'Jantan'
                                   ? Icon(
-                                      Icons.female_outlined,
-                                      color: Colors.pink,
+                                      Icons.male_outlined,
+                                      color: Colors.blue,
                                     )
-                                  : Icon(Icons.transgender_outlined),
-                          SizedBox(
-                            width: 10,
+                                  : gender == 'Betina'
+                                      ? Icon(
+                                          Icons.female_outlined,
+                                          color: Colors.pink,
+                                        )
+                                      : Icon(Icons.transgender_outlined),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                nama,
+                                style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                      color: Colors.deepPurple,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
                           ),
+                          Row(
+                            children: [
+                              Icon(Icons.av_timer, color: Colors.purple),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                age,
+                                style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w300,
+                                )),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.cake_outlined, color: Colors.purple),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                '${lahir.day}/${lahir.month}/${lahir.year}',
+                                style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w300,
+                                )),
+                              ),
+                            ],
+                          ),
+                          // SizedBox(height: 20,),
                           Text(
-                            nama,
+                            'RM  ' + harga,
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
-                                  color: Colors.deepPurple,
+                                  color: Colors.green,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Icon(Icons.av_timer, color: Colors.purple),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            age,
-                            style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w300,
-                            )),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.cake_outlined, color: Colors.purple),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            '${lahir.day}/${lahir.month}/${lahir.year}',
-                            style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w300,
-                            )),
-                          ),
-                        ],
-                      ),
-                      // SizedBox(height: 20,),
-                      Text(
-                        'RM  ' + harga,
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              color: Colors.green,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
-                  ),
+                      onTap: () {
+                        deleteKambing(kambing);
+                      }),
                 ),
               ],
             ),
