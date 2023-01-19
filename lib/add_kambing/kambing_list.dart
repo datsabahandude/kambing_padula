@@ -182,8 +182,9 @@ class _kambing_listState extends State<kambing_list> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(24)),
+                              backgroundColor: Colors.transparent,
+                              // shape: RoundedRectangleBorder(
+                              //     borderRadius: BorderRadius.circular(24)),
                               content: Image.memory(
                                 gambar,
                                 width: MediaQuery.of(context).size.width,
