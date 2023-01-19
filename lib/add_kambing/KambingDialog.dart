@@ -186,6 +186,7 @@ class _KambingDialogState extends State<KambingDialog>
     final isEditing = widget.kambing != null;
     final title = isEditing ? 'Ubah Maklumat' : 'Tambah Kambing Baru';
     return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       title: Text(
         title,
         style: GoogleFonts.poppins(
@@ -203,19 +204,29 @@ class _KambingDialogState extends State<KambingDialog>
                 Stack(
                   children: [
                     Center(
-                      child: image != null
+                      child: imageBytes != null
                           ? ClipOval(
-                              child: Image.file(
-                                image!,
+                              child: Image.memory(
+                                imageBytes!,
                                 width: 180,
                                 height: 180,
                                 fit: BoxFit.cover,
                               ),
                             )
-                          : CircleAvatar(
-                              backgroundImage: AssetImage("images/kambir.jpg"),
-                              backgroundColor: Colors.transparent,
-                              radius: 100),
+                          : image != null
+                              ? ClipOval(
+                                  child: Image.file(
+                                    image!,
+                                    width: 180,
+                                    height: 180,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : CircleAvatar(
+                                  backgroundImage:
+                                      AssetImage("images/kambir.jpg"),
+                                  backgroundColor: Colors.transparent,
+                                  radius: 100),
                     ),
                     Positioned(
                       top: 130,
@@ -269,7 +280,7 @@ class _KambingDialogState extends State<KambingDialog>
                                             ),
                                           ),
                                           InkWell(
-                                            splashColor: Colors.greenAccent,
+                                            splashColor: Colors.purple,
                                             onTap: _pickImageGallery,
                                             child: Row(
                                               children: [
@@ -459,7 +470,8 @@ class _KambingDialogState extends State<KambingDialog>
                       minWidth: MediaQuery.of(context).size.width * 0.6,
                       onPressed: () async {
                         final isValid = _formKey.currentState!.validate();
-                        if (isValid && image != null) {
+                        if ((isValid && image != null) ||
+                            (isValid && imageBytes != null)) {
                           final img = imageBytes!;
                           final nama = namaEditingController.text;
                           final harga = hargaEditingController.text;
@@ -471,10 +483,10 @@ class _KambingDialogState extends State<KambingDialog>
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.CENTER,
                               timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.green,
-                              textColor: Colors.black87,
+                              backgroundColor: Colors.deepPurple,
+                              textColor: Colors.white,
                               fontSize: 16.0);
-                        } else if (image == null) {
+                        } else if ((image == null) && (imageBytes == null)) {
                           Fluttertoast.showToast(
                               msg: "Mana Gambarnya?",
                               toastLength: Toast.LENGTH_SHORT,

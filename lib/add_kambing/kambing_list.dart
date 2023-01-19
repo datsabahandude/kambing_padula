@@ -169,12 +169,31 @@ class _kambing_listState extends State<kambing_list> {
               children: [
                 AspectRatio(
                   aspectRatio: 1 / 1,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.memory(
-                      gambar,
-                      fit: BoxFit.cover,
+                  child: InkWell(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.memory(
+                        gambar,
+                        fit: BoxFit.cover,
+                      ),
                     ),
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              backgroundColor: Colors.transparent,
+                              // shape: RoundedRectangleBorder(
+                              //     borderRadius: BorderRadius.circular(24)),
+                              content: Image.memory(
+                                gambar,
+                                width: MediaQuery.of(context).size.width,
+                                height: 300,
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          });
+                    },
                   ),
                 ),
                 SizedBox(
@@ -182,83 +201,191 @@ class _kambing_listState extends State<kambing_list> {
                 ),
                 AspectRatio(
                   aspectRatio: 5 / 3,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+                  child: InkWell(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          gender == 'Jantan'
-                              ? Icon(
-                                  Icons.male_outlined,
-                                  color: Colors.blue,
-                                )
-                              : gender == 'Betina'
+                          Row(
+                            children: [
+                              gender == 'Jantan'
                                   ? Icon(
-                                      Icons.female_outlined,
-                                      color: Colors.pink,
+                                      Icons.male_outlined,
+                                      color: Colors.blue,
                                     )
-                                  : Icon(Icons.transgender_outlined),
-                          SizedBox(
-                            width: 10,
+                                  : gender == 'Betina'
+                                      ? Icon(
+                                          Icons.female_outlined,
+                                          color: Colors.pink,
+                                        )
+                                      : Icon(Icons.transgender_outlined),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                nama,
+                                style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                      color: Colors.deepPurple,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
                           ),
+                          Row(
+                            children: [
+                              Icon(Icons.av_timer, color: Colors.purple),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                age,
+                                style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w300,
+                                )),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.cake_outlined, color: Colors.purple),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                '${lahir.day}/${lahir.month}/${lahir.year}',
+                                style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w300,
+                                )),
+                              ),
+                            ],
+                          ),
+                          // SizedBox(height: 20,),
                           Text(
-                            nama,
+                            'RM  ' + harga,
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
-                                  color: Colors.deepPurple,
+                                  color: Colors.green,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Icon(Icons.av_timer, color: Colors.purple),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            age,
-                            style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w300,
-                            )),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.cake_outlined, color: Colors.purple),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            '${lahir.day}/${lahir.month}/${lahir.year}',
-                            style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w300,
-                            )),
-                          ),
-                        ],
-                      ),
-                      // SizedBox(height: 20,),
-                      Text(
-                        'RM  ' + harga,
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              color: Colors.green,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
-                  ),
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(24)),
+                                  content: SingleChildScrollView(
+                                    child: ListBody(
+                                      children: [
+                                        InkWell(
+                                          splashColor: Colors.purple,
+                                          onTap: () => showDialog(
+                                            context: context,
+                                            builder: (context) => KambingDialog(
+                                              kambing: kambing,
+                                              onClickedDone: (imageBytes,
+                                                  datenow,
+                                                  name,
+                                                  price,
+                                                  gender) {
+                                                editKambing(
+                                                    kambing,
+                                                    imageBytes,
+                                                    datenow,
+                                                    name,
+                                                    price,
+                                                    gender);
+                                              },
+                                            ),
+                                          ),
+                                          /*Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  KambingDialog(
+                                                kambing: kambing,
+                                                onClickedDone: (imageBytes,
+                                                    datenow,
+                                                    name,
+                                                    price,
+                                                    gender) {
+                                                  editKambing(
+                                                      kambing,
+                                                      imageBytes,
+                                                      datenow,
+                                                      name,
+                                                      price,
+                                                      gender);
+                                                },
+                                              ),
+                                            ),
+                                          ),*/
+                                          child: Row(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Icon(
+                                                  Icons.edit,
+                                                  color: Colors.green,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Ubah Maklumat',
+                                                style: GoogleFonts.poppins(
+                                                    textStyle: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.green,
+                                                  fontWeight: FontWeight.w500,
+                                                )),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        InkWell(
+                                          splashColor: Colors.red,
+                                          onTap: () {
+                                            deleteKambing(kambing);
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Icon(
+                                                  Icons.delete,
+                                                  color: Colors.red,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Padam',
+                                                style: GoogleFonts.poppins(
+                                                    textStyle: TextStyle(
+                                                        fontSize: 20,
+                                                        color: Colors.redAccent,
+                                                        fontWeight:
+                                                            FontWeight.w500)),
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ));
+                            });
+                      }),
                 ),
               ],
             ),
@@ -377,13 +504,13 @@ class _kambing_listState extends State<kambing_list> {
     box.add(kambing);
   }
 
-  void editKambing(Kambing kambing, Uint8List image, DateTime date, String nama,
-      String harga, String jantina) {
-    kambing.imageBytes = image;
-    kambing.date = date;
-    kambing.name = nama;
-    kambing.price = harga;
-    kambing.gender = jantina;
+  void editKambing(Kambing kambing, Uint8List imageBytes, DateTime datenow,
+      String name, String price, String gender) {
+    kambing.imageBytes = imageBytes;
+    kambing.date = datenow;
+    kambing.name = name;
+    kambing.price = price;
+    kambing.gender = gender;
 
     kambing.save();
   }
