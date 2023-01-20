@@ -14,11 +14,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^3.0.1
   image_picker: ^0.8.6
-  path_provider: ^2.0.11
+#  path_provider: ^2.0.11
   fluttertoast: ^8.1.2
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   flutter_inset_box_shadow: ^1.0.8
+  easy_localization: ^3.0.1
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:
@@ -30,11 +32,12 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "images/puteh.png"
+  image_path: "assets/images/puteh.png"
 flutter:
   uses-material-design: true
   assets:
-  - images/goat_icon.png
-  - images/goated.jpg
-  - images/kambir.jpg
-  - images/puteh.png
+  - assets/images/goat_icon.png
+  - assets/images/goated.jpg
+  - assets/images/kambir.jpg
+  - assets/images/puteh.png
+  - assets/translations/

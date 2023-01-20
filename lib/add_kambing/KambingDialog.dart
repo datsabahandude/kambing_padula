@@ -224,7 +224,7 @@ class _KambingDialogState extends State<KambingDialog>
                                 )
                               : CircleAvatar(
                                   backgroundImage:
-                                      AssetImage("images/kambir.jpg"),
+                                      AssetImage("assets/images/kambir.jpg"),
                                   backgroundColor: Colors.transparent,
                                   radius: 100),
                     ),
