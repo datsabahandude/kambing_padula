@@ -1,25 +1,39 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kambing_padula/add_kambing/models/kambing.dart';
 import 'add_kambing/kambing_list.dart';
-import 'penjantan.dart';
+import 'testing/localization.dart';
+import 'testing/penjantan.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(KambingAdapter());
   await Hive.openBox<Kambing>('kambings');
-  runApp(const MyApp());
+  await EasyLocalization.ensureInitialized();
+  runApp(
+      // Naming based on country locale code 'https://www.fincher.org/Utilities/CountryLanguageList.shtml'
+      EasyLocalization(
+          supportedLocales: [
+            Locale('en', 'US'),
+            Locale('ms', 'MY')
+          ],
+          path: 'assets/translations',
+          fallbackLocale: Locale('en', 'US'),
+          child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       title: 'Kambing Pak Dola',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -39,7 +53,7 @@ class MyHomePage extends StatelessWidget {
       constraints: const BoxConstraints.expand(),
       decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("images/goated.jpg"), fit: BoxFit.cover)),
+              image: AssetImage("assets/images/goated.jpg"), fit: BoxFit.cover)),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
@@ -72,7 +86,7 @@ class MyHomePage extends StatelessWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /*Padding(
+            Padding(
               padding: const EdgeInsets.all(12.0),
               child: Center(
                 child: Wrap(
@@ -82,7 +96,12 @@ class MyHomePage extends StatelessWidget {
                     Row(
                       children: [
                         MaterialButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => localize()));
+                          },
                           child: SizedBox(
                             width: 140.0,
                             height: 150.0,
@@ -96,16 +115,16 @@ class MyHomePage extends StatelessWidget {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     children: [
-                                      Image.asset("images/goat_icon.png",
+                                      Image.asset("assets/images/goat_icon.png",
                                           width: 64.0),
                                       SizedBox(height: 10.0),
-                                      Text("Makan",
+                                      Text("Easy",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20.0,
                                           )),
                                       SizedBox(height: 4.0),
-                                      Text("Kambing",
+                                      Text("Localization",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20.0,
@@ -117,6 +136,7 @@ class MyHomePage extends StatelessWidget {
                             ),
                           ),
                         ),
+                        Spacer(),
                         MaterialButton(
                           onPressed: () {},
                           child: SizedBox(
@@ -132,16 +152,16 @@ class MyHomePage extends StatelessWidget {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     children: [
-                                      Image.asset("images/puteh.png",
+                                      Image.asset("assets/images/puteh.png",
                                           width: 64.0),
                                       SizedBox(height: 10.0),
-                                      Text("Kambing",
+                                      Text("",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20.0,
                                           )),
                                       SizedBox(height: 4.0),
-                                      Text("Gebu",
+                                      Text("",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20.0,
@@ -158,7 +178,7 @@ class MyHomePage extends StatelessWidget {
                   ],
                 ),
               ),
-            ),*/
+            ),
             Spacer(),
             Padding(
               padding: const EdgeInsets.all(12.0),
@@ -189,16 +209,16 @@ class MyHomePage extends StatelessWidget {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     children: [
-                                      Image.asset("images/goat_icon.png",
+                                      Image.asset("assets/images/goat_icon.png",
                                           width: 64.0),
                                       SizedBox(height: 10.0),
-                                      Text("Kambing",
+                                      Text("",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20.0,
                                           )),
                                       SizedBox(height: 4.0),
-                                      Text("Penjantan",
+                                      Text("",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20.0,
@@ -231,7 +251,7 @@ class MyHomePage extends StatelessWidget {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     children: [
-                                      Image.asset("images/puteh.png",
+                                      Image.asset("assets/images/puteh.png",
                                           width: 64.0),
                                       SizedBox(height: 10.0),
                                       Text("Senarai",
