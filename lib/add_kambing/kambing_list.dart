@@ -31,17 +31,18 @@ class _kambing_listState extends State<kambing_list> {
       resizeToAvoidBottomInset: false,
       // backgroundColor: Colors.transparent,
       appBar: AppBar(
-        leading: new IconButton(
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            // color: Colors.white,
-            size: 30,
-          ),
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MyHomePage()));
-          },
-        ),
+        // leading: new IconButton(
+        //   icon: Icon(
+        //     Icons.arrow_back_rounded,
+        //     // color: Colors.white,
+        //     size: 30,
+        //   ),
+        //   onPressed: () {
+        //     Navigator.push(
+        //         context, MaterialPageRoute(builder: (context) => MyHomePage()));
+        //   },
+        // ),
+        automaticallyImplyLeading: false,
         title: Text(
           "Senarai Kambing",
           style: GoogleFonts.poppins(
@@ -51,7 +52,18 @@ class _kambing_listState extends State<kambing_list> {
                 fontWeight: FontWeight.bold),
           ),
         ),
-        actions: [],
+        actions: [
+          MaterialButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MyHomePage()));
+            },
+            child: CircleAvatar(
+              backgroundImage: AssetImage("assets/images/kambir.jpg"),
+              backgroundColor: Colors.transparent,
+            ),
+          ),
+        ],
       ),
       body: ValueListenableBuilder<Box<Kambing>>(
         valueListenable: Boxes.getKambings().listenable(),
@@ -188,7 +200,8 @@ class _kambing_listState extends State<kambing_list> {
                               content: Image.memory(
                                 gambar,
                                 width: MediaQuery.of(context).size.width,
-                                height: 300,
+                                // height: 300,
+                                // height: MediaQuery.of(context).size.height,
                                 fit: BoxFit.cover,
                               ),
                             );

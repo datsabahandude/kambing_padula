@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: const MyHomePage(),
+      home: const kambing_list(),
     );
   }
 }
@@ -67,19 +67,6 @@ class MyHomePage extends StatelessWidget {
                   fontWeight: FontWeight.bold),
             ),
           ),
-          /*actions: [
-            MaterialButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => penjantan()));
-              },
-              child: CircleAvatar(
-                backgroundImage: AssetImage("images/kambir.jpg"),
-                backgroundColor: Colors.transparent,
-              ),
-            ),
-
-          ],*/
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

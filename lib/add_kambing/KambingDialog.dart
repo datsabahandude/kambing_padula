@@ -513,9 +513,9 @@ class _KambingDialogState extends State<KambingDialog>
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
+                // SizedBox(
+                //   height: 10.0,
+                // ),
               ],
             ),
           ),
