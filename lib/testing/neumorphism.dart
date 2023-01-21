@@ -3,14 +3,14 @@ import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kambing_padula/main.dart';
 
-class penjantan extends StatefulWidget {
-  const penjantan({Key? key}) : super(key: key);
+class neumorphism extends StatefulWidget {
+  const neumorphism({Key? key}) : super(key: key);
 
   @override
-  State<penjantan> createState() => _penjantanState();
+  State<neumorphism> createState() => _neumorphismState();
 }
 
-class _penjantanState extends State<penjantan> {
+class _neumorphismState extends State<neumorphism> {
   bool isPressed = true;
   bool isDarkMode = false;
   @override
@@ -35,7 +35,7 @@ class _penjantanState extends State<penjantan> {
           },
         ),
         title: Text(
-          "Polymorphism",
+          "Neumorphism",
           style: GoogleFonts.poppins(
             textStyle: TextStyle(
                 // color: Colors.lightGreenAccent,

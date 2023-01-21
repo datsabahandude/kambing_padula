@@ -5,7 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kambing_padula/add_kambing/models/kambing.dart';
 import 'add_kambing/kambing_list.dart';
 import 'testing/localization.dart';
-import 'testing/penjantan.dart';
+import 'testing/neumorphism.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,10 +16,7 @@ Future main() async {
   runApp(
       // Naming based on country locale code 'https://www.fincher.org/Utilities/CountryLanguageList.shtml'
       EasyLocalization(
-          supportedLocales: [
-            Locale('en', 'US'),
-            Locale('ms', 'MY')
-          ],
+          supportedLocales: [Locale('en', 'US'), Locale('ms', 'MY')],
           path: 'assets/translations',
           fallbackLocale: Locale('en', 'US'),
           child: const MyApp()));
@@ -53,7 +50,8 @@ class MyHomePage extends StatelessWidget {
       constraints: const BoxConstraints.expand(),
       decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/images/goated.jpg"), fit: BoxFit.cover)),
+              image: AssetImage("assets/images/goated.jpg"),
+              fit: BoxFit.cover)),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
@@ -194,7 +192,7 @@ class MyHomePage extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => penjantan()));
+                                    builder: (context) => neumorphism()));
                           },
                           child: SizedBox(
                             width: 140.0,
@@ -212,16 +210,16 @@ class MyHomePage extends StatelessWidget {
                                       Image.asset("assets/images/goat_icon.png",
                                           width: 64.0),
                                       SizedBox(height: 10.0),
-                                      Text("",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20.0,
-                                          )),
+                                      // Text("Neumorphism",
+                                      //     style: TextStyle(
+                                      //       color: Colors.white,
+                                      //       fontSize: 20.0,
+                                      //     )),
                                       SizedBox(height: 4.0),
-                                      Text("",
+                                      Text("Neumorphism",
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 20.0,
+                                            fontSize: 18.0,
                                           )),
                                     ],
                                   ),
