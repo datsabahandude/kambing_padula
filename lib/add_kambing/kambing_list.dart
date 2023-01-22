@@ -27,10 +27,12 @@ class _kambing_listState extends State<kambing_list> {
   }
 
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // backgroundColor: Colors.transparent,
-      appBar: AppBar(
+      /*appBar: AppBar(
         // leading: new IconButton(
         //   icon: Icon(
         //     Icons.arrow_back_rounded,
@@ -65,12 +67,126 @@ class _kambing_listState extends State<kambing_list> {
           ),
         ],
       ),
-      body: ValueListenableBuilder<Box<Kambing>>(
-        valueListenable: Boxes.getKambings().listenable(),
-        builder: (context, box, _) {
-          final kambings = box.values.toList().cast<Kambing>();
-          return buildContent(kambings);
-        },
+      */
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    height: height * 0.3,
+                    width: width,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/goated.jpg"),
+                        fit: BoxFit.cover
+                      )
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [
+                          Colors.black.withOpacity(0.0),
+                          Colors.black.withOpacity(0.0),
+                          Colors.black.withOpacity(0.1),
+                          Colors.black.withOpacity(0.5),
+                          Colors.black.withOpacity(1.0),
+                        ],
+                        begin: Alignment.topRight, end: Alignment.bottomLeft)),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 80,
+                    left: 20,
+                    child: RichText(
+                        text: TextSpan(
+                      text: "Kambing",
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                          color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w300),
+                      ),
+                          children: [
+                            TextSpan(
+                                text: "\nPak Dola",
+                                style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w500),
+                              ),
+                            )
+                          ]
+                    ),
+                    ),
+                  )
+                ],
+              ),
+              Transform.translate(
+                offset: Offset(0.0, - (height*0.3-height*0.26)),
+                child: Container(
+                  width: width,
+                  height: 400,
+                  padding: EdgeInsets.only(top: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    )
+                  ),
+                  child: DefaultTabController(length: 3,
+                  child: Column(
+                    children: [
+                      TabBar(
+                        labelColor: Colors.black,
+                          labelStyle: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                // color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          unselectedLabelColor: Colors.grey[400],
+                          unselectedLabelStyle: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              // color: Colors.white,
+                                fontSize: 17,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          indicatorSize: TabBarIndicatorSize.label,
+                          // indicatorColor: Colors.transparent,
+                          tabs: [
+                        Tab(child: Text("Kambing"),),
+                        Tab(child: Text("Matang"),),
+                        Tab(child: Text("Anak"),),
+                      ]
+                      ),
+                      SizedBox(height: 5,),
+                      /*Container(
+                        child: TabBarView(
+                          children: [
+                            Container(child: Text('Tab 1')),
+                            Container(child: Text('Tab 2')),
+                            Container(child: Text('Tab 3')),
+                          ],
+                          // ValueListenableBuilder<Box<Kambing>>(
+                          //   valueListenable: Boxes.getKambings().listenable(),
+                          //   builder: (context, box, _) {
+                          //     final kambings = box.values.toList().cast<Kambing>();
+                          //     return buildContent(kambings);
+                          //   },
+                          // ),
+                        ),
+                      )*/
+                    ],
+                  ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepPurple,
@@ -102,13 +218,16 @@ class _kambing_listState extends State<kambing_list> {
             height: 24,
           ),
           Expanded(
-              child: ListView.builder(
-                  padding: EdgeInsets.all(8),
-                  itemCount: kambings.length,
-                  itemBuilder: (context, index) {
-                    final kambing = kambings[index];
-                    return buildKambing(context, kambing);
-                  }))
+              child: SizedBox(
+                height: 200,
+                child: ListView.builder(
+                    padding: EdgeInsets.all(8),
+                    itemCount: kambings.length,
+                    itemBuilder: (context, index) {
+                      final kambing = kambings[index];
+                      return buildKambing(context, kambing);
+                    }),
+              ))
         ],
       );
     }
