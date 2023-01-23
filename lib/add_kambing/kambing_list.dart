@@ -268,10 +268,10 @@ class _kambing_listState extends State<kambing_list> {
       mm = '${DateTime.now().month - lahir.month + 11}';
     } else {}
     final age = yy + ' Tahun ' + mm + ' Bulan';
-    if (page == 2 && (int.parse(yy) > 0) || int.parse(mm) >= 8) {
+    if ((page == 2) && ((int.parse(yy) > 0) || int.parse(mm) >= 8)) {
       return Container();
     }
-    if (page == 1 && (int.parse(yy) == 0 && int.parse(mm) < 8)) {
+    if ((page == 1) && (int.parse(yy) == 0 && int.parse(mm) < 8)) {
       return Container();
     }
     return Card(
