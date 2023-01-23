@@ -41,123 +41,134 @@ class _kambing_listState extends State<kambing_list> {
                   height: height * 0.3,
                   width: width,
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/goated.jpg"),
-                      fit: BoxFit.cover
-                    )
-                  ),
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/goated.jpg"),
+                          fit: BoxFit.cover)),
                   child: Container(
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                        Colors.black.withOpacity(0.0),
-                        Colors.black.withOpacity(0.0),
-                        Colors.black.withOpacity(0.1),
-                        Colors.black.withOpacity(0.5),
-                        Colors.black.withOpacity(1.0),
-                      ],
-                      begin: Alignment.topRight, end: Alignment.bottomLeft)),
+                        gradient: LinearGradient(colors: [
+                      Colors.black.withOpacity(0.0),
+                      Colors.black.withOpacity(0.0),
+                      Colors.black.withOpacity(0.1),
+                      Colors.black.withOpacity(0.5),
+                      Colors.black.withOpacity(1.0),
+                    ], begin: Alignment.topRight, end: Alignment.bottomLeft)),
                   ),
                 ),
                 Positioned(
                   bottom: 80,
                   left: 20,
                   child: RichText(
-                      text: TextSpan(
-                    text: "Kambing",
-                    style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                        color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w300),
-                    ),
+                    text: TextSpan(
+                        text: "Kambing",
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w300),
+                        ),
                         children: [
                           TextSpan(
-                              text: "\nPak Dola",
-                              style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w500),
+                            text: "\nPak Dola",
+                            style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w500),
                             ),
                           )
-                        ]
-                  ),
+                        ]),
                   ),
                 )
               ],
             ),
             Transform.translate(
-              offset: Offset(0.0, - (height*0.3-height*0.26)),
+              offset: Offset(0.0, -(height * 0.3 - height * 0.26)),
               child: Container(
                 width: width,
                 height: height * 0.7,
                 padding: EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  )
-                ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    )),
                 child: DefaultTabController(
                   length: 3,
-                child: Column(
-                  children: <Widget> [
-                    TabBar(
-                      labelColor: Colors.black,
-                        labelStyle: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              // color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        unselectedLabelColor: Colors.grey[400],
-                        unselectedLabelStyle: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                            // color: Colors.white,
-                              fontSize: 17,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        indicatorSize: TabBarIndicatorSize.label,
-                        // indicatorColor: Colors.transparent,
-                        tabs: <Widget> [
-                      Tab(child: Text("Kambing"),),
-                      Tab(child: Text("Matang"),),
-                      Tab(child: Text("Anak"),),
-                    ]
-                    ),
-                    SizedBox(height: 5,),
-                    Expanded(
-                      child: Container(
-                      child: TabBarView(
-                        children: [
-                          ValueListenableBuilder<Box<Kambing>>(
-                          valueListenable: Boxes.getKambings().listenable(),
-                          builder: (context, box, _) {
-                            final kambings = box.values.toList().cast<Kambing>();
-                            return buildContent(kambings);
-                          },
-                        ),
-                          ValueListenableBuilder<Box<Kambing>>(
-                            valueListenable: Boxes.getKambings().listenable(),
-                            builder: (context, box, _) {
-                              final kambings = box.values.toList().cast<Kambing>();
-                              return buildContent(kambings);
-                            },
+                  child: Column(
+                    children: <Widget>[
+                      TabBar(
+                          labelColor: Colors.black,
+                          labelStyle: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                // color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
                           ),
-                          ValueListenableBuilder<Box<Kambing>>(
-                            valueListenable: Boxes.getKambings().listenable(),
-                            builder: (context, box, _) {
-                              final kambings = box.values.toList().cast<Kambing>();
-                              return buildContent(kambings);
-                            },
+                          unselectedLabelColor: Colors.grey[400],
+                          unselectedLabelStyle: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                // color: Colors.white,
+                                fontSize: 17,
+                                fontWeight: FontWeight.normal),
                           ),
-                        ],
+                          indicatorSize: TabBarIndicatorSize.label,
+                          // indicatorColor: Colors.transparent,
+                          tabs: <Widget>[
+                            Tab(
+                              child: Text("Kambing"),
+                            ),
+                            Tab(
+                              child: Text("Matang"),
+                            ),
+                            Tab(
+                              child: Text("Anak"),
+                            ),
+                          ]),
+                      SizedBox(
+                        height: 5,
                       ),
-                    ),
-                    ),
-                  ],
-                ),
+                      Expanded(
+                        child: Container(
+                          child: TabBarView(
+                            children: [
+                              ValueListenableBuilder<Box<Kambing>>(
+                                valueListenable:
+                                    Boxes.getKambings().listenable(),
+                                builder: (context, box, _) {
+                                  final kambings =
+                                      box.values.toList().cast<Kambing>();
+                                  int page = 0;
+                                  return buildContent(kambings, page);
+                                },
+                              ),
+                              ValueListenableBuilder<Box<Kambing>>(
+                                valueListenable:
+                                    Boxes.getKambings().listenable(),
+                                builder: (context, box, _) {
+                                  final kambings =
+                                      box.values.toList().cast<Kambing>();
+                                  int page = 1;
+                                  return buildContent(kambings, page);
+                                },
+                              ),
+                              ValueListenableBuilder<Box<Kambing>>(
+                                valueListenable:
+                                    Boxes.getKambings().listenable(),
+                                builder: (context, box, _) {
+                                  final kambings =
+                                      box.values.toList().cast<Kambing>();
+                                  int page = 2;
+                                  return buildContent(kambings, page);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             )
@@ -176,7 +187,7 @@ class _kambing_listState extends State<kambing_list> {
     );
   }
 
-  Widget buildContent(List<Kambing> kambings) {
+  Widget buildContent(List<Kambing> kambings, page) {
     if (kambings.isEmpty) {
       return Center(
         child: Text('gak ada kambingnya?',
@@ -201,7 +212,7 @@ class _kambing_listState extends State<kambing_list> {
                   itemCount: kambings.length,
                   itemBuilder: (context, index) {
                     final kambing = kambings[index];
-                    return buildKambing(context, kambing);
+                    return buildKambing(context, kambing, page);
                   }))
         ],
       );
@@ -209,11 +220,7 @@ class _kambing_listState extends State<kambing_list> {
   }
 
   // template UI
-  Widget buildKambing(
-    BuildContext context,
-    Kambing kambing,
-  )
-  {
+  Widget buildKambing(BuildContext context, Kambing kambing, page) {
     final gambar = kambing.imageBytes;
     final lahir = kambing.date;
     final nama = kambing.name;
@@ -261,6 +268,12 @@ class _kambing_listState extends State<kambing_list> {
       mm = '${DateTime.now().month - lahir.month + 11}';
     } else {}
     final age = yy + ' Tahun ' + mm + ' Bulan';
+    if (page == 2 && (int.parse(yy) > 0) || int.parse(mm) >= 8) {
+      return Container();
+    }
+    if (page == 1 && (int.parse(yy) == 0 && int.parse(mm) < 8)) {
+      return Container();
+    }
     return Card(
       shadowColor: Colors.deepPurpleAccent,
       elevation: 8,
