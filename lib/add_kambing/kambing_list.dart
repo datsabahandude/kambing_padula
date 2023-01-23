@@ -29,7 +29,6 @@ class _kambing_listState extends State<kambing_list> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    var tab = 'kambing';
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -37,22 +36,28 @@ class _kambing_listState extends State<kambing_list> {
           children: [
             Stack(
               children: [
-                Container(
-                  height: height * 0.3,
-                  width: width,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/goated.jpg"),
-                          fit: BoxFit.cover)),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MyHomePage()));
+                  },
                   child: Container(
+                    height: height * 0.3,
+                    width: width,
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [
-                      Colors.black.withOpacity(0.0),
-                      Colors.black.withOpacity(0.0),
-                      Colors.black.withOpacity(0.1),
-                      Colors.black.withOpacity(0.5),
-                      Colors.black.withOpacity(1.0),
-                    ], begin: Alignment.topRight, end: Alignment.bottomLeft)),
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/goated.jpg"),
+                            fit: BoxFit.cover)),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                        Colors.black.withOpacity(0.0),
+                        Colors.black.withOpacity(0.0),
+                        Colors.black.withOpacity(0.1),
+                        Colors.black.withOpacity(0.5),
+                        Colors.black.withOpacity(1.0),
+                      ], begin: Alignment.topRight, end: Alignment.bottomLeft)),
+                    ),
                   ),
                 ),
                 Positioned(
@@ -126,9 +131,6 @@ class _kambing_listState extends State<kambing_list> {
                               child: Text("Anak"),
                             ),
                           ]),
-                      SizedBox(
-                        height: 5,
-                      ),
                       Expanded(
                         child: Container(
                           child: TabBarView(
@@ -323,6 +325,7 @@ class _kambing_listState extends State<kambing_list> {
                 AspectRatio(
                   aspectRatio: 5 / 3,
                   child: InkWell(
+                      splashColor: Colors.purple,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
