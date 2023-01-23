@@ -186,6 +186,7 @@ class _KambingDialogState extends State<KambingDialog>
     final isEditing = widget.kambing != null;
     final title = isEditing ? 'Ubah Maklumat' : 'Tambah Kambing Baru';
     return AlertDialog(
+      insetPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       title: Text(
         title,
@@ -224,7 +225,7 @@ class _KambingDialogState extends State<KambingDialog>
                                 )
                               : CircleAvatar(
                                   backgroundImage:
-                                      AssetImage("images/kambir.jpg"),
+                                      AssetImage("assets/images/kambir.jpg"),
                                   backgroundColor: Colors.transparent,
                                   radius: 100),
                     ),
@@ -512,9 +513,9 @@ class _KambingDialogState extends State<KambingDialog>
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
+                // SizedBox(
+                //   height: 10.0,
+                // ),
               ],
             ),
           ),
