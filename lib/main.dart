@@ -6,6 +6,7 @@ import 'package:kambing_padula/add_kambing/models/kambing.dart';
 import 'add_kambing/kambing_list.dart';
 import 'testing/localization.dart';
 import 'testing/neumorphism.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();

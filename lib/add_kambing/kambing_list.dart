@@ -6,6 +6,7 @@ import 'package:kambing_padula/add_kambing/KambingDialog.dart';
 import 'package:kambing_padula/add_kambing/models/boxes.dart';
 import 'package:kambing_padula/add_kambing/models/kambing.dart';
 import 'package:kambing_padula/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class kambing_list extends StatefulWidget {
   const kambing_list({Key? key}) : super(key: key);
