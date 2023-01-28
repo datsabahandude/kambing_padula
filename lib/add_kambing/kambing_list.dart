@@ -21,6 +21,12 @@ class _kambing_listState extends State<kambing_list> {
   }
 
   @override
+  void didChangeDependencies() {
+    precacheImage(AssetImage("assets/images/goated.jpg"), context);
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
     Hive.close();
     super.dispose();
