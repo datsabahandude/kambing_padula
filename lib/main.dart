@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kambing_padula/add_kambing/models/kambing.dart';
+import 'package:kambing_padula/testing/gallery_saver.dart';
 import 'add_kambing/kambing_list.dart';
 import 'testing/localization.dart';
 import 'testing/neumorphism.dart';
@@ -124,7 +126,12 @@ class MyHomePage extends StatelessWidget {
                         ),
                         Spacer(),
                         MaterialButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => gallerySaver()));
+                          },
                           child: SizedBox(
                             width: 140.0,
                             height: 150.0,
@@ -141,13 +148,13 @@ class MyHomePage extends StatelessWidget {
                                       Image.asset("assets/images/puteh.png",
                                           width: 64.0),
                                       SizedBox(height: 10.0),
-                                      Text("",
+                                      Text("Image",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20.0,
                                           )),
                                       SizedBox(height: 4.0),
-                                      Text("",
+                                      Text("Save",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20.0,
