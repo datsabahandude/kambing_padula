@@ -18,8 +18,8 @@ class _localizeState extends State<localize> {
         title: Text(
           'lingua',
           style: GoogleFonts.poppins(
-            textStyle: TextStyle(
-              // color: Colors.white,
+            textStyle: const TextStyle(
+                // color: Colors.white,
                 fontSize: 26,
                 fontWeight: FontWeight.bold),
           ),
@@ -29,26 +29,32 @@ class _localizeState extends State<localize> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("text_example",
+            Text(
+              "text_example",
               style: GoogleFonts.raleway(
-                textStyle: TextStyle(
-                  // color: Colors.white,
+                textStyle: const TextStyle(
+                    // color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.w600),
-              ),).tr(),
+              ),
+            ).tr(),
             TextButton(
-              child: Text("en",).tr(),
-            onPressed: () {
-              context.setLocale(Locale('en', 'US'));
-              // controller.onLanguageChanged();
-            },
+              child: const Text(
+                "en",
+              ).tr(),
+              onPressed: () {
+                context.setLocale(const Locale('en', 'US'));
+                // controller.onLanguageChanged();
+              },
             ),
             TextButton(
-              child: Text("my",).tr(),
-            onPressed: () {
-              context.setLocale(Locale('ms', 'MY'));
-              // controller.onLanguageChanged();
-            },
+              child: const Text(
+                "my",
+              ).tr(),
+              onPressed: () {
+                context.setLocale(const Locale('ms', 'MY'));
+                // controller.onLanguageChanged();
+              },
             )
           ],
         ),

@@ -17,33 +17,33 @@ class _neumorphismState extends State<neumorphism> {
   Widget build(BuildContext context) {
     final bgcolor =
         isDarkMode ? const Color(0xFF2E3239) : const Color(0xFFE7ECEF);
-    Offset distance = isPressed ? Offset(10, 10) : Offset(28, 28);
+    Offset distance = isPressed ? const Offset(10, 10) : const Offset(28, 28);
     double blur = isPressed ? 5 : 30;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: bgcolor,
       appBar: AppBar(
-        leading: new IconButton(
-          icon: Icon(
+        leading: IconButton(
+          icon: const Icon(
             Icons.arrow_back_rounded,
             color: Colors.white,
             size: 30,
           ),
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MyHomePage()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const MyHomePage()));
           },
         ),
         title: Text(
           "Neumorphism",
           style: GoogleFonts.poppins(
-            textStyle: TextStyle(
+            textStyle: const TextStyle(
                 // color: Colors.lightGreenAccent,
                 fontSize: 26,
                 fontWeight: FontWeight.bold),
           ),
         ),
-        actions: [],
+        // actions: [],
       ),
       body: Center(
         child: GestureDetector(
@@ -57,17 +57,17 @@ class _neumorphismState extends State<neumorphism> {
                   BoxShadow(
                     blurRadius: blur,
                     offset: -distance,
-                    color: isDarkMode ? Color(0xFF35393F) : Colors.white,
+                    color: isDarkMode ? const Color(0xFF35393F) : Colors.white,
                     inset: isPressed,
                   ),
                   BoxShadow(
                     blurRadius: blur,
                     offset: distance,
-                    color: isDarkMode ? Color(0xFF23262A) : Colors.grey,
+                    color: isDarkMode ? const Color(0xFF23262A) : Colors.grey,
                     inset: isPressed,
                   )
                 ]),
-            child: SizedBox(
+            child: const SizedBox(
               height: 200,
               width: 200,
             ),

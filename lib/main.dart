@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kambing_padula/add_kambing/models/kambing.dart';
@@ -18,9 +17,9 @@ Future main() async {
   runApp(
       // Naming based on country locale code 'https://www.fincher.org/Utilities/CountryLanguageList.shtml'
       EasyLocalization(
-          supportedLocales: [Locale('en', 'US'), Locale('ms', 'MY')],
+          supportedLocales: const [Locale('en', 'US'), Locale('ms', 'MY')],
           path: 'assets/translations',
-          fallbackLocale: Locale('en', 'US'),
+          fallbackLocale: const Locale('en', 'US'),
           child: const MyApp()));
 }
 
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    precacheImage(AssetImage("assets/images/goated.jpg"), context);
+    precacheImage(const AssetImage("assets/images/goated.jpg"), context);
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
@@ -64,7 +63,7 @@ class MyHomePage extends StatelessWidget {
           title: Text(
             'Kambing Pak Dola',
             style: GoogleFonts.poppins(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                   // color: Colors.white,
                   fontSize: 26,
                   fontWeight: FontWeight.bold),
@@ -88,7 +87,7 @@ class MyHomePage extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => localize()));
+                                    builder: (context) => const localize()));
                           },
                           child: SizedBox(
                             width: 140.0,
@@ -105,14 +104,14 @@ class MyHomePage extends StatelessWidget {
                                     children: [
                                       Image.asset("assets/images/goat_icon.png",
                                           width: 64.0),
-                                      SizedBox(height: 10.0),
-                                      Text("Easy",
+                                      const SizedBox(height: 10.0),
+                                      const Text("Easy",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20.0,
                                           )),
-                                      SizedBox(height: 4.0),
-                                      Text("Localization",
+                                      const SizedBox(height: 4.0),
+                                      const Text("Localization",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20.0,
@@ -124,13 +123,14 @@ class MyHomePage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         MaterialButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => gallerySaver()));
+                                    builder: (context) =>
+                                        const gallerySaver()));
                           },
                           child: SizedBox(
                             width: 140.0,
@@ -147,14 +147,14 @@ class MyHomePage extends StatelessWidget {
                                     children: [
                                       Image.asset("assets/images/puteh.png",
                                           width: 64.0),
-                                      SizedBox(height: 10.0),
-                                      Text("Image",
+                                      const SizedBox(height: 10.0),
+                                      const Text("Image",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20.0,
                                           )),
-                                      SizedBox(height: 4.0),
-                                      Text("Save",
+                                      const SizedBox(height: 4.0),
+                                      const Text("Save",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20.0,
@@ -172,7 +172,7 @@ class MyHomePage extends StatelessWidget {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Center(
@@ -187,7 +187,7 @@ class MyHomePage extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => neumorphism()));
+                                    builder: (context) => const neumorphism()));
                           },
                           child: SizedBox(
                             width: 140.0,
@@ -204,14 +204,14 @@ class MyHomePage extends StatelessWidget {
                                     children: [
                                       Image.asset("assets/images/goat_icon.png",
                                           width: 64.0),
-                                      SizedBox(height: 10.0),
+                                      const SizedBox(height: 10.0),
                                       // Text("Neumorphism",
                                       //     style: TextStyle(
                                       //       color: Colors.white,
                                       //       fontSize: 20.0,
                                       //     )),
-                                      SizedBox(height: 4.0),
-                                      Text("Neumorphism",
+                                      const SizedBox(height: 4.0),
+                                      const Text("Neumorphism",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 18.0,
@@ -223,13 +223,14 @@ class MyHomePage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         MaterialButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => kambing_list()));
+                                    builder: (context) =>
+                                        const kambing_list()));
                           },
                           child: SizedBox(
                             width: 140.0,
@@ -246,14 +247,14 @@ class MyHomePage extends StatelessWidget {
                                     children: [
                                       Image.asset("assets/images/puteh.png",
                                           width: 64.0),
-                                      SizedBox(height: 10.0),
-                                      Text("Senarai",
+                                      const SizedBox(height: 10.0),
+                                      const Text("Senarai",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20.0,
                                           )),
-                                      SizedBox(height: 4.0),
-                                      Text("Kambing",
+                                      const SizedBox(height: 4.0),
+                                      const Text("Kambing",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20.0,
