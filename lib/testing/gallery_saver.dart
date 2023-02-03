@@ -62,7 +62,7 @@ class _gallerySaverState extends State<gallerySaver> {
                       /// alternatively look into Dio package if download image not working
                       /// toDcim: true // if want inside camera folder
                       try {
-                        await GallerySaver.saveImage(imageBytes.toString(),
+                        await GallerySaver.saveImage(image!.path,
                             albumName: 'Flutter');
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
