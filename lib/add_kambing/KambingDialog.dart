@@ -30,8 +30,8 @@ class _KambingDialogState extends State<KambingDialog>
   String? _selectedVal = '';
   DateTime datenow = DateTime.now();
   String umur = '';
-  final namaEditingController = new TextEditingController();
-  final hargaEditingController = new TextEditingController();
+  final namaEditingController = TextEditingController();
+  final hargaEditingController = TextEditingController();
   File? image;
   Uint8List? imageBytes;
 
@@ -68,7 +68,7 @@ class _KambingDialogState extends State<KambingDialog>
         this.imageBytes = imageBytes;
       });
     } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
+      // print('Failed to pick image: $e');
       Fluttertoast.showToast(
           msg: "Ternyata timbul masalah",
           toastLength: Toast.LENGTH_SHORT,
@@ -92,7 +92,7 @@ class _KambingDialogState extends State<KambingDialog>
         this.imageBytes = imageBytes;
       });
     } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
+      // print('Failed to pick image: $e');
       Fluttertoast.showToast(
           msg: "Tenyata punya masalah",
           toastLength: Toast.LENGTH_SHORT,
@@ -123,7 +123,7 @@ class _KambingDialogState extends State<KambingDialog>
         decoration: InputDecoration(
             floatingLabelBehavior: FloatingLabelBehavior.never,
             errorStyle: GoogleFonts.poppins(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                 fontSize: 12.0,
                 color: Colors.deepPurpleAccent,
                 fontWeight: FontWeight.w700,
@@ -131,11 +131,11 @@ class _KambingDialogState extends State<KambingDialog>
             ),
             fillColor: Colors.white,
             filled: true,
-            prefixIcon: Icon(Icons.paste_outlined, color: Colors.purple),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+            prefixIcon: const Icon(Icons.paste_outlined, color: Colors.purple),
+            contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
             hintText: "Nama Kambing",
             hintStyle: GoogleFonts.poppins(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                 fontSize: 16.0,
                 color: Colors.deepPurple,
               ),
@@ -146,7 +146,7 @@ class _KambingDialogState extends State<KambingDialog>
     final hargaField = TextFormField(
         autofocus: false,
         controller: hargaEditingController,
-        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: <TextInputFormatter>[
           FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))
         ],
@@ -162,7 +162,7 @@ class _KambingDialogState extends State<KambingDialog>
         decoration: InputDecoration(
             floatingLabelBehavior: FloatingLabelBehavior.never,
             errorStyle: GoogleFonts.poppins(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                 fontSize: 12.0,
                 color: Colors.deepPurpleAccent,
                 fontWeight: FontWeight.w700,
@@ -170,12 +170,12 @@ class _KambingDialogState extends State<KambingDialog>
             ),
             fillColor: Colors.white,
             filled: true,
-            prefixIcon:
-                Icon(Icons.monetization_on_outlined, color: Colors.purple),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+            prefixIcon: const Icon(Icons.monetization_on_outlined,
+                color: Colors.purple),
+            contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
             hintText: "Harga Kambing",
             hintStyle: GoogleFonts.poppins(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                 fontSize: 16.0,
                 color: Colors.deepPurple,
               ),
@@ -191,13 +191,13 @@ class _KambingDialogState extends State<KambingDialog>
       title: Text(
         title,
         style: GoogleFonts.poppins(
-          textStyle: TextStyle(),
+          textStyle: const TextStyle(),
         ),
       ),
       content: SingleChildScrollView(
         // padding: EdgeInsets.all(15.0),
         child: Container(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Form(
             key: _formKey,
             child: Column(
@@ -223,7 +223,7 @@ class _KambingDialogState extends State<KambingDialog>
                                     fit: BoxFit.cover,
                                   ),
                                 )
-                              : CircleAvatar(
+                              : const CircleAvatar(
                                   backgroundImage:
                                       AssetImage("assets/images/kambir.jpg"),
                                   backgroundColor: Colors.transparent,
@@ -235,10 +235,8 @@ class _KambingDialogState extends State<KambingDialog>
                       child: RawMaterialButton(
                         elevation: 10,
                         fillColor: Colors.white,
-                        child: Icon(Icons.add_a_photo_outlined,
-                            color: Color(0xff360c72)),
-                        padding: EdgeInsets.all(15),
-                        shape: CircleBorder(),
+                        padding: const EdgeInsets.all(15),
+                        shape: const CircleBorder(),
                         onPressed: () {
                           showDialog(
                               context: context,
@@ -247,7 +245,7 @@ class _KambingDialogState extends State<KambingDialog>
                                     title: Text(
                                       'Sila Pilih',
                                       style: GoogleFonts.poppins(
-                                          textStyle: TextStyle(
+                                          textStyle: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         color: Colors.deepPurple,
                                       )),
@@ -260,9 +258,8 @@ class _KambingDialogState extends State<KambingDialog>
                                             onTap: _pickImageCamera,
                                             child: Row(
                                               children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
+                                                const Padding(
+                                                  padding: EdgeInsets.all(8.0),
                                                   child: Icon(
                                                     Icons.camera_alt,
                                                     color: Colors.deepPurple,
@@ -271,7 +268,8 @@ class _KambingDialogState extends State<KambingDialog>
                                                 Text(
                                                   'Kamera',
                                                   style: GoogleFonts.poppins(
-                                                      textStyle: TextStyle(
+                                                      textStyle:
+                                                          const TextStyle(
                                                     fontSize: 20,
                                                     color: Colors.deepPurple,
                                                     fontWeight: FontWeight.w500,
@@ -285,9 +283,8 @@ class _KambingDialogState extends State<KambingDialog>
                                             onTap: _pickImageGallery,
                                             child: Row(
                                               children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
+                                                const Padding(
+                                                  padding: EdgeInsets.all(8.0),
                                                   child: Icon(
                                                     Icons.image_outlined,
                                                     color: Colors.deepPurple,
@@ -296,12 +293,14 @@ class _KambingDialogState extends State<KambingDialog>
                                                 Text(
                                                   'Album',
                                                   style: GoogleFonts.poppins(
-                                                      textStyle: TextStyle(
-                                                          fontSize: 20,
-                                                          color:
-                                                              Colors.deepPurple,
-                                                          fontWeight:
-                                                              FontWeight.w500)),
+                                                      textStyle:
+                                                          const TextStyle(
+                                                              fontSize: 20,
+                                                              color: Colors
+                                                                  .deepPurple,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500)),
                                                 )
                                               ],
                                             ),
@@ -311,11 +310,13 @@ class _KambingDialogState extends State<KambingDialog>
                                     ));
                               });
                         },
+                        child: const Icon(Icons.add_a_photo_outlined,
+                            color: Color(0xff360c72)),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10.0,
                 ),
                 ElevatedButton.icon(
@@ -378,13 +379,13 @@ class _KambingDialogState extends State<KambingDialog>
                       return;
                     }
                     setState(() => datenow = newdate);
-                    umur = yy + ' Tahun ' + mm + ' Bulan';
+                    umur = '$yy Tahun $mm Bulan';
                   },
-                  icon: Icon(Icons.cake_outlined, color: Colors.purple),
+                  icon: const Icon(Icons.cake_outlined, color: Colors.purple),
                   label: Text(
                     '${datenow.day}/${datenow.month}/${datenow.year}',
                     style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         color: Colors.deepPurple,
                         fontSize: 16,
                       ),
@@ -395,42 +396,42 @@ class _KambingDialogState extends State<KambingDialog>
                 ),
                 ElevatedButton.icon(
                   onPressed: () {},
-                  icon: Icon(Icons.av_timer, color: Colors.purple),
+                  icon: const Icon(Icons.av_timer, color: Colors.purple),
                   label: Text(
-                    'Umur: ' + umur,
+                    'Umur: $umur',
                     style: GoogleFonts.poppins(
-                      textStyle:
-                          TextStyle(color: Colors.deepPurple, fontSize: 14),
+                      textStyle: const TextStyle(
+                          color: Colors.deepPurple, fontSize: 14),
                     ),
                   ),
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.white)),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10.0,
                 ),
                 namaField,
-                SizedBox(
+                const SizedBox(
                   height: 15.0,
                 ),
                 hargaField,
-                SizedBox(
+                const SizedBox(
                   height: 15.0,
                 ),
                 DropdownButtonFormField(
                   value: _selectedVal,
                   items: jantina
                       .map((e) => DropdownMenuItem(
+                          value: e,
                           child: Text(
                             e,
                             style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
+                              textStyle: const TextStyle(
                                   color: Colors.deepPurple,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold),
                             ),
-                          ),
-                          value: e))
+                          )))
                       .toList(),
                   onChanged: (val) {
                     setState(() {
@@ -440,91 +441,82 @@ class _KambingDialogState extends State<KambingDialog>
                   dropdownColor: Colors.white,
                   decoration: InputDecoration(
                     prefixIcon: _selectedVal == 'Jantan'
-                        ? Icon(
+                        ? const Icon(
                             Icons.male_outlined,
                             color: Colors.blue,
                           )
                         : _selectedVal == 'Betina'
-                            ? Icon(
+                            ? const Icon(
                                 Icons.female_outlined,
                                 color: Colors.pink,
                               )
-                            : Icon(Icons.transgender_outlined),
+                            : const Icon(Icons.transgender_outlined),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     fillColor: Colors.white,
                     filled: true,
-                    contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20.0,
                 ),
-                Container(
-                  child: Material(
-                    elevation: 5,
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.white,
-                    child: MaterialButton(
-                      padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                      minWidth: MediaQuery.of(context).size.width * 0.6,
-                      onPressed: () async {
-                        final isValid = _formKey.currentState!.validate();
-                        if ((isValid && image != null) ||
-                            (isValid && imageBytes != null)) {
-                          final img = imageBytes!;
-                          final nama = namaEditingController.text;
-                          final harga = hargaEditingController.text;
-                          final g = _selectedVal!;
-                          widget.onClickedDone(img, datenow, nama, harga, g);
-                          Navigator.of(context).pop();
-                          Fluttertoast.showToast(
-                              msg: "Daftar Berjaya!",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.deepPurple,
-                              textColor: Colors.white,
-                              fontSize: 16.0);
-                        } else if ((image == null) && (imageBytes == null)) {
-                          Fluttertoast.showToast(
-                              msg: "Mana Gambarnya?",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.red,
-                              textColor: Colors.white,
-                              fontSize: 16.0);
-                        }
-                      },
-                      child: Text(
-                        "Daftar Kambing",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              fontSize: 20,
-                              color: Color(0xff360c72),
-                              fontWeight: FontWeight.bold),
-                        ),
+                Material(
+                  elevation: 5,
+                  borderRadius: BorderRadius.circular(30),
+                  color: Colors.white,
+                  child: MaterialButton(
+                    padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    minWidth: MediaQuery.of(context).size.width * 0.6,
+                    onPressed: () async {
+                      final isValid = _formKey.currentState!.validate();
+                      if ((isValid && image != null) ||
+                          (isValid && imageBytes != null)) {
+                        final img = imageBytes!;
+                        final nama = namaEditingController.text;
+                        final harga = hargaEditingController.text;
+                        final g = _selectedVal!;
+                        widget.onClickedDone(img, datenow, nama, harga, g);
+                        Navigator.of(context).pop();
+                        Fluttertoast.showToast(
+                            msg: "Daftar Berjaya!",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.deepPurple,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                      } else if ((image == null) && (imageBytes == null)) {
+                        Fluttertoast.showToast(
+                            msg: "Mana Gambarnya?",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                      }
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    child: Text(
+                      "Daftar Kambing",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        textStyle: const TextStyle(
+                            fontSize: 20,
+                            color: Color(0xff360c72),
+                            fontWeight: FontWeight.bold),
                       ),
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(20.0)),
                     ),
                   ),
                 ),
-                // SizedBox(
-                //   height: 10.0,
-                // ),
               ],
             ),
           ),
         ),
       ),
-      actions: <Widget>[
-        // buildCancelButton(context),
-        // buildAddButton(context, isEditing: isEditing),
-      ],
     );
   }
 }
