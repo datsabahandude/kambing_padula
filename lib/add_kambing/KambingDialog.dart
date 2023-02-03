@@ -512,18 +512,11 @@ class _KambingDialogState extends State<KambingDialog>
                     ),
                   ),
                 ),
-                // SizedBox(
-                //   height: 10.0,
-                // ),
               ],
             ),
           ),
         ),
       ),
-      actions: const <Widget>[
-        // buildCancelButton(context),
-        // buildAddButton(context, isEditing: isEditing),
-      ],
     );
   }
 }

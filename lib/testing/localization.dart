@@ -29,15 +29,18 @@ class _localizeState extends State<localize> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "text_example",
-              style: GoogleFonts.raleway(
-                textStyle: const TextStyle(
-                    // color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600),
-              ),
-            ).tr(),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                "text_example",
+                style: GoogleFonts.raleway(
+                  textStyle: const TextStyle(
+                      // color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600),
+                ),
+              ).tr(),
+            ),
             TextButton(
               child: const Text(
                 "en",
