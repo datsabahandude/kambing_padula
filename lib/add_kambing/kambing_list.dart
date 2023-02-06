@@ -36,156 +36,161 @@ class _kambing_listState extends State<kambing_list> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Column(
-        children: [
-          Stack(
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MyHomePage()));
-                },
-                child: Container(
-                  height: height * 0.3,
-                  width: width,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/goated.jpg"),
-                          fit: BoxFit.cover)),
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Column(
+          children: [
+            Stack(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MyHomePage()));
+                  },
                   child: Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [
-                      Colors.black.withOpacity(0.0),
-                      Colors.black.withOpacity(0.0),
-                      Colors.black.withOpacity(0.1),
-                      Colors.black.withOpacity(0.5),
-                      Colors.black.withOpacity(1.0),
-                    ], begin: Alignment.topRight, end: Alignment.bottomLeft)),
+                    height: height * 0.3,
+                    width: width,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/goated.jpg"),
+                            fit: BoxFit.cover)),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                        Colors.black.withOpacity(0.0),
+                        Colors.black.withOpacity(0.0),
+                        Colors.black.withOpacity(0.1),
+                        Colors.black.withOpacity(0.5),
+                        Colors.black.withOpacity(1.0),
+                      ], begin: Alignment.topRight, end: Alignment.bottomLeft)),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 80,
+                  left: 20,
+                  child: RichText(
+                    text: TextSpan(
+                        text: "Kambing",
+                        style: GoogleFonts.poppins(
+                          textStyle: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w300),
+                        ),
+                        children: [
+                          TextSpan(
+                            text: "\nPak Dola",
+                            style: GoogleFonts.poppins(
+                              textStyle: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          )
+                        ]),
+                  ),
+                )
+              ],
+            ),
+            Transform.translate(
+              offset: Offset(0.0, -(height * 0.3 - height * 0.26)),
+              child: Container(
+                width: width,
+                height: height * 0.7,
+                padding: const EdgeInsets.only(top: 10),
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    )),
+                child: DefaultTabController(
+                  length: 3,
+                  child: Column(
+                    children: <Widget>[
+                      TabBar(
+                          labelColor: Colors.black,
+                          labelStyle: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                                // color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          unselectedLabelColor: Colors.grey[400],
+                          unselectedLabelStyle: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                                // color: Colors.white,
+                                fontSize: 17,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          indicatorSize: TabBarIndicatorSize.label,
+                          // indicatorColor: Colors.transparent,
+                          tabs: const <Widget>[
+                            Tab(
+                              child: Text("Kambing"),
+                            ),
+                            Tab(
+                              child: Text("Matang"),
+                            ),
+                            Tab(
+                              child: Text("Anak"),
+                            ),
+                          ]),
+                      Expanded(
+                        child: TabBarView(
+                          children: [
+                            ValueListenableBuilder<Box<Kambing>>(
+                              valueListenable: Boxes.getKambings().listenable(),
+                              builder: (context, box, _) {
+                                final kambings =
+                                    box.values.toList().cast<Kambing>();
+                                int page = 0;
+                                return buildContent(kambings, page);
+                              },
+                            ),
+                            ValueListenableBuilder<Box<Kambing>>(
+                              valueListenable: Boxes.getKambings().listenable(),
+                              builder: (context, box, _) {
+                                final kambings =
+                                    box.values.toList().cast<Kambing>();
+                                int page = 1;
+                                return buildContent(kambings, page);
+                              },
+                            ),
+                            ValueListenableBuilder<Box<Kambing>>(
+                              valueListenable: Boxes.getKambings().listenable(),
+                              builder: (context, box, _) {
+                                final kambings =
+                                    box.values.toList().cast<Kambing>();
+                                int page = 2;
+                                return buildContent(kambings, page);
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              Positioned(
-                bottom: 80,
-                left: 20,
-                child: RichText(
-                  text: TextSpan(
-                      text: "Kambing",
-                      style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w300),
-                      ),
-                      children: [
-                        TextSpan(
-                          text: "\nPak Dola",
-                          style: GoogleFonts.poppins(
-                            textStyle: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        )
-                      ]),
-                ),
-              )
-            ],
+            )
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.deepPurple,
+          onPressed: () => showDialog(
+              context: context,
+              builder: (context) => KambingDialog(onClickedDone: addKambing)),
+          child: const Icon(
+            Icons.add,
           ),
-          Transform.translate(
-            offset: Offset(0.0, -(height * 0.3 - height * 0.26)),
-            child: Container(
-              width: width,
-              height: height * 0.7,
-              padding: const EdgeInsets.only(top: 10),
-              decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  )),
-              child: DefaultTabController(
-                length: 3,
-                child: Column(
-                  children: <Widget>[
-                    TabBar(
-                        labelColor: Colors.black,
-                        labelStyle: GoogleFonts.poppins(
-                          textStyle: const TextStyle(
-                              // color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        unselectedLabelColor: Colors.grey[400],
-                        unselectedLabelStyle: GoogleFonts.poppins(
-                          textStyle: const TextStyle(
-                              // color: Colors.white,
-                              fontSize: 17,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        indicatorSize: TabBarIndicatorSize.label,
-                        // indicatorColor: Colors.transparent,
-                        tabs: const <Widget>[
-                          Tab(
-                            child: Text("Kambing"),
-                          ),
-                          Tab(
-                            child: Text("Matang"),
-                          ),
-                          Tab(
-                            child: Text("Anak"),
-                          ),
-                        ]),
-                    Expanded(
-                      child: TabBarView(
-                        children: [
-                          ValueListenableBuilder<Box<Kambing>>(
-                            valueListenable: Boxes.getKambings().listenable(),
-                            builder: (context, box, _) {
-                              final kambings =
-                                  box.values.toList().cast<Kambing>();
-                              int page = 0;
-                              return buildContent(kambings, page);
-                            },
-                          ),
-                          ValueListenableBuilder<Box<Kambing>>(
-                            valueListenable: Boxes.getKambings().listenable(),
-                            builder: (context, box, _) {
-                              final kambings =
-                                  box.values.toList().cast<Kambing>();
-                              int page = 1;
-                              return buildContent(kambings, page);
-                            },
-                          ),
-                          ValueListenableBuilder<Box<Kambing>>(
-                            valueListenable: Boxes.getKambings().listenable(),
-                            builder: (context, box, _) {
-                              final kambings =
-                                  box.values.toList().cast<Kambing>();
-                              int page = 2;
-                              return buildContent(kambings, page);
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepPurple,
-        onPressed: () => showDialog(
-            context: context,
-            builder: (context) => KambingDialog(onClickedDone: addKambing)),
-        child: const Icon(
-          Icons.add,
         ),
       ),
     );
