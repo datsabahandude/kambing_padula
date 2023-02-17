@@ -22,6 +22,7 @@ dependencies:
   easy_localization: ^3.0.1
   provider: ^6.0.5
   gallery_saver: ^2.3.2
+  lottie: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -37,8 +38,6 @@ flutter_icons:
 flutter:
   uses-material-design: true
   assets:
-  - assets/images/goat_icon.png
-  - assets/images/goated.jpg
-  - assets/images/kambir.jpg
-  - assets/images/puteh.png
+  - assets/images/
   - assets/translations/
+  - assets/lottie/

@@ -48,231 +48,212 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints.expand(),
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/images/goated.jpg"),
-              fit: BoxFit.cover)),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: Text(
-            'Kambing Pak Dola',
-            style: GoogleFonts.poppins(
-              textStyle: const TextStyle(
-                  // color: Colors.white,
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold),
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/goated.jpg"),
+                fit: BoxFit.cover)),
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            centerTitle: true,
+            title: Text(
+              'Widgets',
+              style: GoogleFonts.poppins(
+                textStyle: const TextStyle(
+                    // color: Colors.white,
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Center(
-                child: Wrap(
-                  spacing: 15.0,
-                  runSpacing: 15.0,
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 25),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
                   children: [
-                    Row(
-                      children: [
-                        MaterialButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const localize()));
-                          },
-                          child: SizedBox(
-                            width: 140.0,
-                            height: 150.0,
-                            child: Card(
-                              color: Colors.transparent,
-                              elevation: 2.0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0)),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Image.asset("assets/images/goat_icon.png",
-                                          width: 64.0),
-                                      const SizedBox(height: 10.0),
-                                      const Text("Easy",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20.0,
-                                          )),
-                                      const SizedBox(height: 4.0),
-                                      const Text("Localization",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20.0,
-                                          )),
-                                    ],
-                                  ),
-                                ),
+                    MaterialButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const localize()));
+                      },
+                      child: SizedBox(
+                        width: 140.0,
+                        height: 150.0,
+                        child: Card(
+                          color: Colors.transparent,
+                          elevation: 2.0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0)),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Image.asset("assets/images/goat_icon.png",
+                                      width: 64.0),
+                                  const SizedBox(height: 10.0),
+                                  const Text("Easy",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                      )),
+                                  const SizedBox(height: 4.0),
+                                  const Text("Localization",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                      )),
+                                ],
                               ),
                             ),
                           ),
                         ),
-                        const Spacer(),
-                        MaterialButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const gallerySaver()));
-                          },
-                          child: SizedBox(
-                            width: 140.0,
-                            height: 150.0,
-                            child: Card(
-                              color: Colors.transparent,
-                              elevation: 2.0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0)),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Image.asset("assets/images/puteh.png",
-                                          width: 64.0),
-                                      const SizedBox(height: 10.0),
-                                      const Text("Image",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20.0,
-                                          )),
-                                      const SizedBox(height: 4.0),
-                                      const Text("Save",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20.0,
-                                          )),
-                                    ],
-                                  ),
-                                ),
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const gallerySaver()));
+                      },
+                      child: SizedBox(
+                        width: 140.0,
+                        height: 150.0,
+                        child: Card(
+                          color: Colors.transparent,
+                          elevation: 2.0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0)),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Image.asset("assets/images/puteh.png",
+                                      width: 64.0),
+                                  const SizedBox(height: 10.0),
+                                  const Text("Image",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                      )),
+                                  const SizedBox(height: 4.0),
+                                  const Text("Save",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                      )),
+                                ],
                               ),
                             ),
                           ),
                         ),
-                      ],
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const neumorphism()));
+                      },
+                      child: SizedBox(
+                        width: 140.0,
+                        height: 150.0,
+                        child: Card(
+                          color: Colors.transparent,
+                          elevation: 2.0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0)),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Image.asset("assets/images/goat_icon.png",
+                                      width: 64.0),
+                                  const SizedBox(height: 10.0),
+                                  const SizedBox(height: 4.0),
+                                  const Text("Neumorphism",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18.0,
+                                      )),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
-            ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Center(
-                child: Wrap(
-                  spacing: 15.0,
-                  runSpacing: 15.0,
-                  children: [
-                    Row(
-                      children: [
-                        MaterialButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const neumorphism()));
-                          },
-                          child: SizedBox(
-                            width: 140.0,
-                            height: 150.0,
-                            child: Card(
-                              color: Colors.transparent,
-                              elevation: 2.0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0)),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Image.asset("assets/images/goat_icon.png",
-                                          width: 64.0),
-                                      const SizedBox(height: 10.0),
-                                      // Text("Neumorphism",
-                                      //     style: TextStyle(
-                                      //       color: Colors.white,
-                                      //       fontSize: 20.0,
-                                      //     )),
-                                      const SizedBox(height: 4.0),
-                                      const Text("Neumorphism",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18.0,
-                                          )),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
+              const Spacer(),
+              Center(
+                child: MaterialButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const kambing_list()));
+                  },
+                  child: SizedBox(
+                    width: 260.0,
+                    height: 280.0,
+                    child: Card(
+                      color: Colors.transparent,
+                      elevation: 2.0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0)),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            children: [
+                              Image.asset("assets/images/puteh.png",
+                                  width: 128.0),
+                              const SizedBox(height: 20.0),
+                              Text("SENARAI",
+                                  style: GoogleFonts.lato(
+                                      textStyle: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 34.0,
+                                  ))),
+                              const SizedBox(height: 3.0),
+                              Text("KAMBING",
+                                  style: GoogleFonts.lato(
+                                      textStyle: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 34.0,
+                                  ))),
+                            ],
                           ),
                         ),
-                        const Spacer(),
-                        MaterialButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const kambing_list()));
-                          },
-                          child: SizedBox(
-                            width: 140.0,
-                            height: 150.0,
-                            child: Card(
-                              color: Colors.transparent,
-                              elevation: 2.0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0)),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Image.asset("assets/images/puteh.png",
-                                          width: 64.0),
-                                      const SizedBox(height: 10.0),
-                                      const Text("Senarai",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20.0,
-                                          )),
-                                      const SizedBox(height: 4.0),
-                                      const Text("Kambing",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20.0,
-                                          )),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 40,
+              ),
+            ],
+          ),
         ),
       ),
     );
