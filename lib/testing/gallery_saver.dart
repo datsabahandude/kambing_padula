@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
 
@@ -49,7 +50,17 @@ class _gallerySaverState extends State<gallerySaver> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          "Compress Image",
+          style: GoogleFonts.poppins(
+            textStyle: const TextStyle(
+                // color: Colors.lightGreenAccent,
+                fontSize: 26,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
       body: Container(
         color: Colors.amber[50],
         child: Center(
