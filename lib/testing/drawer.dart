@@ -10,12 +10,20 @@ class PDrawer extends StatefulWidget {
 
 class _PDrawerState extends State<PDrawer> {
   final _duration = const Duration(milliseconds: 1000);
+  bool isDrawer = false;
+
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        leading: const InkWell(
-          onTap: _isDrawerTap,
+        leading: InkWell(
+          onTap: () {
+            setState(() {
+              isDrawer = !isDrawer;
+            });
+          },
           child: Icon(Icons.list),
         ),
         centerTitle: true,
@@ -31,10 +39,12 @@ class _PDrawerState extends State<PDrawer> {
       body: Stack(
         children: [
           Container(
-            color: Colors.amber,
+            width: width,
+            height: height,
+            color: Colors.amber[50],
           ),
           AnimatedPositioned(
-            left: 0,
+            left: isDrawer ? 0 : -300,
             duration: _duration,
             child: DecoratedBox(
               decoration: BoxDecoration(
@@ -47,7 +57,12 @@ class _PDrawerState extends State<PDrawer> {
                     ),
                   ],
                   borderRadius: BorderRadius.all(Radius.circular(12))),
-              // child: ListView(children: []),
+              child: Container(
+                height: height,
+                width: width * 0.4,
+                color: Colors.blueGrey,
+              ),
+              // child: ListView(children: [Text('data1'), Text('data2')]),
             ),
           )
         ],
@@ -55,5 +70,3 @@ class _PDrawerState extends State<PDrawer> {
     );
   }
 }
-
-void _isDrawerTap() {}
