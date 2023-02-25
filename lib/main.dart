@@ -7,6 +7,7 @@ import 'package:kambing_padula/testing/gallery_saver.dart';
 import 'add_kambing/kambing_list.dart';
 import 'testing/localization.dart';
 import 'testing/neumorphism.dart';
+import 'testing/drawer.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -192,6 +193,45 @@ class MyHomePage extends StatelessWidget {
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 18.0,
+                                      )),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => PDrawer()));
+                      },
+                      child: SizedBox(
+                        width: 140.0,
+                        height: 150.0,
+                        child: Card(
+                          color: Colors.transparent,
+                          elevation: 2.0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0)),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Image.asset("assets/images/puteh.png",
+                                      width: 64.0),
+                                  const SizedBox(height: 10.0),
+                                  const Text("kEwL",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                      )),
+                                  const SizedBox(height: 4.0),
+                                  const Text("dRaWeR",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
                                       )),
                                 ],
                               ),
