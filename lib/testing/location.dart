@@ -10,11 +10,17 @@ class LocationPage extends StatefulWidget {
 }
 
 class _LocationPageState extends State<LocationPage> {
-  final Uri _url = Uri.parse('https://github.com/datsabahandude');
+  final _url = 'https://github.com/datsabahandude';
   String lat = '';
   String long = '';
   String locationMessage = '';
   bool isLoading = false;
+  @override
+  void initState() {
+    super.initState();
+    _liveLocation(); // fetch current location
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +46,7 @@ class _LocationPageState extends State<LocationPage> {
                         setState(() {
                           isLoading = true;
                         });
+
                         _getCurrentLocation().then((value) {
                           lat = '${value.latitude}';
                           long = '${value.longitude}';
@@ -62,7 +69,13 @@ class _LocationPageState extends State<LocationPage> {
                             : () {
                                 _openMap(lat, long);
                               },
-                        child: const Text('Open Map'))
+                        child: const Text('Open Map')),
+                    ElevatedButton(
+                      onPressed: () {
+                        _launchUrl();
+                      },
+                      child: const Text('My Github Profile'),
+                    )
                   ]),
             ),
     );
@@ -109,5 +122,12 @@ class _LocationPageState extends State<LocationPage> {
     await canLaunchUrlString(googleUrl)
         ? await launchUrlString(googleUrl)
         : throw 'Could Not Launch $googleUrl';
+  }
+
+  /// Github Profile
+  Future<void> _launchUrl() async {
+    if (!await launchUrlString(_url)) {
+      throw Exception('Could not launch $_url');
+    }
   }
 }
