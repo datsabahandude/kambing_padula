@@ -11,8 +11,8 @@ class LocationPage extends StatefulWidget {
 }
 
 class _LocationPageState extends State<LocationPage> {
-  final Uri _url =
-      Uri.parse('https://github.com/datsabahandude'); // use universal format
+  final Uri _url = Uri.parse(
+      'https://github.com/datsabahandude'); // use universal format 'https:' 'tel:' 'sms:' 'file:'
   String lat = '';
   String long = '';
   String locationMessage = '';
