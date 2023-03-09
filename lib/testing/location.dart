@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class LocationPage extends StatefulWidget {
@@ -10,7 +11,8 @@ class LocationPage extends StatefulWidget {
 }
 
 class _LocationPageState extends State<LocationPage> {
-  final _url = 'https://github.com/datsabahandude';
+  final Uri _url =
+      Uri.parse('https://github.com/datsabahandude'); // use universal format
   String lat = '';
   String long = '';
   String locationMessage = '';
@@ -72,7 +74,7 @@ class _LocationPageState extends State<LocationPage> {
                         child: const Text('Open Map')),
                     ElevatedButton(
                       onPressed: () {
-                        _launchUrl();
+                        _launchUrl(_url);
                       },
                       child: const Text('My Github Profile'),
                     )
@@ -125,8 +127,8 @@ class _LocationPageState extends State<LocationPage> {
   }
 
   /// Github Profile
-  Future<void> _launchUrl() async {
-    if (!await launchUrlString(_url)) {
+  Future<void> _launchUrl(_url) async {
+    if (!await launchUrl(_url)) {
       throw Exception('Could not launch $_url');
     }
   }
