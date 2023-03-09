@@ -42,13 +42,13 @@ class _kambing_listState extends State<kambing_list> {
       onWillPop: () async {
         return false;
       },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: isLottie
-            ? Center(
-                child: Lottie.asset('assets/lottie/counting-sheep.json'),
-              )
-            : Column(
+      child: isLottie
+          ? Center(
+              child: Lottie.asset('assets/lottie/counting-sheep.json'),
+            )
+          : Scaffold(
+              resizeToAvoidBottomInset: false,
+              body: Column(
                 children: [
                   Stack(
                     children: [
@@ -198,16 +198,17 @@ class _kambing_listState extends State<kambing_list> {
                   )
                 ],
               ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.deepPurple,
-          onPressed: () => showDialog(
-              context: context,
-              builder: (context) => KambingDialog(onClickedDone: addKambing)),
-          child: const Icon(
-            Icons.add,
-          ),
-        ),
-      ),
+              floatingActionButton: FloatingActionButton(
+                backgroundColor: Colors.deepPurple,
+                onPressed: () => showDialog(
+                    context: context,
+                    builder: (context) =>
+                        KambingDialog(onClickedDone: addKambing)),
+                child: const Icon(
+                  Icons.add,
+                ),
+              ),
+            ),
     );
   }
 
