@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kambing_padula/add_kambing/models/kambing.dart';
 import 'package:kambing_padula/testing/gallery_saver.dart';
 import 'package:kambing_padula/testing/location.dart';
+import 'package:kambing_padula/testing/qr_code.dart';
 import 'add_kambing/kambing_list.dart';
 import 'testing/localization.dart';
 import 'testing/neumorphism.dart';
@@ -204,8 +205,10 @@ class MyHomePage extends StatelessWidget {
                     ),
                     MaterialButton(
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => PDrawer()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const PDrawer()));
                       },
                       child: SizedBox(
                         width: 140.0,
@@ -271,6 +274,47 @@ class MyHomePage extends StatelessWidget {
                                       )),
                                   const SizedBox(height: 4.0),
                                   const Text("Location",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                      )),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const QRCodePage()));
+                      },
+                      child: SizedBox(
+                        width: 140.0,
+                        height: 150.0,
+                        child: Card(
+                          color: Colors.transparent,
+                          elevation: 2.0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0)),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Image.asset("assets/images/puteh.png",
+                                      width: 64.0),
+                                  const SizedBox(height: 10.0),
+                                  const Text("QR",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                      )),
+                                  const SizedBox(height: 4.0),
+                                  const Text("Code",
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 20.0,
