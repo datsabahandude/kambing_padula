@@ -11,6 +11,7 @@ class QRScanPage extends StatefulWidget {
 }
 
 class _QRScanPageState extends State<QRScanPage> {
+  // final controller = TextEditingController();
   String qrCode = 'Unknown';
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class _QRScanPageState extends State<QRScanPage> {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             const Text('Scan Result'),
             const SizedBox(height: 8),
-            Text(qrCode),
+            InkWell(onTap: () {}, child: Text(qrCode)),
             ElevatedButton(
               onPressed: () => scanQRCode(),
               child: const Text('Scan'),
@@ -38,7 +39,11 @@ class _QRScanPageState extends State<QRScanPage> {
   Future<void> scanQRCode() async {
     try {
       final qrCode = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR);
+          '#ff6666', // line indicator color
+          'Cancel', // cancel string
+          true, // can activate flash
+          ScanMode.QR // for scanning 'QR'/'Barcode' etc
+          );
       if (!mounted) return;
       setState(() {
         this.qrCode = qrCode;
