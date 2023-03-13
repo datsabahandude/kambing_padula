@@ -10,6 +10,18 @@ class VideoPage extends StatefulWidget {
 
 class _VideoPageState extends State<VideoPage> {
   late VideoPlayerController _controller;
+  String _videoDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = twoDigits(duration.inHours);
+    final minutes = twoDigits(duration.inMinutes);
+    final seconds = twoDigits(duration.inSeconds);
+    return [
+      if (duration.inHours > 0) hours,
+      minutes,
+      seconds,
+    ].join(':');
+  }
+
   @override
   void initState() {
     super.initState();
@@ -37,17 +49,13 @@ class _VideoPageState extends State<VideoPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                color: Colors.red,
+              SizedBox(
+                height: 250,
                 child: _controller.value.isInitialized
-                    ? SizedBox(
-                        height: 200,
-                        child: VideoPlayer(_controller),
-                      )
-                    : const SizedBox(
-                        height: 200,
+                    ? VideoPlayer(_controller)
+                    : const Center(
                         child: CircularProgressIndicator(
-                          backgroundColor: Colors.deepPurple,
+                          backgroundColor: Color.fromRGBO(39, 55, 144, 1),
                           valueColor: AlwaysStoppedAnimation(Colors.white),
                         ),
                       ),
@@ -55,22 +63,46 @@ class _VideoPageState extends State<VideoPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _controller.value.isPlaying
-                            ? _controller.pause()
-                            : _controller.play();
-                      });
-                    },
-                    icon: Icon(
-                      _controller.value.isPlaying
-                          ? Icons.pause
-                          : Icons.play_arrow,
-                    ),
+                  ValueListenableBuilder(
+                      valueListenable: _controller,
+                      builder: (context, VideoPlayerValue value, child) {
+                        return Text(
+                          _videoDuration(value.position),
+                        );
+                      }),
+                  Expanded(
+                      child: SizedBox(
+                    height: 20,
+                    child: VideoProgressIndicator(_controller,
+                        allowScrubbing: true,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 12)),
+                  )),
+                  Text(
+                    _videoDuration(_controller.value.duration),
                   )
                 ],
-              )
+              ),
+              Center(
+                child: ValueListenableBuilder(
+                    valueListenable: _controller,
+                    builder: (context, VideoPlayerValue value, child) {
+                      return IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _controller.value.isPlaying
+                                  ? _controller.pause()
+                                  : _controller.play();
+                            });
+                          },
+                          icon:
+                              Icon(value.position == _controller.value.duration
+                                  ? Icons.play_arrow
+                                  : _controller.value.isPlaying
+                                      ? Icons.pause
+                                      : Icons.play_arrow));
+                    }),
+              ),
             ],
           ),
         ));
