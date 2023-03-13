@@ -27,6 +27,7 @@ dependencies:
   url_launcher: ^6.1.10
   barcode_widget: ^2.0.3
   flutter_barcode_scanner: ^2.0.0
+  video_player: ^2.6.0
 
 dev_dependencies:
   flutter_test:
