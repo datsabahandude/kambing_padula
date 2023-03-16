@@ -1,7 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class QRScanPage extends StatefulWidget {
   const QRScanPage({super.key});
@@ -25,7 +27,31 @@ class _QRScanPageState extends State<QRScanPage> {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             const Text('Scan Result'),
             const SizedBox(height: 8),
-            InkWell(onTap: () {}, child: Text(qrCode)),
+            InkWell(
+              onTap: () {},
+              child: RichText(
+                text: TextSpan(
+                  text: qrCode,
+                  style: const TextStyle(
+                      color: Colors.blue, decoration: TextDecoration.underline),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () async {
+                      if (await canLaunchUrlString(qrCode)) {
+                        await launchUrlString(qrCode);
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: qrCode,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                      }
+                    },
+                ),
+              ),
+            ),
             ElevatedButton(
               onPressed: () => scanQRCode(),
               child: const Text('Scan'),
