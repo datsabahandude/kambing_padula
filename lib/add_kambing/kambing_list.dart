@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,7 +20,13 @@ class _kambing_listState extends State<kambing_list> {
   bool isLottie = false;
   @override
   void initState() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
     super.initState();
+    triggerNotification();
   }
 
   @override
@@ -32,6 +39,15 @@ class _kambing_listState extends State<kambing_list> {
   void dispose() {
     Hive.close();
     super.dispose();
+  }
+
+  triggerNotification() {
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 1,
+            channelKey: 'basic_channel',
+            title: 'Welcome Back!',
+            body: 'Just a simple greeting'));
   }
 
   @override
