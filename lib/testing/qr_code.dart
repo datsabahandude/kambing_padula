@@ -1,6 +1,11 @@
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:kambing_padula/testing/qr_scan.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
 
 class QRCodePage extends StatefulWidget {
   const QRCodePage({super.key});
@@ -11,6 +16,17 @@ class QRCodePage extends StatefulWidget {
 
 class _QRCodePageState extends State<QRCodePage> {
   final controller = TextEditingController();
+  Uint8List? bytes;
+  Widget barcode() {
+    return BarcodeWidget(
+      barcode: Barcode.qrCode(),
+      color: Colors.black,
+      data: controller.text,
+      width: 200,
+      height: 200,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final cField = TextFormField(
@@ -18,33 +34,17 @@ class _QRCodePageState extends State<QRCodePage> {
         controller: controller,
         keyboardType: TextInputType.emailAddress,
         validator: (value) {
-          if (value!.isEmpty) {
-            return 'Nama Kambing ?';
-          }
+          return null;
         },
         onSaved: (value) {
           controller.text = value!;
         },
         textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
+            border: InputBorder.none,
             floatingLabelBehavior: FloatingLabelBehavior.never,
-            errorStyle: const TextStyle(
-              fontSize: 12.0,
-              color: Colors.deepPurpleAccent,
-              fontWeight: FontWeight.w700,
-            ),
-            fillColor: Colors.white,
             filled: true,
-            prefixIcon: const Icon(Icons.paste_outlined, color: Colors.purple),
-            contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "...",
-            hintStyle: const TextStyle(
-              fontSize: 16.0,
-              color: Colors.deepPurple,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            )));
+            hintText: "..."));
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -58,7 +58,10 @@ class _QRCodePageState extends State<QRCodePage> {
                         builder: (context) => const QRScanPage()));
               },
               child: Row(
-                children: [Text('QR Scan'), Icon(Icons.arrow_right_sharp)],
+                children: const [
+                  Text('QR Scan'),
+                  Icon(Icons.arrow_right_sharp)
+                ],
               ))
         ],
       ),
@@ -68,13 +71,7 @@ class _QRCodePageState extends State<QRCodePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  BarcodeWidget(
-                    barcode: Barcode.qrCode(),
-                    color: Colors.black,
-                    data: controller.text ?? 'Hello World',
-                    width: 200,
-                    height: 200,
-                  ),
+                  barcode(),
                   const SizedBox(
                     height: 40,
                   ),
@@ -86,13 +83,57 @@ class _QRCodePageState extends State<QRCodePage> {
                         onPressed: () {
                           setState(() {});
                         },
-                        backgroundColor: Theme.of(context).primaryColor,
-                        child: const Icon(Icons.done),
+                        backgroundColor: const Color.fromRGBO(39, 55, 144, 1),
+                        child: const Icon(Icons.generating_tokens_rounded),
                       )
                     ],
-                  )
+                  ),
+                  controller.text.isNotEmpty
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Material(
+                              clipBehavior: Clip.antiAlias,
+                              elevation: 5,
+                              borderRadius: BorderRadius.circular(15),
+                              color: const Color.fromRGBO(39, 55, 144, 1),
+                              child: MaterialButton(
+                                onPressed: () async {
+                                  final qrCtrl = ScreenshotController();
+                                  final bytes =
+                                      await qrCtrl.captureFromWidget(barcode());
+                                  setState(() {
+                                    this.bytes = bytes;
+                                  });
+                                  saveImg(bytes);
+                                },
+                                minWidth:
+                                    MediaQuery.of(context).size.width * 0.6,
+                                child: const Text(
+                                  'Download QR',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              )),
+                        )
+                      : Container(),
                 ],
               ))),
     );
+  }
+
+  Future saveImg(Uint8List bytes) async {
+    final appStorage = (await getApplicationDocumentsDirectory()).path;
+    final file = File('$appStorage/image.png');
+    file.writeAsBytes(bytes);
+    try {
+      await GallerySaver.saveImage(file.path, albumName: 'Flutter');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Downloaded to Gallery')));
+    } catch (e) {
+      print(e);
+    }
   }
 }
