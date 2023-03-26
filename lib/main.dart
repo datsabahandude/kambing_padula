@@ -11,9 +11,19 @@ import 'testing/localization.dart';
 import 'testing/neumorphism.dart';
 import 'testing/drawer.dart';
 import 'testing/video_player.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  AwesomeNotifications().initialize(
+      "resource://drawable/puteh",
+      [
+        NotificationChannel(
+            channelKey: 'basic_channel',
+            channelName: 'Basic Notification',
+            channelDescription: 'Channel Description')
+      ],
+      debug: true);
   await Hive.initFlutter();
   Hive.registerAdapter(KambingAdapter());
   await Hive.openBox<Kambing>('kambings');
