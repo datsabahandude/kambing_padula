@@ -68,12 +68,11 @@ class _KambingDialogState extends State<KambingDialog>
         this.imageBytes = imageBytes;
       });
     } on PlatformException catch (e) {
-      // print('Failed to pick image: $e');
       Fluttertoast.showToast(
-          msg: "Ternyata timbul masalah",
+          msg: "$e",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
@@ -92,12 +91,11 @@ class _KambingDialogState extends State<KambingDialog>
         this.imageBytes = imageBytes;
       });
     } on PlatformException catch (e) {
-      // print('Failed to pick image: $e');
       Fluttertoast.showToast(
-          msg: "Tenyata punya masalah",
+          msg: "$e",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
