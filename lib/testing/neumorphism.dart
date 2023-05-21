@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kambing_padula/main.dart';
+import '../homepage.dart';
 
 class neumorphism extends StatefulWidget {
   const neumorphism({Key? key}) : super(key: key);

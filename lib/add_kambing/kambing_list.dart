@@ -1,4 +1,4 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
+// import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,8 +6,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kambing_padula/add_kambing/KambingDialog.dart';
 import 'package:kambing_padula/add_kambing/models/boxes.dart';
 import 'package:kambing_padula/add_kambing/models/kambing.dart';
-import 'package:kambing_padula/main.dart';
 import 'package:lottie/lottie.dart';
+
+import '../homepage.dart';
 
 class kambing_list extends StatefulWidget {
   const kambing_list({Key? key}) : super(key: key);
@@ -20,13 +21,13 @@ class _kambing_listState extends State<kambing_list> {
   bool isLottie = false;
   @override
   void initState() {
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      if (!isAllowed) {
-        AwesomeNotifications().requestPermissionToSendNotifications();
-      }
-    });
+    // AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+    //   if (!isAllowed) {
+    //     AwesomeNotifications().requestPermissionToSendNotifications();
+    //   }
+    // });
     super.initState();
-    triggerNotification();
+    // triggerNotification();
   }
 
   @override
@@ -41,14 +42,14 @@ class _kambing_listState extends State<kambing_list> {
     super.dispose();
   }
 
-  triggerNotification() {
-    AwesomeNotifications().createNotification(
-        content: NotificationContent(
-            id: 1,
-            channelKey: 'basic_channel',
-            title: 'Welcome Back!',
-            body: 'Just a simple greeting'));
-  }
+  // triggerNotification() {
+  //   AwesomeNotifications().createNotification(
+  //       content: NotificationContent(
+  //           id: 1,
+  //           channelKey: 'basic_channel',
+  //           title: 'Welcome Back!',
+  //           body: 'Just a simple greeting'));
+  // }
 
   @override
   Widget build(BuildContext context) {
